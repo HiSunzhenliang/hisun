@@ -1,373 +1,131 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 <head>
-  <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
-<meta name="theme-color" content="#222">
-<meta name="generator" content="Hexo 5.2.0">
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>MP3 文件格式解析 | Alliswell&#39;s blog</title>
+  <meta name="author" content="SunZhenliang">
+  
+  <meta name="description" content="MP3 文件格式解析MP3 的全称是 MPEG Audio Layer3, 它是一种高效的计算机音频编码方案，它以较大的压缩比将音频文件转换成较小的扩展名为。MP3 的文件，基本保持原文件的音质。MP3 是 ISO/MPEG 标准的一部分，ISO/MPEG 标准描述了使用高性能感知编码方案的音频压缩，此标准一直在不断更新以满足“质高量小”的追求，现已形成 MPEGLayer1、Layer2、Layer3 三个音频编码解码方案。MPEGLayer3 压缩率可达 1:10 至 1:12,1M 的 MP3 文件可播放 1 分钟，而 1 分钟 CD 音质的 WAV 文件 (44100Hz,16bit, 双声道，60 秒）要占用 10M 空间，这样算来，一张 650M 的 MP3 光盘播放时间应在 10 小时以上，而同样容量的一张 CD 盘播放时间在 70 分钟左右。MP3 的优势是 CD 难以比拟的。
+MPEG Audio 标准MPEG(MovingPictureExpertsGroup) 是 ISO 下的一个动态图 像专家组，它制定的 MPEG 标准广泛应用于各种多媒体中。 MPEG 标准包括视频和音频标准，其中音频标准已制定出 MPEG-1、MPEG-2、MPEG-2AAC 和 MPEG-4。
+MPEG-1 和 MPEG-2 标准使用同一个音频编码解码族—Layer1、2、3。MPEG-2 一个新特点是采用低采样率扩展降低数据流量，另一特点是多通道扩展，将主声道增加为 5 个。MPEG-2AAC(MPEG-2AdvancedAudioCoding) 标准是 FraunhoferIIS 同 AT&amp;amp;T 公司于 1997 年推出的，旨在显著减少数据流量，MPEG22AAC 采用的修正的离散余弦变换 (MDCT,ModifiedDiscreteCo2sineTransform) 算法，采样率可在 8KHz 到 96KHz 之间，声道数可在 1-48 之间。
+MPEG Audio Layer1、2、3 三个层使用相同的滤波器组、位流结构和头信息，采样频率为 32KHz、4411KHz 或 48KHz。Layer1 是为数字压缩磁带 DCC(DigitalCompactCassette) 设计的，数据流量为 384kbps,Layer2 在复杂性和性能间作了权衡，数据流量下降到 256kbps-192kbps。Layer3 一开始就为低数据流量而设计，数据流量在 128kbps-112kbps,Layer3 增加了 MDCT 变换，使其频率分辨能力是 Layer2 的 18 倍，Layer3 还使用了与 MPEGVid2eo 类似的平均信息量编码 (EntropyCoding), 减少了冗余信息。MP3 绝大部分使用的是 MPEG21 标准。
+音频压缩MP3 格式始于 80 年代中期，德国 Erlangen 的 Fraunhofer 研究 所致力于高质量、低数据率的声音编码。
+MP3 音频压缩包含编码和解码两个部分。编码是将 WAV 文件中的数据转换成高压缩率的位流形式，解码是接受位流并将其重建到 WAV 文件中。
+MP3 采用了感知音频编码 (PerceptualAudioCoding) 这一失真算法。人耳感受声音的频率范围是 20Hz-220kHz,MP3 截掉了大量的冗余信号和无关的信号，编码器通过混合滤波器组将原始声音变换到频率域，利用心理声学模型，估算刚好能被察觉到的噪声水平，再经过量化，转换成 Huffman 编码，形成 MP3 位流。解码器要简单得多，它的任务是从编码后的谱线成分中，经过反 量化和逆变换，提取出声音信号。"> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
+  <meta property="og:title" content="MP3 文件格式解析"/>
+  <meta property="og:site_name" content="Alliswell&#39;s blog"/>
 
-  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
-  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
-  <link rel="mask-icon" href="/logo.svg" color="#222">
-
-<link rel="stylesheet" href="/css/main.css">
-
-
-
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
-
-<script class="hexo-configurations">
-    var NexT = window.NexT || {};
-    var CONFIG = {"hostname":"alliswell.top","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
-  </script>
-<meta name="description" content="MP3 文件格式解析MP3 的全称是 MPEG Audio Layer3, 它是一种高效的计算机音频编码方案，它以较大的压缩比将音频文件转换成较小的扩展名为。MP3 的文件，基本保持原文件的音质。MP3 是 ISO&#x2F;MPEG 标准的一部分，ISO&#x2F;MPEG 标准描述了使用高性能感知编码方案的音频压缩，此标准一直在不断更新以满足“质高量小”的追求，现已形成 MPEGLayer1、Layer2、Lay">
-<meta property="og:type" content="article">
-<meta property="og:title" content="MP3 文件格式解析">
-<meta property="og:url" content="https://alliswell.top/wiki/MP3%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/index.html">
-<meta property="og:site_name" content="Alliswell&#39;s blog">
-<meta property="og:description" content="MP3 文件格式解析MP3 的全称是 MPEG Audio Layer3, 它是一种高效的计算机音频编码方案，它以较大的压缩比将音频文件转换成较小的扩展名为。MP3 的文件，基本保持原文件的音质。MP3 是 ISO&#x2F;MPEG 标准的一部分，ISO&#x2F;MPEG 标准描述了使用高性能感知编码方案的音频压缩，此标准一直在不断更新以满足“质高量小”的追求，现已形成 MPEGLayer1、Layer2、Lay">
-<meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012141012855-1193055958.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012141029418-1919208897.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012141039777-880575532.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012141049012-1279776091.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012141105387-1201925425.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012141122168-852393751.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012145357902-914224524.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012145845855-1416090028.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012145854840-1633635283.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012150427824-44825799.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012150447371-840131951.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012150455027-279783863.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012150511965-812032450.png">
-<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012150541215-1878531096.png">
-<meta property="article:published_time" content="2020-11-30T07:24:32.000Z">
-<meta property="article:modified_time" content="2021-01-04T15:54:04.349Z">
-<meta property="article:author" content="SunZhenliang">
-<meta property="article:tag" content="Audio">
-<meta property="article:tag" content="MP3">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171012141012855-1193055958.png">
-
-
-<link rel="canonical" href="https://alliswell.top/wiki/MP3%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/">
-
-
-<script class="page-configurations">
-  // https://hexo.io/docs/variables.html
-  CONFIG.page = {
-    sidebar: "",
-    isHome : false,
-    isPost : true,
-    lang   : 'en'
-  };
-</script>
-<title>MP3 文件格式解析 | Alliswell's blog</title>
+  
+    <meta property="og:image" content=""/>
   
 
-  <script>
-    var _hmt = _hmt || [];
-    (function() {
-      var hm = document.createElement("script");
-      hm.src = "https://hm.baidu.com/hm.js?bc4c604bb95e897c6bcd8c12d5d3f9e4";
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(hm, s);
-    })();
-  </script>
+  
+    <link rel="alternative" href="/atom.xml" title="Alliswell&#39;s blog" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
 
+  <script src="/js/jquery-2.0.3.min.js"></script>
 
-  <noscript>
-  <style>
-  body { margin-top: 2rem; }
-
-  .use-motion .menu-item,
-  .use-motion .sidebar,
-  .use-motion .post-block,
-  .use-motion .pagination,
-  .use-motion .comments,
-  .use-motion .post-header,
-  .use-motion .post-body,
-  .use-motion .collection-header {
-    visibility: visible;
-  }
-
-  .use-motion .header,
-  .use-motion .site-brand-container .toggle,
-  .use-motion .footer { opacity: initial; }
-
-  .use-motion .site-title,
-  .use-motion .site-subtitle,
-  .use-motion .custom-logo-image {
-    opacity: initial;
-    top: initial;
-  }
-
-  .use-motion .logo-line {
-    transform: scaleX(1);
-  }
-
-  .search-pop-overlay, .sidebar-nav { display: none; }
-  .sidebar-panel { display: block; }
-  </style>
-</noscript>
-
-<link rel="alternate" href="/atom.xml" title="Alliswell's blog" type="application/atom+xml">
-</head>
-
-<body itemscope itemtype="http://schema.org/WebPage">
-  <div class="headband"></div>
-
-  <main class="main">
-    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
-      <div class="header-inner"><div class="site-brand-container">
-  <div class="site-nav-toggle">
-    <div class="toggle" aria-label="Toggle navigation bar">
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-        <span class="toggle-line"></span>
-    </div>
-  </div>
-
-  <div class="site-meta">
-
-    <a href="/" class="brand" rel="start">
-      <i class="logo-line"></i>
-      <h1 class="site-title">Alliswell's blog</h1>
-      <i class="logo-line"></i>
-    </a>
-  </div>
-
-  <div class="site-nav-right">
-    <div class="toggle popup-trigger">
-        <i class="fa fa-search fa-fw fa-lg"></i>
-    </div>
-  </div>
-</div>
+  <!-- analytics -->
+  
 
 
 
-<nav class="site-nav">
-  <ul class="main-menu menu">
-        <li class="menu-item menu-item-home">
 
-    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+<meta name="generator" content="Hexo 5.2.0"></head>
 
-  </li>
-        <li class="menu-item menu-item-about">
-
-    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
-
-  </li>
-        <li class="menu-item menu-item-tags">
-
-    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
-
-  </li>
-        <li class="menu-item menu-item-categories">
-
-    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
-
-  </li>
-        <li class="menu-item menu-item-archives">
-
-    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
-
-  </li>
-      <li class="menu-item menu-item-search">
-        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
-        </a>
-      </li>
-  </ul>
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Alliswell&#39;s blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
 </nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> MP3 文件格式解析</h1>
+		</div>
+	
 
 
 
-  <div class="search-pop-overlay">
-    <div class="popup search-popup"><div class="search-header">
-  <span class="search-icon">
-    <i class="fa fa-search"></i>
-  </span>
-  <div class="search-input-container">
-    <input autocomplete="off" autocapitalize="off" maxlength="80"
-           placeholder="Searching..." spellcheck="false"
-           type="search" class="search-input">
-  </div>
-  <span class="popup-btn-close">
-    <i class="fa fa-times-circle"></i>
-  </span>
-</div>
-<div class="search-result-container no-result">
-  <div class="search-result-icon">
-    <i class="fa fa-spinner fa-pulse fa-5x"></i>
-  </div>
-</div>
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
 
-    </div>
-  </div>
+	<!-- content -->
+	<div class="mypage">		
+	  		
 
-</div>
-        
-  
-  <div class="toggle sidebar-toggle">
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-    <span class="toggle-line"></span>
-  </div>
-
-  <aside class="sidebar">
-
-    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
-      <ul class="sidebar-nav">
-        <li class="sidebar-nav-toc">
-          Table of Contents
-        </li>
-        <li class="sidebar-nav-overview">
-          Overview
-        </li>
-      </ul>
-
-      <div class="sidebar-panel-container">
-        <!--noindex-->
-        <section class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MP3-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90"><span class="nav-number">1.</span> <span class="nav-text">MP3 文件格式解析</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#MPEG-Audio-%E6%A0%87%E5%87%86"><span class="nav-number">1.1.</span> <span class="nav-text">MPEG Audio 标准</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9F%B3%E9%A2%91%E5%8E%8B%E7%BC%A9"><span class="nav-number">1.2.</span> <span class="nav-text">音频压缩</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MP3-%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="nav-number">1.3.</span> <span class="nav-text">MP3 文件结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-%E5%B8%A7%E5%A4%B4%E6%A0%BC%E5%BC%8F"><span class="nav-number">1.3.1.</span> <span class="nav-text">1. 帧头格式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E5%B8%A7%E9%95%BF%E5%BA%A6"><span class="nav-number">1.3.2.</span> <span class="nav-text">2、如何计算帧长度</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3%E3%80%81%E6%AF%8F%E5%B8%A7%E7%9A%84%E6%8C%81%E7%BB%AD%E6%97%B6%E9%97%B4"><span class="nav-number">1.3.3.</span> <span class="nav-text">3、每帧的持续时间</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5%E3%80%81%E5%B8%A7%E6%95%B0%E6%8D%AE"><span class="nav-number">1.3.4.</span> <span class="nav-text">5、帧数据</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6%E3%80%81VBR-%E5%A4%B4"><span class="nav-number">1.3.5.</span> <span class="nav-text">6、VBR 头</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MPEG-%E9%9F%B3%E9%A2%91%E6%A0%87%E7%AD%BE"><span class="nav-number">1.4.</span> <span class="nav-text">MPEG 音频标签</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1%E3%80%81ID3v1"><span class="nav-number">1.4.1.</span> <span class="nav-text">1、ID3v1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2%E3%80%81ID3V2"><span class="nav-number">1.4.2.</span> <span class="nav-text">2、ID3V2</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E3%80%81%E6%A0%87%E7%AD%BE%E5%A4%B4"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">（一）、标签头</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89%E3%80%81%E6%A0%87%E7%AD%BE%E5%B8%A7"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">（二）、标签帧</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#MP3-%E6%96%87%E4%BB%B6%E5%AE%9E%E4%BE%8B%E5%89%96%E6%9E%90"><span class="nav-number">1.5.</span> <span class="nav-text">MP3 文件实例剖析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.6.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
-        </section>
-        <!--/noindex-->
-
-        <section class="site-overview-wrap sidebar-panel">
-          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
-    <img class="site-author-image" itemprop="image" alt="SunZhenliang"
-      src="/head.jpg">
-  <p class="site-author-name" itemprop="name">SunZhenliang</p>
-  <div class="site-description" itemprop="description"></div>
-</div>
-<div class="site-state-wrap site-overview-item animated">
-  <nav class="site-state">
-      <div class="site-state-item site-state-posts">
-          <a href="/archives">
-        
-          <span class="site-state-item-count">63</span>
-          <span class="site-state-item-name">posts</span>
-        </a>
-      </div>
-      <div class="site-state-item site-state-categories">
-            <a href="/categories">
-          
-        <span class="site-state-item-count">19</span>
-        <span class="site-state-item-name">categories</span></a>
-      </div>
-      <div class="site-state-item site-state-tags">
-            <a href="/tags">
-          
-        <span class="site-state-item-count">93</span>
-        <span class="site-state-item-name">tags</span></a>
-      </div>
-  </nav>
-</div>
-  <div class="links-of-author site-overview-item animated">
-      <span class="links-of-author-item">
-        <a href="https://github.com/HiSunzhenliang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HiSunzhenliang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
-      </span>
-      <span class="links-of-author-item">
-        <a href="mailto:hisunzhenliang@outlook.com" title="E-Mail → mailto:hisunzhenliang@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
-      </span>
-  </div>
-
-
-
-        </section>
-      </div>
-    </div>
-  </aside>
-  <div class="sidebar-dimmer"></div>
-
-
-    </header>
-
-    
-  <div class="back-to-top">
-    <i class="fa fa-arrow-up"></i>
-    <span>0%</span>
-  </div>
-
-<noscript>
-  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
-</noscript>
-
-
-    <div class="main-inner post posts-expand">
-
-
-  
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
-    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/MP3%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/head.jpg">
-      <meta itemprop="name" content="SunZhenliang">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Alliswell's blog">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          MP3 文件格式解析
-        </h1>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">Posted on</span>
-
-      <time title="Created: 2020-11-30 15:24:32" itemprop="dateCreated datePublished" datetime="2020-11-30T15:24:32+08:00">2020-11-30</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">In</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/Audio/" itemprop="url" rel="index"><span itemprop="name">Audio</span></a>
-        </span>
-    </span>
-
-  
-    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="far fa-eye"></i>
-      </span>
-      <span class="post-meta-item-text">Views: </span>
-      <span id="busuanzi_value_page_pv"></span>
-    </span>
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-        <h1 id="MP3-文件格式解析"><a href="#MP3-文件格式解析" class="headerlink" title="MP3 文件格式解析"></a>MP3 文件格式解析</h1><p>MP3 的全称是 MPEG Audio Layer3, 它是一种高效的计算机音频编码方案，它以较大的压缩比将音频文件转换成较小的扩展名为。MP3 的文件，基本保持原文件的音质。MP3 是 ISO/MPEG 标准的一部分，ISO/MPEG 标准描述了使用高性能感知编码方案的音频压缩，此标准一直在不断更新以满足“质高量小”的追求，现已形成 MPEGLayer1、Layer2、Layer3 三个音频编码解码方案。MPEGLayer3 压缩率可达 1:10 至 1:12,1M 的 MP3 文件可播放 1 分钟，而 1 分钟 CD 音质的 WAV 文件 (44100Hz,16bit, 双声道，60 秒）要占用 10M 空间，这样算来，一张 650M 的 MP3 光盘播放时间应在 10 小时以上，而同样容量的一张 CD 盘播放时间在 70 分钟左右。MP3 的优势是 CD 难以比拟的。</p>
+	  <h1 id="MP3-文件格式解析"><a href="#MP3-文件格式解析" class="headerlink" title="MP3 文件格式解析"></a>MP3 文件格式解析</h1><p>MP3 的全称是 MPEG Audio Layer3, 它是一种高效的计算机音频编码方案，它以较大的压缩比将音频文件转换成较小的扩展名为。MP3 的文件，基本保持原文件的音质。MP3 是 ISO/MPEG 标准的一部分，ISO/MPEG 标准描述了使用高性能感知编码方案的音频压缩，此标准一直在不断更新以满足“质高量小”的追求，现已形成 MPEGLayer1、Layer2、Layer3 三个音频编码解码方案。MPEGLayer3 压缩率可达 1:10 至 1:12,1M 的 MP3 文件可播放 1 分钟，而 1 分钟 CD 音质的 WAV 文件 (44100Hz,16bit, 双声道，60 秒）要占用 10M 空间，这样算来，一张 650M 的 MP3 光盘播放时间应在 10 小时以上，而同样容量的一张 CD 盘播放时间在 70 分钟左右。MP3 的优势是 CD 难以比拟的。</p>
 <h2 id="MPEG-Audio-标准"><a href="#MPEG-Audio-标准" class="headerlink" title="MPEG Audio 标准"></a>MPEG Audio 标准</h2><p>MPEG(MovingPictureExpertsGroup) 是 ISO 下的一个动态图 像专家组，它制定的 MPEG 标准广泛应用于各种多媒体中。 MPEG 标准包括视频和音频标准，其中音频标准已制定出 MPEG-1、MPEG-2、MPEG-2AAC 和 MPEG-4。</p>
 <p>MPEG-1 和 MPEG-2 标准使用同一个音频编码解码族—Layer1、2、3。MPEG-2 一个新特点是采用低采样率扩展降低数据流量，另一特点是多通道扩展，将主声道增加为 5 个。MPEG-2AAC(MPEG-2AdvancedAudioCoding) 标准是 FraunhoferIIS 同 AT&amp;T 公司于 1997 年推出的，旨在显著减少数据流量，MPEG22AAC 采用的修正的离散余弦变换 (MDCT,ModifiedDiscreteCo2sineTransform) 算法，采样率可在 8KHz 到 96KHz 之间，声道数可在 1-48 之间。</p>
 <p>MPEG Audio Layer1、2、3 三个层使用相同的滤波器组、位流结构和头信息，采样频率为 32KHz、4411KHz 或 48KHz。Layer1 是为数字压缩磁带 DCC(DigitalCompactCassette) 设计的，数据流量为 384kbps,Layer2 在复杂性和性能间作了权衡，数据流量下降到 256kbps-192kbps。Layer3 一开始就为低数据流量而设计，数据流量在 128kbps-112kbps,Layer3 增加了 MDCT 变换，使其频率分辨能力是 Layer2 的 18 倍，Layer3 还使用了与 MPEGVid2eo 类似的平均信息量编码 (EntropyCoding), 减少了冗余信息。MP3 绝大部分使用的是 MPEG21 标准。</p>
@@ -475,161 +233,189 @@
 </ul>
 </blockquote>
 
-    </div>
+	  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+	</div>
+
+	
+	<span id="/wiki/MP3%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/" class="leancloud-visitors view" data-flag-title="MP3 文件格式解析">
+		<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+	</span>
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
 
     
     
+    <a href="/wiki/MP4文件格式详解/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> Prev</a>
     
 
-    <footer class="post-footer">
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/wiki/G-711编解码原理/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+-->
+	
+		<section id="comments" class="comments">
+			<style>
+			.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+			@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var valineConfig = {"enable":true,"appId":"ueIePJtaGryN9FhXJieFg0zv-MdYXbMMI","appKey":"YrCpNBNF8jxrR28HotIjP2Gb","placeholder":"提交评论时留下邮箱收到回复后将自动通知","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"]}
+valineConfig.el='#vcomment';
+new Valine(valineConfig);
+    // new Valine({
+    //     el: '#vcomment',
+    //     appId: "",
+    //     appKey: "",
+    //     placeholder: "提交评论时留下邮箱收到回复后将自动通知",
+    //     avatar:"monsterid",
+    //     visitor: "true",
+    //     requiredFields: "nick,mail".split(','),
+    // });
+</script>
+
+		</section>
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2020-11-30 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
           
-
-<div class="post-copyright">
-<ul>
-  <li class="post-copyright-author">
-      <strong>Post author:  </strong>SunZhenliang
+  <li>
+    <li><a href="/categories/Audio/">Audio<span>3</span></a></li>
   </li>
-  <li class="post-copyright-link">
-      <strong>Post link: </strong>
-      <a href="https://alliswell.top/wiki/MP3%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/" title="MP3 文件格式解析">https://alliswell.top/wiki/MP3文件格式解析/</a>
-  </li>
-  <li class="post-copyright-license">
-    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
-  </li>
-</ul>
-</div>
 
-          <div class="post-tags">
-              <a href="/tags/Audio/" rel="tag"><i class="fa fa-tag"></i> Audio</a>
-              <a href="/tags/MP3/" rel="tag"><i class="fa fa-tag"></i> MP3</a>
-          </div>
+    </ul>
+	</div>
+	
 
-        
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Audio/">Audio<span>3</span></a></li> <li><a href="/tags/MP3/">MP3<span>1</span></a></li>
+    </ul>
+	</div>
+		
 
-          <div class="post-nav">
-            <div class="post-nav-item">
-                <a href="/wiki/G-711%E7%BC%96%E8%A7%A3%E7%A0%81%E5%8E%9F%E7%90%86/" rel="prev" title="G.711 编解码原理">
-                  <i class="fa fa-chevron-left"></i> G.711 编解码原理
-                </a>
-            </div>
-            <div class="post-nav-item">
-                <a href="/wiki/MP4%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" rel="next" title="MP4 文件格式详解">
-                  MP4 文件格式详解 <i class="fa fa-chevron-right"></i>
-                </a>
-            </div>
-          </div>
-    </footer>
-  </article>
-</div>
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+		   <span class="toc-title">Contents</span>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#MP3-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90"><span class="toc-article-text">MP3 文件格式解析</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#MPEG-Audio-%E6%A0%87%E5%87%86"><span class="toc-article-text">MPEG Audio 标准</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E9%9F%B3%E9%A2%91%E5%8E%8B%E7%BC%A9"><span class="toc-article-text">音频压缩</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#MP3-%E6%96%87%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-article-text">MP3 文件结构</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1-%E5%B8%A7%E5%A4%B4%E6%A0%BC%E5%BC%8F"><span class="toc-article-text">1. 帧头格式</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2%E3%80%81%E5%A6%82%E4%BD%95%E8%AE%A1%E7%AE%97%E5%B8%A7%E9%95%BF%E5%BA%A6"><span class="toc-article-text">2、如何计算帧长度</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#3%E3%80%81%E6%AF%8F%E5%B8%A7%E7%9A%84%E6%8C%81%E7%BB%AD%E6%97%B6%E9%97%B4"><span class="toc-article-text">3、每帧的持续时间</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#5%E3%80%81%E5%B8%A7%E6%95%B0%E6%8D%AE"><span class="toc-article-text">5、帧数据</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#6%E3%80%81VBR-%E5%A4%B4"><span class="toc-article-text">6、VBR 头</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#MPEG-%E9%9F%B3%E9%A2%91%E6%A0%87%E7%AD%BE"><span class="toc-article-text">MPEG 音频标签</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#1%E3%80%81ID3v1"><span class="toc-article-text">1、ID3v1</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#2%E3%80%81ID3V2"><span class="toc-article-text">2、ID3V2</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%EF%BC%88%E4%B8%80%EF%BC%89%E3%80%81%E6%A0%87%E7%AD%BE%E5%A4%B4"><span class="toc-article-text">（一）、标签头</span></a></li><li class="toc-article-item toc-article-level-4"><a class="toc-article-link" href="#%EF%BC%88%E4%BA%8C%EF%BC%89%E3%80%81%E6%A0%87%E7%AD%BE%E5%B8%A7"><span class="toc-article-text">（二）、标签帧</span></a></li></ol></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#MP3-%E6%96%87%E4%BB%B6%E5%AE%9E%E4%BE%8B%E5%89%96%E6%9E%90"><span class="toc-article-text">MP3 文件实例剖析</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-article-text">参考资料</span></a></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
 
+		
 
+	</div>
+	
+		
 
+</div><!-- row -->
 
-
-
-
-<script>
-  window.addEventListener('tabs:register', () => {
-    let { activeClass } = CONFIG.comments;
-    if (CONFIG.comments.storage) {
-      activeClass = localStorage.getItem('comments_active') || activeClass;
-    }
-    if (activeClass) {
-      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
-      if (activeTab) {
-        activeTab.click();
-      }
-    }
-  });
-  if (CONFIG.comments.storage) {
-    window.addEventListener('tabs:click', event => {
-      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
-      const commentClass = event.target.classList[1];
-      localStorage.setItem('comments_active', commentClass);
-    });
-  }
-</script>
-</div>
-  </main>
-
-  <footer class="footer">
-    <div class="footer-inner">
+<!--
+ -->
 
 
-<div class="copyright">
-  &copy; 2019 – 
-  <span itemprop="copyrightYear">2021</span>
-  <span class="with-love">
-    <i class="fa fa-heart"></i>
-  </span>
-  <span class="author" itemprop="copyrightHolder">SunZhenliang</span>
-</div>
-<div class="busuanzi-count">
-    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-user"></i>
-      </span>
-      <span class="site-uv" title="Total Visitors">
-        <span id="busuanzi_value_site_uv"></span>
-      </span>
-    </span>
-    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
-      <span class="post-meta-item-icon">
-        <i class="fa fa-eye"></i>
-      </span>
-      <span class="site-pv" title="Total Views">
-        <span id="busuanzi_value_site_pv"></span>
-      </span>
-    </span>
-</div>
-  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+
+	</div>
   </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2021 SunZhenliang's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
 
-    </div>
-  </footer>
 
   
-  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
-<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
 
-  
-  <script>
-    (function(){
-      var bp = document.createElement('script');
-      var curProtocol = window.location.protocol.split(':')[0];
-      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
-      var s = document.getElementsByTagName("script")[0];
-      s.parentNode.insertBefore(bp, s);
-    })();
-  </script>
-
-<script src="/js/local-search.js"></script>
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
 
 
-
-
-<script>
-if (document.querySelectorAll('.mermaid').length) {
-  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js', () => {
-    mermaid.init({
-      theme    : 'forest',
-      logLevel : 3,
-      flowchart: { curve     : 'linear' },
-      gantt    : { axisFormat: '%m/%d/%Y' },
-      sequence : { actorMargin: 50 }
-    }, '.mermaid');
-  }, window.mermaid);
-}
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
 </script>
 
 
-  
-  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 
-
-
-
-
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
 
 </body>
-</html>
+   </html>
