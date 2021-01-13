@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alliswell.top","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="MP4 文件格式详解目前 MP4 的概念被炒得很火，也很乱。最开始 MP4 指的是音频（MP3 的升级版），即 MPEG-2 AAC 标准。随后 MP4 概念被转移到视频上，对应的是 MPEG-4 标准。而现在我们流行的叫法，多半是指能播放 MPEG-4 标准编码格式视频的播放器。但是这篇文章介绍的内容跟上面这些都无关，我们要讨论的是 MP4 文件封装格式，对应的标准为 ISO&#x2F;IEC 14496">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MP4 文件格式详解">
+<meta property="og:url" content="https://alliswell.top/wiki/MP4%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/index.html">
+<meta property="og:site_name" content="Alliswell&#39;s blog">
+<meta property="og:description" content="MP4 文件格式详解目前 MP4 的概念被炒得很火，也很乱。最开始 MP4 指的是音频（MP3 的升级版），即 MPEG-2 AAC 标准。随后 MP4 概念被转移到视频上，对应的是 MPEG-4 标准。而现在我们流行的叫法，多半是指能播放 MPEG-4 标准编码格式视频的播放器。但是这篇文章介绍的内容跟上面这些都无关，我们要讨论的是 MP4 文件封装格式，对应的标准为 ISO&#x2F;IEC 14496">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124103255828-809042371.jpg">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124103308953-79513465.jpg">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124103319000-1662662916.jpg">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124103340343-505155072.jpg">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124103352140-1758822429.jpg">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105632828-1690291173.jpg">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105617750-494904833.jpg">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105548187-1453820539.jpg">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105534562-2004584065.jpg">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105523765-1396178666.jpg">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105445453-359347705.jpg">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105430750-1558311660.jpg">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105354187-597951417.jpg">
+<meta property="article:published_time" content="2020-11-30T08:39:53.000Z">
+<meta property="article:modified_time" content="2021-01-04T15:54:04.349Z">
+<meta property="article:author" content="SunZhenliang">
+<meta property="article:tag" content="Video">
+<meta property="article:tag" content="MP4">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124103255828-809042371.jpg">
+
+
+<link rel="canonical" href="https://alliswell.top/wiki/MP4%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>MP4 文件格式详解 | Alliswell's blog</title>
+  
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bc4c604bb95e897c6bcd8c12d5d3f9e4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Alliswell's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Alliswell's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#MP4-%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3"><span class="nav-number">1.</span> <span class="nav-text">MP4 文件格式详解</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1%E3%80%81%E6%A6%82%E8%BF%B0"><span class="nav-number">1.1.</span> <span class="nav-text">1、概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2%E3%80%81Box"><span class="nav-number">1.2.</span> <span class="nav-text">2、Box</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3%E3%80%81File-Type-Box%EF%BC%88ftyp%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">3、File Type Box（ftyp）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4%E3%80%81Movie-Box%EF%BC%88moov%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">4、Movie Box（moov）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#4-1-Movie-Header-Box%EF%BC%88mvhd%EF%BC%89"><span class="nav-number">1.4.1.</span> <span class="nav-text">4.1 Movie Header Box（mvhd）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-2-Track-Box%EF%BC%88trak%EF%BC%89"><span class="nav-number">1.4.2.</span> <span class="nav-text">4.2 Track Box（trak）</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-1-Track-Header-Box%EF%BC%88tkhd%EF%BC%89"><span class="nav-number">1.4.2.1.</span> <span class="nav-text">4.2.1 Track Header Box（tkhd）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-2-2-Media-Box%EF%BC%88mdia%EF%BC%89"><span class="nav-number">1.4.2.2.</span> <span class="nav-text">4.2.2 Media Box（mdia）</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-2-1-Media-Header-Box%EF%BC%88mdhd%EF%BC%89"><span class="nav-number">1.4.2.2.1.</span> <span class="nav-text">4.2.2.1 Media Header Box（mdhd）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-2-2-Handler-Reference-Box%EF%BC%88hdlr%EF%BC%89"><span class="nav-number">1.4.2.2.2.</span> <span class="nav-text">4.2.2.2 Handler Reference Box（hdlr）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#4-2-2-3-Media-Information-Box%EF%BC%88minf%EF%BC%89"><span class="nav-number">1.4.2.2.3.</span> <span class="nav-text">4.2.2.3 Media Information Box（minf）</span></a><ol class="nav-child"><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-2-3-1-Media-Information-Header-Box%EF%BC%88vmhd%E3%80%81smhd%E3%80%81hmhd%E3%80%81nmhd%EF%BC%89"><span class="nav-number">1.4.2.2.3.1.</span> <span class="nav-text">4.2.2.3.1 Media Information Header Box（vmhd、smhd、hmhd、nmhd）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-2-3-2-Data-Information-Box%EF%BC%88dinf%EF%BC%89"><span class="nav-number">1.4.2.2.3.2.</span> <span class="nav-text">4.2.2.3.2 Data Information Box（dinf）</span></a></li><li class="nav-item nav-level-6"><a class="nav-link" href="#4-2-2-3-3-Sample-Table-Box%EF%BC%88stbl%EF%BC%89"><span class="nav-number">1.4.2.2.3.3.</span> <span class="nav-text">4.2.2.3.3 Sample Table Box（stbl）</span></a></li></ol></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.5.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SunZhenliang"
+      src="/head.jpg">
+  <p class="site-author-name" itemprop="name">SunZhenliang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HiSunzhenliang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HiSunzhenliang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:hisunzhenliang@outlook.com" title="E-Mail → mailto:hisunzhenliang@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/MP4%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          MP4 文件格式详解
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-11-30 16:39:53" itemprop="dateCreated datePublished" datetime="2020-11-30T16:39:53+08:00">2020-11-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Video/" itemprop="url" rel="index"><span itemprop="name">Video</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="MP4-文件格式详解"><a href="#MP4-文件格式详解" class="headerlink" title="MP4 文件格式详解"></a>MP4 文件格式详解</h1><p>目前 MP4 的概念被炒得很火，也很乱。最开始 MP4 指的是音频（MP3 的升级版），即 MPEG-2 AAC 标准。随后 MP4 概念被转移到视频上，对应的是 MPEG-4 标准。而现在我们流行的叫法，多半是指能播放 MPEG-4 标准编码格式视频的播放器。但是这篇文章介绍的内容跟上面这些都无关，我们要讨论的是 MP4 文件封装格式，对应的标准为 ISO/IEC 14496-12，即信息技术 视听对象编码的第 12 部分：ISO 基本媒体文件格式（Information technology Coding of audio-visual objects Part 12: ISO base media file format）。ISO/IEC 组织指定的标准一般用数字表示，ISO/IEC 14496 即 MPEG-4 标准。</p>
+<p>  MP4 视频文件封装格式是基于 QuickTime 容器格式定义的，因此参考 QuickTime 的格式定义对理解 MP4 文件格式很有帮助。MP4 文件格式是一个十分开放的容器，几乎可以用来描述所有的媒体结构，MP4 文件中的媒体描述与媒体数据是分开的，并且媒体数据的组织也很自由，不一定要按照时间顺序排列，甚至媒体数据可以直接引用其他文件。同时，MP4 也支持流媒体。MP4 目前被广泛用于封装 h.264 视频和 AAC 音频，是高清视频的代表。</p>
+<p>  现在我们就来看看 MP4 文件格式到底是什么样的。</p>
+<h2 id="1、概述"><a href="#1、概述" class="headerlink" title="1、概述"></a><strong>1、概述</strong></h2><p>  MP4 文件中的所有数据都装在 box（QuickTime 中为 atom）中，也就是说 MP4 文件由若干个 box 组成，每个 box 有类型和长度，可以将 box 理解为一个数据对象块。box 中可以包含另一个 box，这种 box 称为 container box。一个 MP4 文件首先会有且只有一个“ftyp”类型的 box，作为 MP4 格式的标志并包含关于文件的一些信息；之后会有且只有一个“moov”类型的 box（Movie Box），它是一种 container box，子 box 包含了媒体的 metadata 信息；MP4 文件的媒体数据包含在“mdat”类型的 box（Midia Data Box）中，该类型的 box 也是 container box，可以有多个，也可以没有（当媒体数据全部引用其他文件时），媒体数据的结构由 metadata 进行描述。</p>
+<p>  下面是一些概念：</p>
+<p>  <strong><em>track</em></strong> 表示一些 sample 的集合，对于媒体数据来说，track 表示一个视频或音频序列。</p>
+<p>  <strong><em>hint track</em></strong> 这个特殊的 track 并不包含媒体数据，而是包含了一些将其他数据 track 打包成流媒体的指示信息。</p>
+<p>  <strong><em>sample</em></strong> 对于非 hint track 来说，video sample 即为一帧视频，或一组连续视频帧，audio sample 即为一段连续的压缩音频，它们统称 sample。对于 hint track，sample 定义一个或多个流媒体包的格式。</p>
+<p>  <strong><em>sample table</em></strong> 指明 sampe 时序和物理布局的表。</p>
+<p>  <strong><em>chunk</em></strong> 一个 track 的几个 sample 组成的单元。</p>
+<p>  在本文中，我们不讨论涉及 hint 的内容，只关注包含媒体数据的本地 MP4 文件。下图为一个典型的 MP4 文件的结构树。</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124103255828-809042371.jpg"></p>
+<h2 id="2、Box"><a href="#2、Box" class="headerlink" title="2、Box"></a><strong>2、Box</strong></h2><p>​    首先需要说明的是，box 中的字节序为网络字节序，也就是大端字节序（Big-Endian），简单的说，就是一个 32 位的 4 字节整数存储方式为高位字节在内存的低端。Box 由 header 和 body 组成，其中 header 统一指明 box 的大小和类型，body 根据类型有不同的意义和格式。</p>
+<p>​    标准的 box 开头的 4 个字节（32 位）为 box size，该大小包括 box header 和 box body 整个 box 的大小，这样我们就可以在文件中定位各个 box。如果 size 为 1，则表示这个 box 的大小为 large size，真正的 size 值要在 largesize 域上得到。（实际上只有“mdat”类型的 box 才有可能用到 large size。）如果 size 为 0，表示该 box 为文件的最后一个 box，文件结尾即为该 box 结尾。（同样只存在于“mdat”类型的 box 中。）</p>
+<p>​    size 后面紧跟的 32 位为 box type，一般是 4 个字符，如“ftyp”、“moov”等，这些 box type 都是已经预定义好的，分别表示固定的意义。如果是“uuid”，表示该 box 为用户扩展类型。如果 box type 是未定义的，应该将其忽略。</p>
+<h2 id="3、File-Type-Box（ftyp）"><a href="#3、File-Type-Box（ftyp）" class="headerlink" title="3、File Type Box（ftyp）"></a><strong>3、File Type Box（ftyp）</strong></h2><p>   该 box 有且只有 1 个，并且只能被包含在文件层，而不能被其他 box 包含。该 box 应该被放在文件的最开始，指示该 MP4 文件应用的相关信息。</p>
+<p>  “ftyp” body 依次包括 1 个 32 位的 major brand（4 个字符），1 个 32 位的 minor version（整数）和 1 个以 32 位（4 个字符）为单位元素的数组 compatible brands。这些都是用来指示文件应用级别的信息。该 box 的字节实例如下：</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124103308953-79513465.jpg"></p>
+<h2 id="4、Movie-Box（moov）"><a href="#4、Movie-Box（moov）" class="headerlink" title="4、Movie Box（moov）"></a>4、Movie Box（moov）</h2><p>  该 box 包含了文件媒体的 metadata 信息，“moov”是一个 container box，具体内容信息由子 box 诠释。同 File Type Box 一样，该 box 有且只有一个，且只被包含在文件层。一般情况下，“moov”会紧随“ftyp”出现。</p>
+<p>  一般情况下（限于篇幅，本文只讲解常见的 MP4 文件结构），“moov”中会包含 1 个“mvhd”和若干个“trak”。其中“mvhd”为 header box，一般作为“moov”的第一个子 box 出现（对于其他 container box 来说，header box 都应作为首个子 box 出现）。“trak”包含了一个 track 的相关信息，是一个 container box。下图为部分“moov”的字节实例，其中红色部分为 box header，绿色为“mvhd”，黄色为一部分“trak”。</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124103319000-1662662916.jpg"></p>
+<h3 id="4-1-Movie-Header-Box（mvhd）"><a href="#4-1-Movie-Header-Box（mvhd）" class="headerlink" title="4.1 Movie Header Box（mvhd）"></a><strong>4.1 Movie Header Box（mvhd）</strong></h3><p>  “mvhd”结构如下表。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>字节数</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>box size</td>
+<td>4</td>
+<td>box 大小</td>
+</tr>
+<tr>
+<td>box type</td>
+<td>4</td>
+<td>box 类型</td>
+</tr>
+<tr>
+<td>version</td>
+<td>1</td>
+<td>box 版本，0 或 1，一般为 0。（以下字节数均按 version=0）</td>
+</tr>
+<tr>
+<td>flags</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>creation time</td>
+<td>4</td>
+<td>创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</td>
+</tr>
+<tr>
+<td>modification time</td>
+<td>4</td>
+<td>修改时间</td>
+</tr>
+<tr>
+<td>time scale</td>
+<td>4</td>
+<td>文件媒体在 1 秒时间内的刻度值，可以理解为 1 秒长度的时间单元数</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>4</td>
+<td>该 track 的时间长度，用 duration 和 time scale 值可以计算 track 时长，比如 audio track 的 time scale = 8000, duration = 560128，时长为 70.016，video track 的 time scale = 600, duration = 42000，时长为 70</td>
+</tr>
+<tr>
+<td>rate</td>
+<td>4</td>
+<td>推荐播放速率，高 16 位和低 16 位分别为小数点整数部分和小数部分，即 [16.16] 格式，该值为 1.0（0x00010000）表示正常前向播放</td>
+</tr>
+<tr>
+<td>volume</td>
+<td>2</td>
+<td>与 rate 类似，[8.8] 格式，1.0（0x0100）表示最大音量</td>
+</tr>
+<tr>
+<td>reserved</td>
+<td>10</td>
+<td>保留位</td>
+</tr>
+<tr>
+<td>matrix</td>
+<td>36</td>
+<td>视频变换矩阵</td>
+</tr>
+<tr>
+<td>pre-defined</td>
+<td>24</td>
+<td></td>
+</tr>
+<tr>
+<td>next track id</td>
+<td>4</td>
+<td>下一个 track 使用的 id 号</td>
+</tr>
+</tbody></table>
+<p>  “mvhd”的字节实例如下图，各字段已经用颜色区分开：</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124103340343-505155072.jpg"></p>
+<h3 id="4-2-Track-Box（trak）"><a href="#4-2-Track-Box（trak）" class="headerlink" title="4.2 Track Box（trak）"></a><strong>4.2 Track Box（trak）</strong></h3><p>  “trak”也是一个 container box，其子 box 包含了该 track 的媒体数据引用和描述（hint track 除外）。一个 MP4 文件中的媒体可以包含多个 track，且至少有一个 track，这些 track 之间彼此独立，有自己的时间和空间信息。“trak”必须包含一个“tkhd”和一个“mdia”，此外还有很多可选的 box（略）。其中“tkhd”为 track header box，“mdia”为 media box，该 box 是一个包含一些 track 媒体数据信息 box 的 container box。</p>
+<p>  “trak”的部分字节实例如下图，其中黄色为“trak”box 的头，绿色为“tkhd”，蓝色为“edts”（一个可选 box），红色为一部分“mdia”。</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124103352140-1758822429.jpg"></p>
+<h4 id="4-2-1-Track-Header-Box（tkhd）"><a href="#4-2-1-Track-Header-Box（tkhd）" class="headerlink" title="4.2.1 Track Header Box（tkhd）"></a><strong>4.2.1 Track Header Box（tkhd）</strong></h4><p>  “tkhd”结构如下表。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>字节数</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>box size</td>
+<td>4</td>
+<td>box 大小</td>
+</tr>
+<tr>
+<td>box type</td>
+<td>4</td>
+<td>box 类型</td>
+</tr>
+<tr>
+<td>version</td>
+<td>1</td>
+<td>box 版本，0 或 1，一般为 0。（以下字节数均按 version=0）</td>
+</tr>
+<tr>
+<td>flags</td>
+<td>3</td>
+<td>按位或操作结果值，预定义如下：0x000001 track_enabled，否则该 track 不被播放；0x000002 track_in_movie，表示该 track 在播放中被引用；0x000004 track_in_preview，表示该 track 在预览时被引用。一般该值为 7，如果一个媒体所有 track 均未设置 track_in_movie 和 track_in_preview，将被理解为所有 track 均设置了这两项；对于 hint track，该值为 0</td>
+</tr>
+<tr>
+<td>creation time</td>
+<td>4</td>
+<td>创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</td>
+</tr>
+<tr>
+<td>modification time</td>
+<td>4</td>
+<td>修改时间</td>
+</tr>
+<tr>
+<td>track id</td>
+<td>4</td>
+<td>id 号，不能重复且不能为 0</td>
+</tr>
+<tr>
+<td>reserved</td>
+<td>4</td>
+<td>保留位</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>4</td>
+<td>track 的时间长度</td>
+</tr>
+<tr>
+<td>reserved</td>
+<td>8</td>
+<td>保留位</td>
+</tr>
+<tr>
+<td>layer</td>
+<td>2</td>
+<td>视频层，默认为 0，值小的在上层</td>
+</tr>
+<tr>
+<td>alternate group</td>
+<td>2</td>
+<td>track 分组信息，默认为 0 表示该 track 未与其他 track 有群组关系</td>
+</tr>
+<tr>
+<td>volume</td>
+<td>2</td>
+<td>[8.8] 格式，如果为音频 track，1.0（0x0100）表示最大音量；否则为 0</td>
+</tr>
+<tr>
+<td>reserved</td>
+<td>2</td>
+<td>保留位</td>
+</tr>
+<tr>
+<td>matrix</td>
+<td>36</td>
+<td>视频变换矩阵</td>
+</tr>
+<tr>
+<td>width</td>
+<td>4</td>
+<td>宽</td>
+</tr>
+<tr>
+<td>height</td>
+<td>4</td>
+<td>高，均为 [16.16] 格式值，与 sample 描述中的实际画面大小比值，用于播放时的展示宽高</td>
+</tr>
+</tbody></table>
+<p>  “tkhd”的字节实例如下图，各字段已经用颜色区分开：</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105632828-1690291173.jpg"></p>
+<h4 id="4-2-2-Media-Box（mdia）"><a href="#4-2-2-Media-Box（mdia）" class="headerlink" title="4.2.2 Media Box（mdia）"></a><strong>4.2.2 Media Box（mdia）</strong></h4><p>  “mdia”也是个 container box，其子 box 的结构和种类还是比较复杂的。先来看一个“mdia”的实例结构树图。</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105617750-494904833.jpg"></p>
+<p>​    总体来说，“mdia”定义了 track 媒体类型以及 sample 数据，描述 sample 信息。一般“mdia”包含一个“mdhd”，一个“hdlr”和一个“minf”，其中“mdhd”为 media header box，“hdlr”为 handler reference box，“minf”为 media information box。下面依次看一下这几个 box 的结构。</p>
+<h5 id="4-2-2-1-Media-Header-Box（mdhd）"><a href="#4-2-2-1-Media-Header-Box（mdhd）" class="headerlink" title="4.2.2.1 Media Header Box（mdhd）"></a><strong>4.2.2.1 Media Header Box（mdhd）</strong></h5><p>  “mdhd”结构如下表。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>字节数</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>box size</td>
+<td>4</td>
+<td>box 大小</td>
+</tr>
+<tr>
+<td>box type</td>
+<td>4</td>
+<td>box 类型</td>
+</tr>
+<tr>
+<td>version</td>
+<td>1</td>
+<td>box 版本，0 或 1，一般为 0。（以下字节数均按 version=0）</td>
+</tr>
+<tr>
+<td>flags</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>creation time</td>
+<td>4</td>
+<td>创建时间（相对于 UTC 时间 1904-01-01 零点的秒数）</td>
+</tr>
+<tr>
+<td>modification time</td>
+<td>4</td>
+<td>修改时间</td>
+</tr>
+<tr>
+<td>time scale</td>
+<td>4</td>
+<td>同前表</td>
+</tr>
+<tr>
+<td>duration</td>
+<td>4</td>
+<td>track 的时间长度</td>
+</tr>
+<tr>
+<td>language</td>
+<td>2</td>
+<td>媒体语言码。最高位为 0，后面 15 位为 3 个字符（见 ISO 639-2/T 标准中定义）</td>
+</tr>
+<tr>
+<td>pre-defined</td>
+<td>2</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>  “mdhd”的字节实例如下图，各字段已经用颜色区分开：</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105548187-1453820539.jpg"></p>
+<h5 id="4-2-2-2-Handler-Reference-Box（hdlr）"><a href="#4-2-2-2-Handler-Reference-Box（hdlr）" class="headerlink" title="4.2.2.2 Handler Reference Box（hdlr）"></a><strong>4.2.2.2 Handler Reference Box（hdlr）</strong></h5><p>  “hdlr”解释了媒体的播放过程信息，该 box 也可以被包含在 meta box（meta）中。“hdlr”结构如下表。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>字节数</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>box size</td>
+<td>4</td>
+<td>box 大小</td>
+</tr>
+<tr>
+<td>box type</td>
+<td>4</td>
+<td>box 类型</td>
+</tr>
+<tr>
+<td>version</td>
+<td>1</td>
+<td>box 版本，0 或 1，一般为 0。（以下字节数均按 version=0）</td>
+</tr>
+<tr>
+<td>flags</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>pre-defined</td>
+<td>4</td>
+<td></td>
+</tr>
+<tr>
+<td>handler type</td>
+<td>4</td>
+<td>在 media box 中，该值为 4 个字符：“vide”— video track“soun”— audio track“hint”— hint track</td>
+</tr>
+<tr>
+<td>reserved</td>
+<td>12</td>
+<td></td>
+</tr>
+<tr>
+<td>name</td>
+<td>不定</td>
+<td>track type name，以‘\0’结尾的字符串</td>
+</tr>
+</tbody></table>
+<p>  “hdlr”的字节实例如下图，各字段已经用颜色区分开：</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105534562-2004584065.jpg"></p>
+<h5 id="4-2-2-3-Media-Information-Box（minf）"><a href="#4-2-2-3-Media-Information-Box（minf）" class="headerlink" title="4.2.2.3 Media Information Box（minf）"></a><strong>4.2.2.3 Media Information Box（minf）</strong></h5><p>  “minf”存储了解释 track 媒体数据的 handler-specific 信息，media handler 用这些信息将媒体时间映射到媒体数据并进行处理。“minf”中的信息格式和内容与媒体类型以及解释媒体数据的 media handler 密切相关，其他 media handler 不知道如何解释这些信息。“minf”是一个 container box，其实际内容由子 box 说明。</p>
+<p>  一般情况下，“minf”包含一个 header box，一个“dinf”和一个“stbl”，其中，header box 根据 track type（即 media handler type）分为“vmhd”、“smhd”、“hmhd”和“nmhd”，“dinf”为 data information box，“stbl”为 sample table box。下面分别介绍。</p>
+<p>  下图为“minf”部分字节实例，其中红色为 box header，蓝色为“smhd”，绿色为“dinf”，黄色为一部分“stbl”。</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105523765-1396178666.jpg"></p>
+<h6 id="4-2-2-3-1-Media-Information-Header-Box（vmhd、smhd、hmhd、nmhd）"><a href="#4-2-2-3-1-Media-Information-Header-Box（vmhd、smhd、hmhd、nmhd）" class="headerlink" title="4.2.2.3.1 Media Information Header Box（vmhd、smhd、hmhd、nmhd）"></a><strong>4.2.2.3.1 Media Information Header Box（vmhd、smhd、hmhd、nmhd）</strong></h6><p><strong><em>Video Media Header Box（vmhd）</em></strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>字节数</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>box size</td>
+<td>4</td>
+<td>box 大小</td>
+</tr>
+<tr>
+<td>box type</td>
+<td>4</td>
+<td>box 类型</td>
+</tr>
+<tr>
+<td>version</td>
+<td>1</td>
+<td>box 版本，0 或 1，一般为 0。（以下字节数均按 version=0）</td>
+</tr>
+<tr>
+<td>flags</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>graphics mode</td>
+<td>4</td>
+<td>视频合成模式，为 0 时拷贝原始图像，否则与 opcolor 进行合成</td>
+</tr>
+<tr>
+<td>opcolor</td>
+<td>2×3</td>
+<td>｛red，green，blue｝</td>
+</tr>
+</tbody></table>
+<p><strong><em>Sound Media Header Box（smhd）</em></strong></p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>字节数</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>box size</td>
+<td>4</td>
+<td>box 大小</td>
+</tr>
+<tr>
+<td>box type</td>
+<td>4</td>
+<td>box 类型</td>
+</tr>
+<tr>
+<td>version</td>
+<td>1</td>
+<td>box 版本，0 或 1，一般为 0。（以下字节数均按 version=0）</td>
+</tr>
+<tr>
+<td>flags</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>balance</td>
+<td>2</td>
+<td>立体声平衡，[8.8] 格式值，一般为 0，-1.0 表示全部左声道，1.0 表示全部右声道</td>
+</tr>
+<tr>
+<td>reserved</td>
+<td>2</td>
+<td></td>
+</tr>
+</tbody></table>
+<p><strong><em>Hint Media Header Box（hmhd）</em></strong></p>
+<p>  略</p>
+<p><strong><em>Null Media Header Box（nmhd）</em></strong></p>
+<p>  非视音频媒体使用该 box，略。</p>
+<h6 id="4-2-2-3-2-Data-Information-Box（dinf）"><a href="#4-2-2-3-2-Data-Information-Box（dinf）" class="headerlink" title="4.2.2.3.2 Data Information Box（dinf）"></a><strong>4.2.2.3.2 Data Information Box（dinf）</strong></h6><p>  “dinf”解释如何定位媒体信息，是一个 container box。“dinf”一般包含一个“dref”，即 data reference box；“dref”下会包含若干个“url”或“urn”，这些 box 组成一个表，用来定位 track 数据。简单的说，track 可以被分成若干段，每一段都可以根据“url”或“urn”指向的地址来获取数据，sample 描述中会用这些片段的序号将这些片段组成一个完整的 track。一般情况下，当数据被完全包含在文件中时，“url”或“urn”中的定位字符串是空的。</p>
+<p>  “dref”的字节结构如下表。</p>
+<table>
+<thead>
+<tr>
+<th>字段</th>
+<th>字节数</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>box size</td>
+<td>4</td>
+<td>box 大小</td>
+</tr>
+<tr>
+<td>box type</td>
+<td>4</td>
+<td>box 类型</td>
+</tr>
+<tr>
+<td>version</td>
+<td>1</td>
+<td>box 版本，0 或 1，一般为 0。（以下字节数均按 version=0）</td>
+</tr>
+<tr>
+<td>flags</td>
+<td>3</td>
+<td></td>
+</tr>
+<tr>
+<td>entry count</td>
+<td>4</td>
+<td>“url”或“urn”表的元素个数</td>
+</tr>
+<tr>
+<td>“url”或“urn”列表</td>
+<td>不定</td>
+<td></td>
+</tr>
+</tbody></table>
+<p>  “url”或“urn”都是 box，“url”的内容为字符串（location string），“urn”的内容为一对字符串（name string and location string）。当“url”或“urn”的 box flag 为 1 时，字符串均为空。</p>
+<p>  下面是一个“dinf”的字节实例图。其中黄色为“dinf”的 box header，由红色部分我们知道包含的“url”或“urn”个数为 1，红色后面为“url”box 的内容。紫色为“url”的 box header（根据 box type 我们知道是个“url”），绿色为 box flag，值为 1，说明“url”中的字符串为空，表示 track 数据已包含在文件中。</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105445453-359347705.jpg"></p>
+<h6 id="4-2-2-3-3-Sample-Table-Box（stbl）"><a href="#4-2-2-3-3-Sample-Table-Box（stbl）" class="headerlink" title="4.2.2.3.3 Sample Table Box（stbl）"></a>4.2.2.3.3 Sample Table Box（stbl）</h6><p>  “stbl”几乎是普通的 MP4 文件中最复杂的一个 box 了，首先需要回忆一下 sample 的概念。sample 是媒体数据存储的单位，存储在 media 的 chunk 中，chunk 和 sample 的长度均可互不相同，如下图所示。</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105430750-1558311660.jpg"></p>
+<p>  “stbl”包含了关于 track 中 sample 所有时间和位置的信息，以及 sample 的编解码等信息。利用这个表，可以解释 sample 的时序、类型、大小以及在各自存储容器中的位置。“stbl”是一个 container box，其子 box 包括：sample description box（stsd）、time to sample box（stts）、sample size box（stsz 或 stz2）、sample to chunk box（stsc）、chunk offset box（stco 或 co64）、composition time to sample box（ctts）、sync sample box（stss）等。</p>
+<p>  “stsd”必不可少，且至少包含一个条目，该 box 包含了 data reference box 进行 sample 数据检索的信息。没有“stsd”就无法计算 media sample 的存储位置。“stsd”包含了编码的信息，其存储的信息随媒体类型不同而不同。</p>
+<p><strong><em>Sample Description Box（stsd）</em></strong></p>
+<p>  box header 和 version 字段后会有一个 entry count 字段，根据 entry 的个数，每个 entry 会有 type 信息，如“vide”、“sund”等，根据 type 不同 sample description 会提供不同的信息，例如对于 video track，会有“VisualSampleEntry”类型信息，对于 audio track 会有“AudioSampleEntry”类型信息。</p>
+<p>  视频的编码类型、宽高、长度，音频的声道、采样等信息都会出现在这个 box 中。</p>
+<p><strong><em>Time To Sample Box（stts）</em></strong></p>
+<p>  “stts”存储了 sample 的 duration，描述了 sample 时序的映射方法，我们通过它可以找到任何时间的 sample。“stts”可以包含一个压缩的表来映射时间和 sample 序号，用其他的表来提供每个 sample 的长度和指针。表中每个条目提供了在同一个时间偏移量里面连续的 sample 序号，以及 samples 的偏移量。递增这些偏移量，就可以建立一个完整的 time to sample 表。</p>
+<p><strong><em>Sample Size Box（stsz）</em></strong></p>
+<p>  “stsz” 定义了每个 sample 的大小，包含了媒体中全部 sample 的数目和一张给出每个 sample 大小的表。这个 box 相对来说体积是比较大的。</p>
+<p><strong><em>Sample To Chunk Box（stsc）</em></strong></p>
+<p>  用 chunk 组织 sample 可以方便优化数据获取，一个 thunk 包含一个或多个 sample。“stsc”中用一个表描述了 sample 与 chunk 的映射关系，查看这张表就可以找到包含指定 sample 的 thunk，从而找到这个 sample。</p>
+<p><strong><em>Sync Sample Box（stss）</em></strong></p>
+<p>  “stss”确定 media 中的关键帧。对于压缩媒体数据，关键帧是一系列压缩序列的开始帧，其解压缩时不依赖以前的帧，而后续帧的解压缩将依赖于这个关键帧。“stss”可以非常紧凑的标记媒体内的随机存取点，它包含一个 sample 序号表，表内的每一项严格按照 sample 的序号排列，说明了媒体中的哪一个 sample 是关键帧。如果此表不存在，说明每一个 sample 都是一个关键帧，是一个随机存取点。</p>
+<p><strong><em>Chunk Offset Box（stco）</em></strong></p>
+<p>  “stco”定义了每个 thunk 在媒体流中的位置。位置有两种可能，32 位的和 64 位的，后者对非常大的电影很有用。在一个表中只会有一种可能，这个位置是在整个文件中的，而不是在任何 box 中的，这样做就可以直接在文件中找到媒体数据，而不用解释 box。需要注意的是一旦前面的 box 有了任何改变，这张表都要重新建立，因为位置信息已经改变了。</p>
+<p><strong>5、Free Space Box（free 或 skip）</strong></p>
+<p>  “free”中的内容是无关紧要的，可以被忽略。该 box 被删除后，不会对播放产生任何影响。</p>
+<p><strong>6、Meida Data Box（mdat）</strong></p>
+<p>  该 box 包含于文件层，可以有多个，也可以没有（当媒体数据全部为外部文件引用时），用来存储媒体数据。数据直接跟在 box type 字段后面，具体数据结构的意义需要参考 metadata（主要在 sample table 中描述）。</p>
+<p>  普通 MP4 文件的结构就讲完了，可能会比较乱，下面这张图是常见的 box 的树结构图，可以用来大致了解 MP4 文件的构造。</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/1177848-20171124105354187-597951417.jpg"></p>
+<p>  这篇文章主要面向一些对 MP4 文件结构没有太多了解的初学者，算是篇比较初级的文章，本人也是参考了一些资料写出来的，对于 MP4 文件中涉及的一些概念没有太深入的了解，因此其中应该是有一些错误理解，希望大家抱着批判的眼光读这篇文章。如果有错误的地方，还请大家不吝赐教。</p>
+<p>原文链接：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/ranson7zop/p/7889272.html">https://www.cnblogs.com/ranson7zop/p/7889272.html</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="http://www.52rd.com/blog/Blog.asp?Name=wqyuwss&Subjectid=559">mp4文件格式</a></li>
+</ul>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>SunZhenliang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://alliswell.top/wiki/MP4%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" title="MP4 文件格式详解">https://alliswell.top/wiki/MP4文件格式详解/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Video/" rel="tag"><i class="fa fa-tag"></i> Video</a>
+              <a href="/tags/MP4/" rel="tag"><i class="fa fa-tag"></i> MP4</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/wiki/MP3%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/" rel="prev" title="MP3 文件格式解析">
+                  <i class="fa fa-chevron-left"></i> MP3 文件格式解析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/wiki/Git-commit-message-%E8%A7%84%E8%8C%83/" rel="next" title="Git commit message 规范">
+                  Git commit message 规范 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SunZhenliang</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+</body>
+</html>

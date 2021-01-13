@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alliswell.top","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="安装平台123456789101112131415161718             ............         .&amp;#x27;;;;;;.       .,;,.            ----------      .,;;;;;;;.       &amp;#x27;;;;;;;;.         OS: Deepin 20 x86_64    .;::::::::&amp;#x27;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg 开发环境构建">
+<meta property="og:url" content="https://alliswell.top/wiki/FFmpeg%E5%AE%89%E8%A3%85/index.html">
+<meta property="og:site_name" content="Alliswell&#39;s blog">
+<meta property="og:description" content="安装平台123456789101112131415161718             ............         .&amp;#x27;;;;;;.       .,;,.            ----------      .,;;;;;;;.       &amp;#x27;;;;;;;;.         OS: Deepin 20 x86_64    .;::::::::&amp;#x27;">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-12-18T06:14:59.000Z">
+<meta property="article:modified_time" content="2021-01-04T15:54:04.344Z">
+<meta property="article:author" content="SunZhenliang">
+<meta property="article:tag" content="FFmpeg">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://alliswell.top/wiki/FFmpeg%E5%AE%89%E8%A3%85/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>FFmpeg 开发环境构建 | Alliswell's blog</title>
+  
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bc4c604bb95e897c6bcd8c12d5d3f9e4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Alliswell's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Alliswell's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E5%B9%B3%E5%8F%B0"><span class="nav-number">1.</span> <span class="nav-text">安装平台</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E6%9C%AC%E4%BD%93"><span class="nav-number">2.</span> <span class="nav-text">安装本体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AE%89%E8%A3%85%E4%BE%9D%E8%B5%96"><span class="nav-number">3.</span> <span class="nav-text">安装依赖</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#SDL"><span class="nav-number">3.1.</span> <span class="nav-text">SDL</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#nasm"><span class="nav-number">3.2.</span> <span class="nav-text">nasm</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x264"><span class="nav-number">3.3.</span> <span class="nav-text">x264</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#x265"><span class="nav-number">3.4.</span> <span class="nav-text">x265</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#libmp3lame"><span class="nav-number">3.5.</span> <span class="nav-text">libmp3lame</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#libopencore-amr"><span class="nav-number">3.6.</span> <span class="nav-text">libopencore-amr</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%AE%89%E8%A3%85%E8%BF%87%E7%A8%8B"><span class="nav-number">4.</span> <span class="nav-text">编译安装过程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B5%8B%E8%AF%95"><span class="nav-number">5.</span> <span class="nav-text">测试</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SunZhenliang"
+      src="/head.jpg">
+  <p class="site-author-name" itemprop="name">SunZhenliang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HiSunzhenliang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HiSunzhenliang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:hisunzhenliang@outlook.com" title="E-Mail → mailto:hisunzhenliang@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/FFmpeg%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          FFmpeg 开发环境构建
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-18 14:14:59" itemprop="dateCreated datePublished" datetime="2020-12-18T14:14:59+08:00">2020-12-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Video/" itemprop="url" rel="index"><span itemprop="name">Video</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Video/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h2 id="安装平台"><a href="#安装平台" class="headerlink" title="安装平台"></a>安装平台</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">             ............</span><br><span class="line">         .&#x27;;;;;;.       .,;,.            ----------</span><br><span class="line">      .,;;;;;;;.       &#x27;;;;;;;;.         OS: Deepin 20 x86_64</span><br><span class="line">    .;::::::::&#x27;     .,::;;,&#x27;&#x27;&#x27;&#x27;&#x27;,.       Model: 10SMCTO1WW ThinkCentre M920t-N000</span><br><span class="line">   ,&#x27;.::::::::    .;;&#x27;.          &#x27;;      Kernel: 5.4.70-amd64-desktop</span><br><span class="line">  ;&#x27;  &#x27;cccccc,   ,&#x27; :: &#x27;..        .:     Uptime: 4 days, 4 hours, 14 minutes</span><br><span class="line"> ,,    :ccccc.  ;: .c, &#x27;&#x27; :.       ,;    Packages: 2561 (dpkg), 9 (snap)</span><br><span class="line">.l.     cllll&#x27; ., .lc  :; .l&#x27;       l.   Shell: zsh 5.7.1</span><br><span class="line">.c       :lllc  ;cl:  .l&#x27; .ll.      :&#x27;   Resolution: 1920x1080</span><br><span class="line">.l        &#x27;looc. .   ,o:  &#x27;oo&#x27;      c,   DE: Deepin</span><br><span class="line">.o.         .:ool::coc&#x27;  .ooo&#x27;      o.   WM: KWin</span><br><span class="line"> ::            .....   .;dddo      ;c    Theme: deepin-dark [GTK2/3]</span><br><span class="line">  l:...            .&#x27;;lddddo.     ,o     Icons: Papirus [GTK3]</span><br><span class="line">   lxxxxxdoolllodxxxxxxxxxc      :l      Terminal: konsole</span><br><span class="line">    ,dxxxxxxxxxxxxxxxxxxl.     &#x27;o,       CPU: Intel i5-9500F (6) @ 4.400GHz</span><br><span class="line">      ,dkkkkkkkkkkkkko;.    .;o;         GPU: AMD ATI Radeon HD 8570 / R7 240/340 / R520 OEM</span><br><span class="line">        .;okkkkkdl;.    .,cl:.           Memory: 4032MiB / 7836MiB</span><br><span class="line">            .,:cccccccc:,.</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装本体"><a href="#安装本体" class="headerlink" title="安装本体"></a>安装本体</h2><p>ffmpeg-4.3.git<br>官网<a target="_blank" rel="noopener" href="https://ffmpeg.org/">https://ffmpeg.org/</a></p>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><h3 id="SDL"><a href="#SDL" class="headerlink" title="SDL"></a>SDL</h3><p>Simple DirectMedia Layer 是一个跨平台的开发库，旨在通过 OpenGL 和 Direct3D 提供对音频、键盘、鼠标、操纵杆和图形硬件的低级访问。它用于视频播放软件、模拟器和流行游戏。<br>SDL官网<a target="_blank" rel="noopener" href="https://www.libsdl.org/">https://www.libsdl.org/</a></p>
+<h3 id="nasm"><a href="#nasm" class="headerlink" title="nasm"></a>nasm</h3><p>Netwide Assembler 是 x86 架构的汇编与反汇编工具。<br>如果在在 arm 等其他平台，交叉编译工具链中包含有对应的汇编器，则交叉编译 ffmpeg 时需要 <code>--disable-x86asm</code> 选项。<br>NASM 官网：<a target="_blank" rel="noopener" href="https://www.nasm.us/">https://www.nasm.us/</a></p>
+<h3 id="x264"><a href="#x264" class="headerlink" title="x264"></a>x264</h3><p>x264 是开源的 h264 编码器。<br>ffmpeg 工程中实现了 h264 解码器，但无 h264 编码器。因此需要安装第三方编码器 x264<br>x264 官网<a target="_blank" rel="noopener" href="https://www.videolan.org/developers/x264.html">https://www.videolan.org/developers/x264.html</a></p>
+<h3 id="x265"><a href="#x265" class="headerlink" title="x265"></a>x265</h3><p>x265 是开源的 h265 编码器。<br>ffmpeg 工程中实现了 h265 解码器，但无 h265 编码器。因此需要安装第三方编码器 x265<br>x265 官网：<a target="_blank" rel="noopener" href="http://www.x265.org/">http://www.x265.org/</a></p>
+<h3 id="libmp3lame"><a href="#libmp3lame" class="headerlink" title="libmp3lame"></a>libmp3lame</h3><p>libmp3lame 是开源的 mp3 编码器。<br>libmp3lame 官网<a target="_blank" rel="noopener" href="http://lame.sourceforge.net/">http://lame.sourceforge.net/</a></p>
+<h3 id="libopencore-amr"><a href="#libopencore-amr" class="headerlink" title="libopencore-amr"></a>libopencore-amr</h3><p>libopencore-amr 是开源 amr 编解码器<br>libopencore-amr 官网<a target="_blank" rel="noopener" href="https://sourceforge.net/projects/opencore-amr/files/">https://sourceforge.net/projects/opencore-amr/files/</a></p>
+<h2 id="编译安装过程"><a href="#编译安装过程" class="headerlink" title="编译安装过程"></a>编译安装过程</h2><p>先安装上述依赖，一般优先<code>apt install</code>。如果源里没有则下载源码编译安装。</p>
+<p>ffmpeg 不是使用 automake 等工具，而是自己编写的构建脚本。</p>
+<ol>
+<li>configure<br>Configure 一方面用于检测 FFmpeg 的编译环境，另一方面根据用户配置的选项生成 config.mak，config.h 文件（可能还有 config.asm），提供给 Makefile 使用。FFmpeg 的 configure 脚本很复杂（一个 4000-5000 行的 Shell 脚本）。</li>
+</ol>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">./configure \</span><br><span class="line">--prefix=PATH \</span><br><span class="line">--enable-sdl \</span><br><span class="line">--enable-gpl \</span><br><span class="line">--enable-version3 \</span><br><span class="line">--enable-libmp3lame \</span><br><span class="line">--enable-debug  \</span><br><span class="line">--enable-libopencore-amrnb \</span><br><span class="line">--enable-libopencore-amrwb \</span><br><span class="line">--enable-libx265 \</span><br><span class="line">--enable-libx264</span><br></pre></td></tr></table></figure>
+
+<p><code>--enable-gpl</code>、<code>--enable-version3</code>是 ffmpeg 中使用不同的链接动态库需要不同的开源协议支持。一般可以查询官网 wiki 或者脚本会提示需要指定开源协议版本。<br><code>./configure --help</code>查看可用选项。其中 ffmpeg 也内置 fate 测试和检查工具等。<br>2. <code>make</code><br>3. <code>make install</code></p>
+<h2 id="测试"><a href="#测试" class="headerlink" title="测试"></a>测试</h2><p><code>ffmpeg -v</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg version N-99648-g0c9cf6ea9a Copyright (c) 2000-2020 the FFmpeg developers</span><br><span class="line">  built with gcc 8 (Uos 8.3.0.3-3+rebuild)</span><br><span class="line">  configuration: --prefix=/home/sun/.local --enable-sdl --enable-gpl --enable-version3 --disable-x86asm --enable-libmp3lame --enable-debug --enable-libopencore-amrnb --enable-libopencore-amrwb --enable-libx265 --enable-libx264</span><br><span class="line">  libavutil      56. 60.100 / 56. 60.100</span><br><span class="line">  libavcodec     58.111.101 / 58.111.101</span><br><span class="line">  libavformat    58. 62.100 / 58. 62.100</span><br><span class="line">  libavdevice    58. 11.102 / 58. 11.102</span><br><span class="line">  libavfilter     7. 87.100 /  7. 87.100</span><br><span class="line">  libswscale      5.  8.100 /  5.  8.100</span><br><span class="line">  libswresample   3.  8.100 /  3.  8.100</span><br><span class="line">  libpostproc    55.  8.100 / 55.  8.100</span><br><span class="line">Missing argument for option &#x27;v&#x27;.</span><br><span class="line">Error splitting the argument list: Invalid argument</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://ffmpeg.org/documentation.html">ffmpeg document</a></li>
+</ul>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>SunZhenliang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://alliswell.top/wiki/FFmpeg%E5%AE%89%E8%A3%85/" title="FFmpeg 开发环境构建">https://alliswell.top/wiki/FFmpeg安装/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/FFmpeg/" rel="tag"><i class="fa fa-tag"></i> FFmpeg</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/wiki/sip%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/" rel="prev" title="sip协议学习">
+                  <i class="fa fa-chevron-left"></i> sip协议学习
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/wiki/%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" rel="next" title="视频编解码基础概念">
+                  视频编解码基础概念 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SunZhenliang</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,1385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alliswell.top","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta property="og:type" content="website">
+<meta property="og:title" content="Alliswell&#39;s blog">
+<meta property="og:url" content="https://alliswell.top/index.html">
+<meta property="og:site_name" content="Alliswell&#39;s blog">
+<meta property="og:locale" content="en_US">
+<meta property="article:author" content="SunZhenliang">
+<meta property="article:tag" content="tech code learning huawei leetcode">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://alliswell.top/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : true,
+    isPost : false,
+    lang   : 'en'
+  };
+</script>
+<title>Alliswell's blog</title>
+  
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bc4c604bb95e897c6bcd8c12d5d3f9e4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Alliswell's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Alliswell's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SunZhenliang"
+      src="/head.jpg">
+  <p class="site-author-name" itemprop="name">SunZhenliang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HiSunzhenliang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HiSunzhenliang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:hisunzhenliang@outlook.com" title="E-Mail → mailto:hisunzhenliang@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/%E4%BD%BF%E7%94%A8openmp%E8%BF%9B%E8%A1%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/wiki/%E4%BD%BF%E7%94%A8openmp%E8%BF%9B%E8%A1%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/" class="post-title-link" itemprop="url">使用openmp进行多线程编程</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-08 14:59:28" itemprop="dateCreated datePublished" datetime="2021-01-08T14:59:28+08:00">2021-01-08</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-13 21:55:58" itemprop="dateModified" datetime="2021-01-13T21:55:58+08:00">2021-01-13</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Multi-threads/" itemprop="url" rel="index"><span itemprop="name">Multi-threads</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>转载:<a target="_blank" rel="noopener" href="https://blog.csdn.net/acaiwlj/article/details/49818965">https://blog.csdn.net/acaiwlj/article/details/49818965</a></p>
+<blockquote>
+<p>声明：本文是基于Joel Yliluoma写的Guid into OpenMP:Easy multithreading programming for C++而写的，基本是按照自己的理解，用自己语言组织的。其中大部分例子依然用原来文章的例子，本文仅作为学习笔记之用。</p>
+</blockquote>
+<p>前言<br>多线程在实际的编程中的重要性不言而喻。对于C++而言，当我们需要使用多线程时，可以使用boost::thread库或者自从C++ 11开始支持的std::thread，也可以使用操作系统相关的线程API，如在Linux上，可以使用pthread库。除此之外，还可以使用omp来使用多线程。它的好处是跨平台，使用简单。<br>在Linux平台上，如果需要使用omp，只需在编译时使用”-fopenmp”指令。在Windows的visual studio开发环境中，开启omp支持的步骤为“项目属性 -&gt; C/C++ -&gt; 所有选项 -&gt; openmp支持 -&gt; 是(/openmp)”。<br>本文我们就介绍omp在C++中的使用方法。<br>c++ openmp入门简介<br>openmp是由一系列#paragma指令组成，这些指令控制如何多线程的执行程序。另外，即使编译器不支持omp，程序也也能够正常运行，只是程序不会多线程并行运行。以下为使用omp的简单的例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">vecInt</span><span class="params">(<span class="number">100</span>)</span></span>;</span><br><span class="line">  <span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vecInt.size(); ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    vecInt[i] = i*i;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/wiki/%E4%BD%BF%E7%94%A8openmp%E8%BF%9B%E8%A1%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/openmp%E7%9A%84%E7%9A%84%E4%B8%80%E7%82%B9%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%BA%94%E7%94%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/wiki/openmp%E7%9A%84%E7%9A%84%E4%B8%80%E7%82%B9%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%BA%94%E7%94%A8/" class="post-title-link" itemprop="url">openmp 的的一点多线程应用</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-05 14:57:42" itemprop="dateCreated datePublished" datetime="2021-01-05T14:57:42+08:00">2021-01-05</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-12 20:52:02" itemprop="dateModified" datetime="2021-01-12T20:52:02+08:00">2021-01-12</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Multi-threads/" itemprop="url" rel="index"><span itemprop="name">Multi-threads</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p><code>#pragma omp parallel for</code> 的使用</p>
+<p>openmp 一般随 gcc 一起，编译时使用 <code>-fopenmp</code>打开。会多一个<code>_OPENMP</code>宏定义生效，然后就可以用了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for <span class="comment">// newline is for-loop</span></span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;i = %d\n&quot;</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;end\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.2/com.ibm.xlc1312.aix.doc/compiler_ref/tuoptppp.html">tuoptppp</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.2/com.ibm.xlc1312.aix.doc/compiler_ref/prag_omp_parallel.html">prag_omp_parallel</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.openmp.org/specifications/">https://www.openmp.org/specifications/</a></li>
+</ul>
+</blockquote>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/wiki/openmp%E7%9A%84%E7%9A%84%E4%B8%80%E7%82%B9%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%BA%94%E7%94%A8/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/do-while-0-%E7%89%B9%E6%AE%8A%E7%94%A8%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/wiki/do-while-0-%E7%89%B9%E6%AE%8A%E7%94%A8%E6%B3%95/" class="post-title-link" itemprop="url">do...while(0)特殊用法</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2021-01-01 22:53:32" itemprop="dateCreated datePublished" datetime="2021-01-01T22:53:32+08:00">2021-01-01</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/C-C/" itemprop="url" rel="index"><span itemprop="name">C/C++</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <p>最近在FFmpeg和sox源码中发现有<code>#define do...while(0)</code>的用法，不太能理解就查了下。发现在Linux内核中也有这些用法。</p>
+<p>总结大概有以下几点：</p>
+<ol>
+<li>空语句编译时会产生警告<code>#define FOO do&#123; &#125; while(0)</code></li>
+<li>创建一个局部空间，可以在其中定义局部变量</li>
+<li>在宏定义中使用复杂语法，单只产生单条语句而不是语句块<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> exch(x,y) &#123; int tmp; tmp=x; x=y; y=tmp; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这样调用上面的宏</span></span><br><span class="line"><span class="keyword">if</span> (x &gt; y)</span><br><span class="line">　　exch(x,y);          <span class="comment">// Branch 1</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">　　do_something();     <span class="comment">// Branch 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 但展开是这样</span></span><br><span class="line"><span class="keyword">if</span> (x &gt; y) &#123;                <span class="comment">// 单分支if</span></span><br><span class="line">　　<span class="keyword">int</span> tmp;</span><br><span class="line">　　tmp = x;</span><br><span class="line">　　x = y;</span><br><span class="line">　　y = tmp;</span><br><span class="line">&#125;</span><br><span class="line">　;                           <span class="comment">// 空语句</span></span><br><span class="line"><span class="keyword">else</span>                        <span class="comment">// 错误!!! &quot;parse error before else&quot;</span></span><br><span class="line">　　do_something();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 采用do while</span></span><br><span class="line"><span class="keyword">if</span> (x &gt; y)</span><br><span class="line">　　<span class="keyword">do</span> &#123;</span><br><span class="line">　　<span class="keyword">int</span> tmp;</span><br><span class="line">　　tmp = x;</span><br><span class="line">　　x = y;</span><br><span class="line">　　y = tmp;</span><br><span class="line">　　&#125; <span class="keyword">while</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">　　do_something();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>具体参考以下内核说明文档<a target="_blank" rel="noopener" href="https://kernelnewbies.org/FAQ/DoWhile0">https://kernelnewbies.org/FAQ/DoWhile0</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://kernelnewbies.org/FAQ/DoWhile0">https://kernelnewbies.org/FAQ/DoWhile0</a></li>
+</ul>
+</blockquote>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/wiki/do-while-0-%E7%89%B9%E6%AE%8A%E7%94%A8%E6%B3%95/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/%E4%B8%89%E7%A7%8D%E5%AD%98%E5%82%A8%E7%B1%BB%E5%9E%8B/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/wiki/%E4%B8%89%E7%A7%8D%E5%AD%98%E5%82%A8%E7%B1%BB%E5%9E%8B/" class="post-title-link" itemprop="url">三种存储类型</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-29 13:19:24" itemprop="dateCreated datePublished" datetime="2020-12-29T13:19:24+08:00">2020-12-29</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Storage/" itemprop="url" rel="index"><span itemprop="name">Storage</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="Storage-Research"><a href="#Storage-Research" class="headerlink" title="Storage Research"></a>Storage Research</h1><h2 id="块存储"><a href="#块存储" class="headerlink" title="块存储"></a>块存储</h2><h3 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h3><p>最底层的数据组织方式，所有数据按照固定的大小分块写入，每一块赋予一个用于寻址的编号。</p>
+<h3 id="应用方式："><a href="#应用方式：" class="headerlink" title="应用方式："></a>应用方式：</h3><ol>
+<li>为了方便管理，硬盘这样的块设备通常可以划分为多个逻辑块设备，也就是我们熟悉的硬盘分区（Partition）。</li>
+<li>单个介质的容量、性能有限，可以通过某些技术手段把多个物理块设备组合成一个逻辑块设备，例如各种级别的RAID，JBOD，某些操作系统的卷管理系统（Volume Manager）如Windows的动态磁盘、Linux的LVM等。</li>
+</ol>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>这种方式的好处当然是因为通过了Raid与LVM等手段，对数据提供了保护；</li>
+<li>可以将多块廉价的硬盘组合起来，称为一个大容量的逻辑盘对外提供服务，提高了容量；</li>
+<li>写入数据时，由于是多块磁盘组合出来的逻辑盘，所以几块硬盘可以并行写入的，提升了读写效率；</li>
+</ol>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>主机之间数据无法共享，在服务器不做集群的情况下，块存储裸盘映射给主机，在格式化使用后，对于主机来说相当于本地盘，那么主机A的本地盘根本不能给主机B去使用，无法共享数据</li>
+<li>无目录系统</li>
+</ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/wiki/%E4%B8%89%E7%A7%8D%E5%AD%98%E5%82%A8%E7%B1%BB%E5%9E%8B/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/wiki/%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" class="post-title-link" itemprop="url">视频编解码基础概念</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-18 16:14:39" itemprop="dateCreated datePublished" datetime="2020-12-18T16:14:39+08:00">2020-12-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Video/" itemprop="url" rel="index"><span itemprop="name">Video</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>原始图像信息被采集后，视频数据体积非常大，不利于传输和储存，必须进行编码压缩。播放时只需要采用对应的解码技术就可以恢复播放。<br>本文只涉及这个编解码流程中的基础概念、定义等。</p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><blockquote>
+<p>以下摘录自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/leisure_chn/p/10285829.html">https://www.cnblogs.com/leisure_chn/p/10285829.html</a></p>
+</blockquote>
+<h3 id="熵与冗余"><a href="#熵与冗余" class="headerlink" title="熵与冗余"></a>熵与冗余</h3><p>引自参考资料[1]第1.5节</p>
+<blockquote>
+<p>在所有的实际节目素材中，存在着两种类型的信号分量：即异常的、不可预见的信号分量和可以预见的信号分量。异常分量称为<strong>熵</strong>，它是信号中的真正信息。其余部分称为<strong>冗余</strong>，因为它不是必需的信息。冗余可以是空间性的，如在图像的大片区域中，邻近像素几乎具有相同的数值。冗余也可以是时间性的，例如连续图像之间的相似部分。在所有的压缩系统编码器中都是将熵与冗余相分离，只有熵被编码和传输，而在解码器中再从编码器的发送的信号中计算出冗余。</p>
+</blockquote>
+<h3 id="帧内编码"><a href="#帧内编码" class="headerlink" title="帧内编码"></a>帧内编码</h3><p>帧内编码是空间域编码，利用图像空间性冗余度进行图像压缩，处理的是一幅独立的图像，不会跨越多幅图像。空间域编码依赖于一幅图像中相邻像素间的相似性和图案区的主要空间域频率。</p>
+<p>JPEG标准用于静止图像(即图片)，只使用了空间域压缩，只使用帧内编码。</p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/wiki/%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/FFmpeg%E5%AE%89%E8%A3%85/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/wiki/FFmpeg%E5%AE%89%E8%A3%85/" class="post-title-link" itemprop="url">FFmpeg 开发环境构建</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-18 14:14:59" itemprop="dateCreated datePublished" datetime="2020-12-18T14:14:59+08:00">2020-12-18</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Video/" itemprop="url" rel="index"><span itemprop="name">Video</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Video/FFmpeg/" itemprop="url" rel="index"><span itemprop="name">FFmpeg</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="安装平台"><a href="#安装平台" class="headerlink" title="安装平台"></a>安装平台</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">             ............</span><br><span class="line">         .&#x27;;;;;;.       .,;,.            ----------</span><br><span class="line">      .,;;;;;;;.       &#x27;;;;;;;;.         OS: Deepin 20 x86_64</span><br><span class="line">    .;::::::::&#x27;     .,::;;,&#x27;&#x27;&#x27;&#x27;&#x27;,.       Model: 10SMCTO1WW ThinkCentre M920t-N000</span><br><span class="line">   ,&#x27;.::::::::    .;;&#x27;.          &#x27;;      Kernel: 5.4.70-amd64-desktop</span><br><span class="line">  ;&#x27;  &#x27;cccccc,   ,&#x27; :: &#x27;..        .:     Uptime: 4 days, 4 hours, 14 minutes</span><br><span class="line"> ,,    :ccccc.  ;: .c, &#x27;&#x27; :.       ,;    Packages: 2561 (dpkg), 9 (snap)</span><br><span class="line">.l.     cllll&#x27; ., .lc  :; .l&#x27;       l.   Shell: zsh 5.7.1</span><br><span class="line">.c       :lllc  ;cl:  .l&#x27; .ll.      :&#x27;   Resolution: 1920x1080</span><br><span class="line">.l        &#x27;looc. .   ,o:  &#x27;oo&#x27;      c,   DE: Deepin</span><br><span class="line">.o.         .:ool::coc&#x27;  .ooo&#x27;      o.   WM: KWin</span><br><span class="line"> ::            .....   .;dddo      ;c    Theme: deepin-dark [GTK2/3]</span><br><span class="line">  l:...            .&#x27;;lddddo.     ,o     Icons: Papirus [GTK3]</span><br><span class="line">   lxxxxxdoolllodxxxxxxxxxc      :l      Terminal: konsole</span><br><span class="line">    ,dxxxxxxxxxxxxxxxxxxl.     &#x27;o,       CPU: Intel i5-9500F (6) @ 4.400GHz</span><br><span class="line">      ,dkkkkkkkkkkkkko;.    .;o;         GPU: AMD ATI Radeon HD 8570 / R7 240/340 / R520 OEM</span><br><span class="line">        .;okkkkkdl;.    .,cl:.           Memory: 4032MiB / 7836MiB</span><br><span class="line">            .,:cccccccc:,.</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装本体"><a href="#安装本体" class="headerlink" title="安装本体"></a>安装本体</h2><p>ffmpeg-4.3.git<br>官网<a target="_blank" rel="noopener" href="https://ffmpeg.org/">https://ffmpeg.org/</a></p>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><h3 id="SDL"><a href="#SDL" class="headerlink" title="SDL"></a>SDL</h3><p>Simple DirectMedia Layer 是一个跨平台的开发库，旨在通过 OpenGL 和 Direct3D 提供对音频、键盘、鼠标、操纵杆和图形硬件的低级访问。它用于视频播放软件、模拟器和流行游戏。<br>SDL官网<a target="_blank" rel="noopener" href="https://www.libsdl.org/">https://www.libsdl.org/</a></p>
+<h3 id="nasm"><a href="#nasm" class="headerlink" title="nasm"></a>nasm</h3><p>Netwide Assembler 是 x86 架构的汇编与反汇编工具。<br>如果在在 arm 等其他平台，交叉编译工具链中包含有对应的汇编器，则交叉编译 ffmpeg 时需要 <code>--disable-x86asm</code> 选项。<br>NASM 官网：<a target="_blank" rel="noopener" href="https://www.nasm.us/">https://www.nasm.us/</a></p>
+<h3 id="x264"><a href="#x264" class="headerlink" title="x264"></a>x264</h3>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/wiki/FFmpeg%E5%AE%89%E8%A3%85/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/sip%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/wiki/sip%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/" class="post-title-link" itemprop="url">sip协议学习</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-16 14:29:36" itemprop="dateCreated datePublished" datetime="2020-12-16T14:29:36+08:00">2020-12-16</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Protocols/" itemprop="url" rel="index"><span itemprop="name">Protocols</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="sip协议学习"><a href="#sip协议学习" class="headerlink" title="sip协议学习"></a>sip协议学习</h1><p>最近项目接触到几个通讯协议, 这里来学习一下.</p>
+<h2 id="sip简介"><a href="#sip简介" class="headerlink" title="sip简介"></a>sip简介</h2><p>SIP（Session Initiation Protocol，会话初始协议）, 一种多媒体通讯协议, 支持并应用于语言、视频等多媒体业务。<br>SIP is an application-layer control protocol that can establish,<br>modify, and terminate multimedia sessions (conferences) such as<br>Internet telephony calls.</p>
+<p>SIP协议总的来说就是一堆协议拼起来使用。实现媒体通信、控制等业务功能。</p>
+<p>注意，SIP消息和具体的媒体流并不是在一个层面运作的。例如，一个VoIP电话是先通过SIP信令完成交互后再开始具体媒体流的传输的。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc3428">Session Initiation Protocol (SIP) Extension for Instant Messaging</a></li>
+<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc3261">SIP: Session Initiation Protocol</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaxveliang/p/12434170.html">SIP 协议详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/gnuhpc/archive/2012/01/16/2323637.html">【SIP协议】学习初学笔记</a></li>
+</ul>
+</blockquote>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/wiki/sip%E5%8D%8F%E8%AE%AE%E5%AD%A6%E4%B9%A0/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/Python%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/wiki/Python%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/" class="post-title-link" itemprop="url">Python 深浅拷贝</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-14 16:02:10" itemprop="dateCreated datePublished" datetime="2020-12-14T16:02:10+08:00">2020-12-14</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
+        </span>
+          , 
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/Python/" itemprop="url" rel="index"><span itemprop="name">Python</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在很多语言中都存在<strong>深浅拷贝</strong>两种拷贝数据的方式，Python中也不例外。本文中详细介绍了Python中的深浅拷贝的相关知识，文章的内容包含：</p>
+<ul>
+<li>对象、数据类型、引用</li>
+<li>赋值</li>
+<li>浅拷贝</li>
+<li>深拷贝</li>
+</ul>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/20201215230531.png"></p>
+<p>我们经常听到：<strong>在Python中一切皆对象</strong>。其实，说的就是我们在Python中构造的任何数据类型都是一个对象，不管是数字、字符串、字典等常见的数据结构，还是函数，甚至是我们导入的模块等，Python都会把它当做是一个对象来处理。</p>
+<p>所有的Python对象都拥有3个属性：</p>
+<ul>
+<li>身份</li>
+<li>类型</li>
+<li>值</li>
+</ul>
+<p>我们看一个简单的例子来理解上面的3个属性：</p>
+<p>假设我们声明了一个name变量，通过id、type方法能够查看对象的身份和类型：</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/20201215230633.png"></p>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/wiki/Python%E6%B7%B1%E6%B5%85%E6%8B%B7%E8%B4%9D/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/code-review%E8%A1%8C%E8%AF%9D/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/wiki/code-review%E8%A1%8C%E8%AF%9D/" class="post-title-link" itemprop="url">code review 行话</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-11 16:01:25" itemprop="dateCreated datePublished" datetime="2020-12-11T16:01:25+08:00">2020-12-11</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Language/" itemprop="url" rel="index"><span itemprop="name">Language</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>最近在和大佬交流时，发现很多缩写不太懂，这里记录一下</p>
+</blockquote>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">LGTM  —  Looks good <span class="keyword">to</span> <span class="keyword">me</span>，表示认可这次 PR，同意 merge 合并代码到远程仓库</span><br><span class="line">ASAP -— <span class="keyword">as</span> soon <span class="keyword">as</span> possible! 尽快</span><br><span class="line">ACK  —  acknowledgement, i.e. agreed/accepted change</span><br><span class="line">NACK/NAK — negative acknowledgement, i.e. disagree <span class="keyword">with</span> change <span class="keyword">and</span>/<span class="keyword">or</span> concept</span><br><span class="line">RFC  —  request <span class="keyword">for</span> comments, i.e. I think this <span class="keyword">is</span> a good idea, lets discuss</span><br><span class="line">WIP：Work <span class="keyword">In</span> Progress 「进展中」，常见词汇，这里做为 Best Practice 单独提出来，主要针对改动较多的 PR，可以先提交部分，标题或 Tag 加上 WIP，表示尚未完成，这样别人可以先 review 已提交的部分</span><br><span class="line">AFAIK/AFAICT  —  <span class="keyword">as</span> far <span class="keyword">as</span> I know / can tell</span><br><span class="line">IIRC  —  <span class="keyword">if</span> I recall correctly</span><br><span class="line">IANAL  — “ I am <span class="keyword">not</span> a lawyer ”, but I smell licensing issues</span><br><span class="line">IMO  — （<span class="keyword">In</span> my opinion），在我看来</span><br><span class="line">TL;DR  —  Too <span class="built_in">Long</span>; Didn<span class="comment">&#x27;t Read 「太长懒得看」，README 文档常见。</span></span><br><span class="line">PR  —  Pull request「合并请求」</span><br><span class="line">CR  —  Code Review 「代码审查」</span><br><span class="line">PTAL  —  Please <span class="keyword">Take</span> A Look. 你来瞅瞅？用来提示别人来看一下</span><br><span class="line">TBR  —  <span class="keyword">To</span> Be Reviewed. 提示维护者进行 review</span><br><span class="line">TBD  —  <span class="keyword">To</span> Be Done(<span class="keyword">or</span> Defined/Discussed/Decided/Determined). 根据语境不同意义有所区别，但一般都是还没搞定的意思。</span><br><span class="line">TBH  —  <span class="keyword">To</span> be honest 「老实说」</span><br><span class="line">atm  —  at the moment 「现阶段」，</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/238a1e1f4037">code review 行话</a></li>
+</ul>
+</blockquote>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/wiki/code-review%E8%A1%8C%E8%AF%9D/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/zsh%E5%BF%AB%E6%8D%B7%E9%94%AE/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/wiki/zsh%E5%BF%AB%E6%8D%B7%E9%94%AE/" class="post-title-link" itemprop="url">zsh快捷键</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-12-06 15:49:39" itemprop="dateCreated datePublished" datetime="2020-12-06T15:49:39+08:00">2020-12-06</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/zsh/" itemprop="url" rel="index"><span itemprop="name">zsh</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <ul>
+<li>⌃ + a：移动到行首</li>
+<li>⌃ + e：移动到行尾</li>
+<li>⌃ + f：向前移动</li>
+<li>⌃ + b：向后移动</li>
+<li>⌃ + p：上一条命令</li>
+<li>⌃ + n：下一条命令</li>
+<li>⌃ + r：搜索历史命令</li>
+<li>⌃ + y：召回最近用命令删除的文字</li>
+<li>⌃ + h：删除光标之前的字符</li>
+<li>⌃ + d：删除光标所指的字符</li>
+<li>⌃ + w：删除光标之前的单词</li>
+<li>⌃ + k：删除从光标到行尾的内容</li>
+<li>⌃ + t：交换光标和之前的字符</li>
+</ul>
+
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/wiki/zsh%E5%BF%AB%E6%8D%B7%E9%94%AE/#more" rel="contents">
+                Read more &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/7/">7</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="Next page"></i></a>
+  </nav>
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SunZhenliang</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+</body>
+</html>

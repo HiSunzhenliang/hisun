@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alliswell.top","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="G.711 编解码原理G.711 是 ITU-T 定制出来的一套语音压缩标准，它代表了对数 PCM（logarithmic pulse-code modulation）抽样标准，是主流的波形声音编解码标准，主要用于电话。 G.711 编码采用 8kHz 采样率，有 A-law 和μ-law 两种编码方式，分别是将 13bit 和 14bit 编码为 8bit，因此 G711 固定码率是 8kHz×">
+<meta property="og:type" content="article">
+<meta property="og:title" content="G.711 编解码原理">
+<meta property="og:url" content="https://alliswell.top/wiki/G-711%E7%BC%96%E8%A7%A3%E7%A0%81%E5%8E%9F%E7%90%86/index.html">
+<meta property="og:site_name" content="Alliswell&#39;s blog">
+<meta property="og:description" content="G.711 编解码原理G.711 是 ITU-T 定制出来的一套语音压缩标准，它代表了对数 PCM（logarithmic pulse-code modulation）抽样标准，是主流的波形声音编解码标准，主要用于电话。 G.711 编码采用 8kHz 采样率，有 A-law 和μ-law 两种编码方式，分别是将 13bit 和 14bit 编码为 8bit，因此 G711 固定码率是 8kHz×">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144349406.png">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144420043.png">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144523378.png">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144536867.png">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/74797-20180415174356930-1878134610.png">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144809068.png">
+<meta property="og:image" content="https://gitee.com/SunGitee/src/raw/master/img/74797-20180415181431844-1395002987.png">
+<meta property="article:published_time" content="2020-11-30T06:27:00.000Z">
+<meta property="article:modified_time" content="2021-01-04T15:54:04.345Z">
+<meta property="article:author" content="SunZhenliang">
+<meta property="article:tag" content="Audio">
+<meta property="article:tag" content="G.711">
+<meta property="article:tag" content="alaw">
+<meta property="article:tag" content="ulaw">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144349406.png">
+
+
+<link rel="canonical" href="https://alliswell.top/wiki/G-711%E7%BC%96%E8%A7%A3%E7%A0%81%E5%8E%9F%E7%90%86/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>G.711 编解码原理 | Alliswell's blog</title>
+  
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bc4c604bb95e897c6bcd8c12d5d3f9e4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Alliswell's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Alliswell's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#G-711-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%8E%9F%E7%90%86"><span class="nav-number">1.</span> <span class="nav-text">G.711 编解码原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AC%E6%8D%A2%E5%85%AC%E5%BC%8F"><span class="nav-number">1.1.</span> <span class="nav-text">转换公式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#16bitPCM-%E8%BD%AC-alaw-%E4%BB%A3%E7%A0%81"><span class="nav-number">1.2.</span> <span class="nav-text">16bitPCM 转 alaw 代码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">1.3.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">1.4.</span> <span class="nav-text">参考资料</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SunZhenliang"
+      src="/head.jpg">
+  <p class="site-author-name" itemprop="name">SunZhenliang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HiSunzhenliang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HiSunzhenliang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:hisunzhenliang@outlook.com" title="E-Mail → mailto:hisunzhenliang@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/G-711%E7%BC%96%E8%A7%A3%E7%A0%81%E5%8E%9F%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          G.711 编解码原理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-11-30 14:27:00" itemprop="dateCreated datePublished" datetime="2020-11-30T14:27:00+08:00">2020-11-30</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Audio/" itemprop="url" rel="index"><span itemprop="name">Audio</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <h1 id="G-711-编解码原理"><a href="#G-711-编解码原理" class="headerlink" title="G.711 编解码原理"></a>G.711 编解码原理</h1><p>G.711 是 ITU-T 定制出来的一套语音压缩标准，它代表了对数 PCM（logarithmic pulse-code modulation）抽样标准，是主流的波形声音编解码标准，主要用于电话。</p>
+<p>G.711 编码采用 8kHz 采样率，有 A-law 和μ-law 两种编码方式，分别是将 13bit 和 14bit 编码为 8bit，因此 G711 固定码率是 8kHz×8bit=64kbps。两者都是对数变换，A-law 更加方便计算机处理。μ-law 提供了略微高一些的动态范围，但代价是对于弱信号的量化误差相对 A-law 高一些。</p>
+<h2 id="转换公式"><a href="#转换公式" class="headerlink" title="转换公式"></a>转换公式</h2><p>下面分别介绍两种算法的转换公式。</p>
+<p>A-law:</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144349406.png"></p>
+<p>一般采用 A=87.6, 画出图来则是如下图，用 x 表示输入的采样值，F(x) 表示通过 A-law 变换后的采样值，y 是对 F(x) 进行量化后的采样值。</p>
+<img src="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144420043.png" alt="image-20201130144420043" style="zoom:80%;" />
+
+<p>由此可见在输入的 x 为高值的时候，F(x) 的变化是缓慢的，有较大范围的 x 对应的 F(x) 最终被量化为同一个 y，精度较低。相反在低声强区域，也就是 x 为低值的时候，F(x) 的变化很剧烈，有较少的不同 x 对应的 F(x) 被量化为同一个 y。意思就是说在声音比较小的区域，精度较高，便于区分，而声音比较大的区域，精度不是那么高。</p>
+<p> μ-law 的公式如下，μ取值一般为 255</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144523378.png"></p>
+<p>和 A-law 画在同一个坐标轴中就能发现 A-law 在低强度信号下，精度要稍微高一些。</p>
+<img src="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144536867.png" alt="image-20201130144536867" style="zoom:80%;" />
+
+<p>实际应用中，采用浮点数计算的方式计算，然后进行量化，计算量会比较大，实际上对于 A-law（A=87.6 时），是采用 13 折线近似的方式来计算的，而μ-law（μ=255 时）则是 15 段折线近似的方式。</p>
+<p>A-law 如下表计算，第一列是采样点，共 13bit，最高位为符号位。对于前两行，折线斜率均为 1/2，跟负半段的相应区域位于同一段折线上，对于 3 到 8 行，斜率分别是 1/4 到 1/128，共 6 段折线，加上负半段对应的 6 段折线，总共 13 段折线，这就是所谓的 A-law 十三段折线法</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/74797-20180415174356930-1878134610.png"></p>
+<p>解码公式：</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144809068.png"></p>
+<p>相应的μ-law 的计算方法如下表。</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/74797-20180415181431844-1395002987.png"></p>
+<p>本质上跟 A-law 的区别不大</p>
+<h2 id="16bitPCM-转-alaw-代码"><a href="#16bitPCM-转-alaw-代码" class="headerlink" title="16bitPCM 转 alaw 代码"></a>16bitPCM 转 alaw 代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pcm2alaw.c</span></span><br><span class="line"><span class="comment">// https://blog.csdn.net/wzying25/article/details/79398055</span></span><br><span class="line"><span class="comment">// @sun 2020.06.23</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stdio.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIGN_BIT (0x80)  <span class="comment">/* Sign bit for a A-law byte. */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> QUANT_MASK (0xf) <span class="comment">/* Quantization field mask.   */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NSEGS (8)        <span class="comment">/* Number of A-law segments.  */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SEG_SHIFT (4)    <span class="comment">/* Left shift for segment number. */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SEG_MASK (0x70)  <span class="comment">/* Segment field mask. */</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">short</span> seg_end[<span class="number">8</span>] = &#123;</span><br><span class="line">    <span class="number">0xFF</span>,   <span class="number">0x1FF</span>,  <span class="number">0x3FF</span>, <span class="number">0x7FF</span>, <span class="number">0xFFF</span>,</span><br><span class="line">    <span class="number">0x1FFF</span>, <span class="number">0x3FFF</span>, <span class="number">0x7FFF</span>&#125;;  <span class="comment">//分成不均匀的8个分段，算上负数，总共是16个分段</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="keyword">int</span> val, <span class="keyword">short</span> *table, <span class="keyword">int</span> size)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (val &lt;= *table++) <span class="keyword">return</span> (i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*********************************************************************</span></span><br><span class="line"><span class="comment"> * 输入参数范围 ：-32768~32767</span></span><br><span class="line"><span class="comment"> * 返回8位无符号整数</span></span><br><span class="line"><span class="comment"> * linear2alaw() - Convert a 16-bit linear PCM value to 8-bit A-law</span></span><br><span class="line"><span class="comment"> * For further information see John C. Bellamy&#x27;s Digital Telephony, 1982,</span></span><br><span class="line"><span class="comment"> * John Wiley &amp; Sons, pps 98-111 and 472-476.</span></span><br><span class="line"><span class="comment"> *********************************************************************/</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="title">linear2alaw</span><span class="params">(<span class="keyword">short</span> <span class="keyword">int</span> pcm_val)</span> <span class="comment">/* 2&#x27;s complement (16-bit range) */</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mask;</span><br><span class="line">    <span class="keyword">int</span> seg;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> aval;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//这里右移3位，因为采样值是16bit，而A-law是13bit，存储在高13位上，低3位被舍弃</span></span><br><span class="line">    pcm_val = pcm_val &gt;&gt; <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pcm_val &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        mask = <span class="number">0xD5</span>; <span class="comment">/* sign (7th) bit = 1 二进制的11010101*/</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        mask = <span class="number">0x55</span>;             <span class="comment">/* sign bit = 0  二进制的01010101*/</span></span><br><span class="line">        pcm_val = -pcm_val - <span class="number">1</span>;  <span class="comment">//负数转换为正数计算</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Convert the scaled magnitude to segment number. */</span></span><br><span class="line">    seg = search(pcm_val, seg_end, <span class="number">8</span>);  <span class="comment">//返回pcm_val属于哪个分段</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Combine the sign, segment, and quantization bits. */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (seg &gt;= <span class="number">8</span>) <span class="comment">/* out of range, return maximum value. */</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="number">0x7F</span> ^ mask);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        aval = seg &lt;&lt; SEG_SHIFT;</span><br><span class="line">        <span class="comment">// aval为每一段的偏移，分段量化后的数据需要加上该偏移（aval）</span></span><br><span class="line">        <span class="comment">//分段量化</span></span><br><span class="line">        <span class="comment">//量化方法： (pcm_val-分段值)，然后取有效的高4位   （0分段例外）</span></span><br><span class="line">        <span class="comment">//比如 pcm_val = 0x7000 ，那么seg=7 ，第7段的范围是0x4000~0x7FFF</span></span><br><span class="line">        <span class="comment">//，段偏移aval=7&lt;&lt;4=0x7F 0x7000-0x4000=0x3000</span></span><br><span class="line">        <span class="comment">// ，然后取有效的高4位，即右移10(seg+3)，0x3000&gt;&gt;10=0xC</span></span><br><span class="line">        <span class="comment">//上一步等效为：(0x7000&gt;&gt;10)&amp;0xF=0xC 。也就是： (pcm_val &gt;&gt; (seg + 3)) &amp;</span></span><br><span class="line">        <span class="comment">// QUANT_MASK 然后加上段偏移 0x7F(aval) ，加法等效于或运算，即 |aval</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (seg &lt; <span class="number">2</span>)</span><br><span class="line">            aval |= (pcm_val &gt;&gt; <span class="number">4</span>) &amp; QUANT_MASK;  <span class="comment">// 0、1段折线的斜率一样</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            aval |= (pcm_val &gt;&gt; (seg + <span class="number">3</span>)) &amp; QUANT_MASK;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            aval ^</span><br><span class="line">            mask);  <span class="comment">//异或0x55，目的是尽量避免出现连续的0，或连续的1，提高传输过程的可靠性</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pcm2alaw.h</span></span><br><span class="line"><span class="comment">// @sun 2020.06.23</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stdio.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="title">linear2alaw</span><span class="params">(<span class="keyword">int</span> pcm_val)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/***********************************************************************</span></span><br><span class="line"><span class="comment"> * @Copyright (C)  2020  all right reserved</span></span><br><span class="line"><span class="comment"> * @file main.c</span></span><br><span class="line"><span class="comment"> * @ingroup wav</span></span><br><span class="line"><span class="comment"> * @author SunZhenliang</span></span><br><span class="line"><span class="comment"> * @date 2020-06</span></span><br><span class="line"><span class="comment"> * @brief pcm2alaw</span></span><br><span class="line"><span class="comment"> ***********************************************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;pcm2alaw.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">WAV_HEADER</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> ChunkID[<span class="number">4</span>];         <span class="comment">// &quot;RIFF&quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> ChunkSize;  <span class="comment">// 文件长度(WAVE文件的大小, 不含前8个字节)</span></span><br><span class="line">    <span class="keyword">char</span> Format[<span class="number">4</span>];          <span class="comment">// &quot;WAVE&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> SubChunk1ID[<span class="number">4</span>];             <span class="comment">// &quot;fmt &quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SubChunk1Size;      <span class="comment">// 过渡字节(不定)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> AudioFormat;  <span class="comment">// 格式类别(10H为PCM格式的声音数据)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> NumChannels;  <span class="comment">// 通道数(单声道为1, 双声道为2)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SampleRate;         <span class="comment">// 采样率</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> ByteRate;           <span class="comment">// 波形音频数据传输速率</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> BlockAlign;   <span class="comment">// data数据块长度、字节</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> BitsPerSample;  <span class="comment">// PCM 位宽</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> SubChunk2ID[<span class="number">4</span>];         <span class="comment">// &quot;data&quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SubChunk2Size;  <span class="comment">// data数据的长度</span></span><br><span class="line">&#125; WAV_HEADER;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">ALAW_HEADER</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> ChunkID[<span class="number">4</span>];         <span class="comment">// &quot;RIFF&quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> ChunkSize;  <span class="comment">// 文件长度(WAVE文件的大小, 不含前8个字节)</span></span><br><span class="line">    <span class="keyword">char</span> Format[<span class="number">4</span>];          <span class="comment">// &quot;WAVE&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> SubChunk1ID[<span class="number">4</span>];             <span class="comment">// &quot;fmt &quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SubChunk1Size;      <span class="comment">// 过渡字节(不定)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> AudioFormat;  <span class="comment">// 格式类别(10H为PCM格式的声音数据)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> NumChannels;  <span class="comment">// 通道数(单声道为1, 双声道为2)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SampleRate;         <span class="comment">// 采样率</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> ByteRate;           <span class="comment">// 波形音频数据传输速率</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> BlockAlign;   <span class="comment">// data数据块长度、字节</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> BitsPerSample;  <span class="comment">// PCM 位宽</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> SubChunk3ID[<span class="number">4</span>];         <span class="comment">// &quot;fact&quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SubChunk3Size;  <span class="comment">// fact数据的长度</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SampleLength;   <span class="comment">// data数据的长度</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> SubChunk2ID[<span class="number">4</span>];         <span class="comment">// &quot;data&quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SubChunk2Size;  <span class="comment">// data数据的长度</span></span><br><span class="line">&#125; ALAW_HEADER;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    FILE *fpin = <span class="literal">NULL</span>;</span><br><span class="line">    FILE *fout = <span class="literal">NULL</span>;</span><br><span class="line">    WAV_HEADER wav;</span><br><span class="line">    ALAW_HEADER alaw;</span><br><span class="line">    <span class="keyword">char</span> tmp;</span><br><span class="line">    <span class="keyword">short</span> <span class="keyword">int</span> pcm_val;</span><br><span class="line"></span><br><span class="line">    fpin = fopen(<span class="string">&quot;./M1F1-int16-AFsp.wav&quot;</span>, <span class="string">&quot;rb&quot;</span>);</span><br><span class="line">    fread(&amp;wav, <span class="keyword">sizeof</span>(struct WAV_HEADER), <span class="number">1</span>, fpin);</span><br><span class="line">    fout = fopen(<span class="string">&quot;./8bitalaw.wav&quot;</span>, <span class="string">&quot;w+b&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// WAV_HEADER</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;ChunkID=%c%c%c%c\n&quot;</span>, wav.ChunkID[<span class="number">0</span>], wav.ChunkID[<span class="number">1</span>], wav.ChunkID[<span class="number">2</span>],</span><br><span class="line">           wav.ChunkID[<span class="number">3</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;ChunkSize=%d\n&quot;</span>, wav.ChunkSize);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Format=%c%c%c%c\n&quot;</span>, wav.Format[<span class="number">0</span>], wav.Format[<span class="number">1</span>], wav.Format[<span class="number">2</span>],</span><br><span class="line">           wav.Format[<span class="number">3</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;SubChunk1ID=%c%c%c%c\n&quot;</span>, wav.SubChunk1ID[<span class="number">0</span>], wav.SubChunk1ID[<span class="number">1</span>],</span><br><span class="line">           wav.SubChunk1ID[<span class="number">2</span>], wav.SubChunk1ID[<span class="number">3</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;SubChunk1Size=%d\n&quot;</span>, wav.SubChunk1Size);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;AudioFormat=%d\n&quot;</span>, wav.AudioFormat);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;NumChannels=%d\n&quot;</span>, wav.NumChannels);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;SampleRate=%d\n&quot;</span>, wav.SampleRate);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;ByteRate=%d\n&quot;</span>, wav.ByteRate);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;BlockAlign=%d\n&quot;</span>, wav.BlockAlign);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;BitsPerSample=%d\n&quot;</span>, wav.BitsPerSample);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;SubChunk2ID=%c%c%c%c\n&quot;</span>, wav.SubChunk2ID[<span class="number">0</span>], wav.SubChunk2ID[<span class="number">1</span>],</span><br><span class="line">           wav.SubChunk2ID[<span class="number">2</span>], wav.SubChunk2ID[<span class="number">3</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;SubChunk2Size=%d\n&quot;</span>, wav.SubChunk2Size);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get alaw header</span></span><br><span class="line">    <span class="built_in">strcpy</span>(alaw.ChunkID, wav.ChunkID);</span><br><span class="line">    alaw.ChunkSize = (wav.ChunkSize - <span class="number">36</span>) / <span class="number">2</span> + <span class="number">48</span>;</span><br><span class="line">    <span class="built_in">strcpy</span>(alaw.Format, wav.Format);</span><br><span class="line">    <span class="built_in">strcpy</span>(alaw.SubChunk1ID, wav.SubChunk1ID);</span><br><span class="line">    alaw.SubChunk1Size = wav.SubChunk1Size;</span><br><span class="line">    alaw.AudioFormat = wav.AudioFormat;</span><br><span class="line">    alaw.NumChannels = wav.NumChannels;</span><br><span class="line">    alaw.SampleRate = wav.SampleRate;</span><br><span class="line">    alaw.ByteRate = wav.ByteRate;</span><br><span class="line">    alaw.BlockAlign = wav.BlockAlign;</span><br><span class="line">    alaw.BitsPerSample = wav.BitsPerSample;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">strcpy</span>(alaw.SubChunk3ID, <span class="string">&quot;fact&quot;</span>);</span><br><span class="line">    alaw.SubChunk3Size = <span class="number">4</span>;</span><br><span class="line">    alaw.SampleLength = (wav.ChunkSize - <span class="number">36</span>) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">strcpy</span>(alaw.SubChunk2ID, wav.SubChunk2ID);</span><br><span class="line">    alaw.SubChunk2Size = (wav.ChunkSize - <span class="number">36</span>) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write into 8bitalaw.wav</span></span><br><span class="line">    fwrite(&amp;alaw, <span class="keyword">sizeof</span>(ALAW_HEADER), <span class="number">1</span>, fout);</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span> == fread(&amp;pcm_val, <span class="keyword">sizeof</span>(<span class="keyword">short</span> <span class="keyword">int</span>), <span class="number">1</span>, fpin)) &#123;</span><br><span class="line">        tmp = linear2alaw(pcm_val);  <span class="comment">// 16bit in, 8bit out</span></span><br><span class="line">        fputc(tmp, fout);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fclose(fpin);</span><br><span class="line">    fclose(fout);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>G.71 的原理和计算也比较简单，但是其中用到的一些基本原理同样在其他编码算法中得到了应用，对其进行深入的了解有助于更好的理解其他的算法。</p>
+<p>源代码中关于移位运算，掩码运算，还不是完全的理解，只能根据自己的经验进行一些猜测，之后会继续学习，希望对这方面能有更深入的认识。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/A-law_algorithm">Alaw-Wikipedia</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/quatanium/foscam-ios-sdk/blob/master/g726lib/g711.c">g711.c source code</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/512ce6566f8a">G.711编码原理</a></li>
+</ul>
+</blockquote>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>SunZhenliang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://alliswell.top/wiki/G-711%E7%BC%96%E8%A7%A3%E7%A0%81%E5%8E%9F%E7%90%86/" title="G.711 编解码原理">https://alliswell.top/wiki/G-711编解码原理/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/Audio/" rel="tag"><i class="fa fa-tag"></i> Audio</a>
+              <a href="/tags/G-711/" rel="tag"><i class="fa fa-tag"></i> G.711</a>
+              <a href="/tags/alaw/" rel="tag"><i class="fa fa-tag"></i> alaw</a>
+              <a href="/tags/ulaw/" rel="tag"><i class="fa fa-tag"></i> ulaw</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/wiki/wav%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%AF%A6%E8%A7%A3/" rel="prev" title="wav 文件格式详解">
+                  <i class="fa fa-chevron-left"></i> wav 文件格式详解
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/wiki/MP3%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/" rel="next" title="MP3 文件格式解析">
+                  MP3 文件格式解析 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SunZhenliang</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+</body>
+</html>

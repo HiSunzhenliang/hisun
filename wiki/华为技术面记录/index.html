@@ -1,0 +1,616 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"alliswell.top","root":"/","images":"/images","scheme":"Gemini","version":"8.1.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":true,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":false,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}};
+  </script>
+<meta name="description" content="刚刚完华为二面，要记录一下。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="华为技术面记录">
+<meta property="og:url" content="https://alliswell.top/wiki/%E5%8D%8E%E4%B8%BA%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AE%B0%E5%BD%95/index.html">
+<meta property="og:site_name" content="Alliswell&#39;s blog">
+<meta property="og:description" content="刚刚完华为二面，要记录一下。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190624182415701.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZpbGxhaW55MTM1Nzk=,size_16,color_FFFFFF,t_70">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20190624182502202.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZpbGxhaW55MTM1Nzk=,size_16,color_FFFFFF,t_70">
+<meta property="article:published_time" content="2020-02-13T14:22:57.000Z">
+<meta property="article:modified_time" content="2021-01-04T15:54:04.417Z">
+<meta property="article:author" content="SunZhenliang">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="华为">
+<meta property="article:tag" content="面试">
+<meta property="article:tag" content="技术面">
+<meta property="article:tag" content="二面">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/20190624182415701.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZpbGxhaW55MTM1Nzk=,size_16,color_FFFFFF,t_70">
+
+
+<link rel="canonical" href="https://alliswell.top/wiki/%E5%8D%8E%E4%B8%BA%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AE%B0%E5%BD%95/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'en'
+  };
+</script>
+<title>华为技术面记录 | Alliswell's blog</title>
+  
+
+  <script>
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?bc4c604bb95e897c6bcd8c12d5d3f9e4";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="Alliswell's blog" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">Alliswell's blog</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>Home</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>About</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags" rel="section"><i class="fa fa-tags fa-fw"></i>Tags</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories" rel="section"><i class="fa fa-th fa-fw"></i>Categories</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives" rel="section"><i class="fa fa-archive fa-fw"></i>Archives</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>Search
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="Searching..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%97%AE%E9%A2%98"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-%E4%BB%8B%E7%BB%8D%E4%B8%8B%E8%87%AA%E5%B7%B1%EF%BC%8C%E8%B0%88%E8%B0%88%E6%9C%80%E8%BF%99%E4%B8%AA%E5%B2%97%E4%BD%8D%E7%9A%84%E5%8C%B9%E9%85%8D%E5%BA%A6%E3%80%82"><span class="nav-number">1.1.</span> <span class="nav-text">1. 介绍下自己，谈谈最这个岗位的匹配度。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-%E8%AF%B4%E4%B8%80%E4%B8%8B%E2%80%9C%E9%AB%98%E5%86%85%E8%81%9A%E3%80%81%E4%BD%8E%E8%80%A6%E5%90%88%E2%80%9D%E7%9A%84%E7%90%86%E8%A7%A3%E3%80%82"><span class="nav-number">1.2.</span> <span class="nav-text">2. 说一下“高内聚、低耦合”的理解。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-%E8%AF%B4%E4%B8%80%E4%B8%8B%E7%9F%A5%E9%81%93%E7%9A%84%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F"><span class="nav-number">1.3.</span> <span class="nav-text">3. 说一下知道的设计模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-%E8%AF%B4%E4%B8%80%E4%B8%8B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F%E5%87%A0%E5%A4%A7%E5%8E%9F%E5%88%99"><span class="nav-number">1.4.</span> <span class="nav-text">4. 说一下设计模式几大原则</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-%E4%BD%A0%E5%AF%B9%E7%AE%97%E6%B3%95%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84%E4%BA%86%E8%A7%A3%E5%A4%9A%E4%B8%80%E7%82%B9%E6%98%AF%E5%90%A7%EF%BC%8C%E9%82%A3%E4%BD%A0%E8%AF%B4%E4%B8%8B%E9%93%BE%E8%A1%A8%E7%9B%B8%E5%85%B3%E7%9A%84%E5%90%A7%EF%BC%8C%E5%92%8C%E6%95%B0%E7%BB%84%E5%AF%B9%E6%AF%94"><span class="nav-number">1.5.</span> <span class="nav-text">5. 你对算法数据结构了解多一点是吧，那你说下链表相关的吧，和数组对比</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-%E5%86%8D%E8%AF%B4%E4%B8%8B%E9%98%9F%E5%88%97%E7%9B%B8%E5%85%B3%E5%90%A7"><span class="nav-number">1.6.</span> <span class="nav-text">6. 再说下队列相关吧</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-%E8%AF%B4%E4%B8%80%E4%B8%8B%E7%BA%BF%E7%A8%8B%E5%92%8C%E8%BF%9B%E7%A8%8B"><span class="nav-number">1.7.</span> <span class="nav-text">7. 说一下线程和进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-%E8%AF%B4%E4%B8%80%E4%B8%8B%E5%A6%82%E6%9E%9C%E8%A6%81%E4%B8%A4%E4%B8%AA%E8%BF%9B%E7%A8%8B%E8%A6%81%E6%93%8D%E4%BD%9C%E5%90%8C%E4%B8%80%E6%AE%B5%E5%86%85%E5%AD%98%EF%BC%8C%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%A4%84%E7%90%86"><span class="nav-number">1.8.</span> <span class="nav-text">8. 说一下如果要两个进程要操作同一段内存，应该怎么处理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-%E5%AF%B9%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F%E8%BF%98%E7%86%9F%E6%82%89%E5%90%A7%EF%BC%8C%E8%AF%B4%E4%B8%80%E4%B8%8B%E4%BB%80%E4%B9%88%E6%83%85%E5%86%B5%E4%B8%8B%E9%80%A0%E6%88%90%E6%AD%BB%E9%94%81"><span class="nav-number">1.9.</span> <span class="nav-text">9. 对操作系统还熟悉吧，说一下什么情况下造成死锁</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-%E8%B0%83%E5%88%B6%E8%A7%A3%E8%B0%83%E4%BA%86%E8%A7%A3%E5%90%97%EF%BC%8C%E9%80%9A%E4%BF%A1%E5%B7%A5%E7%A8%8B%E7%9B%B8%E5%85%B3%E5%86%85%E5%AE%B9"><span class="nav-number">1.10.</span> <span class="nav-text">10. 调制解调了解吗，通信工程相关内容</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#11-Linux-%E7%B3%BB%E7%BB%9F%E4%BC%9A%E4%BD%BF%E7%94%A8%E5%90%97%EF%BC%9F"><span class="nav-number">1.11.</span> <span class="nav-text">11. Linux 系统会使用吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#12-%E9%99%A4%E4%BA%86-C-C-%E8%BF%98%E6%8E%8C%E6%8F%A1%E4%BE%8B%E5%A6%82-Python-%E4%B9%8B%E7%B1%BB%E7%9A%84%E8%AF%AD%E8%A8%80%E5%90%97%EF%BC%9F"><span class="nav-number">1.12.</span> <span class="nav-text">12. 除了 C&#x2F;C++ 还掌握例如 Python 之类的语言吗？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#13-%E4%BB%A3%E7%A0%81%E9%87%8F%E5%A4%A7%E6%A6%82%E6%9C%89%E5%A4%9A%E5%B0%91"><span class="nav-number">1.13.</span> <span class="nav-text">13. 代码量大概有多少</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#14-%E4%BD%A0%E7%AE%80%E5%8E%86%E4%B8%8A%E5%86%99%E7%9A%84%E8%B7%AF%E9%9D%A2%E6%9D%90%E6%96%99%E8%AF%95%E9%AA%8C%E6%98%AF%E4%BB%80%E4%B9%88"><span class="nav-number">1.14.</span> <span class="nav-text">14. 你简历上写的路面材料试验是什么</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#15-%E4%BD%A0%E8%BF%98%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E6%88%91%E7%9A%84"><span class="nav-number">1.15.</span> <span class="nav-text">15. 你还有什么问我的</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="SunZhenliang"
+      src="/head.jpg">
+  <p class="site-author-name" itemprop="name">SunZhenliang</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives">
+        
+          <span class="site-state-item-count">63</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories">
+          
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags">
+          
+        <span class="site-state-item-count">93</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/HiSunzhenliang" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;HiSunzhenliang" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i></a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:hisunzhenliang@outlook.com" title="E-Mail → mailto:hisunzhenliang@outlook.com" rel="noopener" target="_blank"><i class="fa fa-envelope fa-fw"></i></a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="en">
+    <link itemprop="mainEntityOfPage" href="https://alliswell.top/wiki/%E5%8D%8E%E4%B8%BA%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AE%B0%E5%BD%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/head.jpg">
+      <meta itemprop="name" content="SunZhenliang">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Alliswell's blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          华为技术面记录
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2020-02-13 22:22:57" itemprop="dateCreated datePublished" datetime="2020-02-13T22:22:57+08:00">2020-02-13</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-01-04 23:54:04" itemprop="dateModified" datetime="2021-01-04T23:54:04+08:00">2021-01-04</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Interview/" itemprop="url" rel="index"><span itemprop="name">Interview</span></a>
+        </span>
+    </span>
+
+  
+    <span class="post-meta-item" title="Views" id="busuanzi_container_page_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span id="busuanzi_value_page_pv"></span>
+    </span>
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>刚刚完华为二面，要记录一下。</p>
+</blockquote>
+<a id="more"></a>
+
+<p>首先就是和 Hr 约的 8 点，不知道是沟通没到位还是怎么样，到 9 点多才接到面试官电话。不过面试官姐姐还是很不错，蛮专业的。// 怀疑是刚下班就来面试。</p>
+<h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><h4 id="1-介绍下自己，谈谈最这个岗位的匹配度。"><a href="#1-介绍下自己，谈谈最这个岗位的匹配度。" class="headerlink" title="1. 介绍下自己，谈谈最这个岗位的匹配度。"></a>1. 介绍下自己，谈谈最这个岗位的匹配度。</h4><p>第一次面试太紧张了，完全忽视了说明如何匹配岗位。</p>
+<h4 id="2-说一下“高内聚、低耦合”的理解。"><a href="#2-说一下“高内聚、低耦合”的理解。" class="headerlink" title="2. 说一下“高内聚、低耦合”的理解。"></a>2. 说一下“高内聚、低耦合”的理解。</h4><p>// 一来就是经常见到但是就是没法准确描述的词，难受呀。</p>
+<p>首先搞清楚模块是什么</p>
+<p>模块就是从系统层次去分成不同的部分，每个部分就是一个模块！ 分而治之， 将大型系统的复杂问题，分成不同的小模块，去处理问题！</p>
+<p><strong>耦合</strong>：主要是讲模块与模块之间的联系，</p>
+<p><strong>内聚</strong>：主要指的是模块内部【东西聚合在一起形成了一个模块】例如方法，变量，对象，或者是功能模块</p>
+<p>什么是耦合</p>
+<p>模块与模块之间有写操作是有关联的， 如果改动一个木块其他的木块都有可能受到影响，模块与模块之间的关系越是紧密，独立性就越不好！</p>
+<p>例如：如果模块 1 直接操作了木块 2 红的数据，这种操作模块与模块之间就为强耦合，甚至可以认为这种情况之下基本算没有分模块！如果 1 只是通过数据与 2 模块交互，这种我们称之为弱耦合！微服务独立的模块，方便去维护，或者写单元测试等等。.. 如果木块之间的依赖非常严重，将会非常不易于维护。</p>
+<p><img src="https://img-blog.csdnimg.cn/20190624182415701.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZpbGxhaW55MTM1Nzk=,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>内聚</p>
+<p>模块内部的代码， 相互之间的联系越强，内聚就越高， 模块的独立性就越好。 一个模块应该尽量的独立，去完成独立的功能！如果有代码非得引入到独立的模块，建议拆分成多模块！低内聚的代码，不好维护，代码也不够健壮</p>
+<p><img src="https://img-blog.csdnimg.cn/20190624182502202.png?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3ZpbGxhaW55MTM1Nzk=,size_16,color_FFFFFF,t_70" alt="img"></p>
+<p>如下这些接口设计原则，就是参考低耦合高内聚</p>
+<p>设计模式一般参照六大设计原则，许多的设计模式，包括一些框架，都是参考高内聚低耦合这个点的。</p>
+<p>单一职责原则：一个类只负责一个功能的职责</p>
+<p>开闭原则：扩展开放，修改关闭。</p>
+<p>里氏代换原则：使用父类的地方都能使用子类对象</p>
+<p>依赖倒转原则：针对接口编程，</p>
+<p>接口隔离原则：针对不同部分用专门接口，不用总接口，需要哪些接口就用哪些接口</p>
+<p>迪米特法则： 软件实体类，尽量不与其他实体类发生关系相互作用，对外都统一的暴露接口就行了</p>
+<h4 id="3-说一下知道的设计模式"><a href="#3-说一下知道的设计模式" class="headerlink" title="3. 说一下知道的设计模式"></a>3. 说一下知道的设计模式</h4><p>常见的设计模式如下：</p>
+<p><strong>1、单例模式</strong>：单例模式主要解决一个全局使用的类频繁的创建和销毁的问题。单例模式下可以确保某一个类只有一个实例，而且自行实例化并向整个系统提供这个实例。单例模式有三个要素：一是某个类只能有一个实例；二是它必须自行创建这个实例；三是它必须自行向整个系统提供这个实例。</p>
+<p><strong>在单例模式的实现中，如果不采取任何措施，在多线程下是不安全的</strong>，可能会同时创建多个实例。因此，为了保证单例模式在多线程下的线程安全，一般采用下面几种方式实现单例模式：</p>
+<ol>
+<li><p>饿汉式：基于 class loader 机制避免多线程的同步问题，不过，instance 在类装载时就实例化，可能会产生垃圾对象。</p>
+</li>
+<li><p>懒汉式：通过双重锁机制实现线程安全。</p>
+</li>
+</ol>
+<p>使用锁机制，防止多次访问，可以这样，第一次判断为空不加锁，若为空，再进行加锁判断是否为空，若为空则生成对象。</p>
+<p>更加详细请看</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/q5707802/article/details/79251148">https://blog.csdn.net/q5707802/article/details/79251148</a></p>
+<p>优点：1、在内存里只有一个实例，减少了内存的开销，尤其是频繁的创建和销毁实例（比如管理学院首页页面缓存）。 2、避免对资源的多重占用（比如写文件操作）。</p>
+<p>缺点：没有接口，不能继承，与单一职责原则冲突，一个类应该只关心内部逻辑，而不关心外面怎么样来实例化。</p>
+<p>使用场景：1、要求生产唯一序列号。 2、WEB 中的计数器，不用每次刷新都在数据库里加一次，用单例先缓存起来。 3、创建的一个对象需要消耗的资源过多，比如 I/O 与数据库的连接等。</p>
+<p>实现：</p>
+<p>单例模式要求类能够有返回对象一个引用（永远是同一个）和一个获得该实例的方法（必须是静态方法，通常使用 getInstance 这个名称）。</p>
+<p><strong>如何保证单例模式只有唯一实例</strong></p>
+<p>将该类的构造方法定义为私有方法，这样其他处的代码就无法通过调用该类的构造方法来实例化该类的对象，只有通过该类提供的静态方法来得到该类的唯一实例；</p>
+<p>在该类内提供一个静态方法，当我们调用这个方法时，如果类持有的引用不为空就返回这个引用，如果类保持的引用为空就创建该类的实例并将实例的引用赋予该类保持的引用。</p>
+<p><strong>2、工厂模式</strong>：工厂模式主要解决接口选择的问题。该模式下定义一个创建对象的接口，让其子类自己决定实例化哪一个工厂类，使其创建过程延迟到子类进行。</p>
+<p>优点</p>
+<p>解耦，代码复用，更改功能容易。</p>
+<p><strong>3、观察者模式</strong>：定义对象间的一种一对多的依赖关系，当一个对象的状态发生改变时，所有依赖于它的对象都得到通知并被自动更新。</p>
+<p><strong>4、装饰器模式</strong>：对已经存在的某些类进行装饰，以此来扩展一些功能，从而动态的为一个对象增加新的功能。装饰器模式是一种用于代替继承的技术，无需通过继承增加子类就能扩展对象的新功能。使用对象的关联关系代替继承关系，更加灵活，同时避免类型体系的快速膨胀。</p>
+<p>优点：装饰类和被装饰类可以独立发展，不会相互耦合，装饰模式是继承的一个替代模式，装饰模式可以动态扩展一个实现类的功能。</p>
+<p>缺点：多层装饰比较复杂。</p>
+<p>使用场景：1、扩展一个类的功能。 2、动态增加功能，动态撤销。</p>
+<h4 id="4-说一下设计模式几大原则"><a href="#4-说一下设计模式几大原则" class="headerlink" title="4. 说一下设计模式几大原则"></a>4. 说一下设计模式几大原则</h4><p><strong>1、单一职责原则</strong></p>
+<p>一个类只负责一个功能的职责</p>
+<p>单一职责有 2 个含义，一个是避免相同的职责分散到不同的类中，另一个是避免一个类承担太多职责。减少类的耦合，提高类的复用性。</p>
+<p><strong>2、接口隔离原则</strong></p>
+<p>针对不同部分用专门接口，不用总接口，需要哪些接口就用哪些接口</p>
+<p>表明客户端不应该被强迫实现一些他们不会使用的接口，应该把胖接口中额外方法分组，然后用多个接口代替它，每个接口服务于一个子模块。简单说，就是使用多个专门的接口比使用单个接口好很多。</p>
+<p>该原则观点如下：<br>        1）一个类对另外一个类的依赖性应当是建立在最小的接口上</p>
+<p>2）客户端程序不应该依赖它不需要的接口方法。</p>
+<p><strong>3、开放 - 封闭原则</strong></p>
+<p>扩展开放，修改关闭</p>
+<p>open 模块的行为必须是开放的、支持扩展的，而不是僵化的。</p>
+<p>closed 在对模块的功能进行扩展时，不应该影响或大规模影响已有的程序模块。一句话概括：一个模块在扩展性方面应该是开放的而在更改性方面应该是封闭的。</p>
+<p>核心思想就是对抽象编程，而不对具体编程。</p>
+<p><strong>4、替换原则</strong></p>
+<p>使用父类的地方都能使用子类对象</p>
+<p>子类型必须能够替换掉他们的父类型、并出现在父类能够出现的任何地方。</p>
+<p>主要针对继承的设计原则</p>
+<p>1）父类的方法都要在子类中实现或者重写，并且派生类只实现其抽象类中生命的方法，而不应当给出多余的，方法定义或实现。</p>
+<p>2）在客户端程序中只应该使用父类对象而不应当直接使用子类对象，这样可以实现运行期间绑定。</p>
+<p><strong>5、依赖倒置原则</strong></p>
+<p>针对接口编程，</p>
+<p>上层模块不应该依赖于下层模块，他们共同依赖于一个抽象，即：父类不能依赖子类，他们都要依赖抽象类。</p>
+<p>抽象不能依赖于具体，具体应该要依赖于抽象。</p>
+<p><strong>6、迪米特法则</strong></p>
+<p> 软件实体类，尽量不与其他实体类发生关系相互作用，对外都统一的暴露接口就行了</p>
+<p>// 可能也是看出来我对软件工程方面不是很熟悉，开始问其他方面</p>
+<h4 id="5-你对算法数据结构了解多一点是吧，那你说下链表相关的吧，和数组对比"><a href="#5-你对算法数据结构了解多一点是吧，那你说下链表相关的吧，和数组对比" class="headerlink" title="5. 你对算法数据结构了解多一点是吧，那你说下链表相关的吧，和数组对比"></a>5. 你对算法数据结构了解多一点是吧，那你说下链表相关的吧，和数组对比</h4><h4 id="6-再说下队列相关吧"><a href="#6-再说下队列相关吧" class="headerlink" title="6. 再说下队列相关吧"></a>6. 再说下队列相关吧</h4><h4 id="7-说一下线程和进程"><a href="#7-说一下线程和进程" class="headerlink" title="7. 说一下线程和进程"></a>7. 说一下线程和进程</h4><h4 id="8-说一下如果要两个进程要操作同一段内存，应该怎么处理"><a href="#8-说一下如果要两个进程要操作同一段内存，应该怎么处理" class="headerlink" title="8. 说一下如果要两个进程要操作同一段内存，应该怎么处理"></a>8. 说一下如果要两个进程要操作同一段内存，应该怎么处理</h4><p>自己答的：使用 1）开关中断，2）使用 <del>型号量</del> 信号量机制</p>
+<h4 id="9-对操作系统还熟悉吧，说一下什么情况下造成死锁"><a href="#9-对操作系统还熟悉吧，说一下什么情况下造成死锁" class="headerlink" title="9. 对操作系统还熟悉吧，说一下什么情况下造成死锁"></a>9. 对操作系统还熟悉吧，说一下什么情况下造成死锁</h4><p>互斥、不可剥夺、请求和保持、循环等待</p>
+<p>// 感觉虽然的确是在回答，就是不是很准确。</p>
+<h4 id="10-调制解调了解吗，通信工程相关内容"><a href="#10-调制解调了解吗，通信工程相关内容" class="headerlink" title="10. 调制解调了解吗，通信工程相关内容"></a>10. 调制解调了解吗，通信工程相关内容</h4><p>不了解。</p>
+<h4 id="11-Linux-系统会使用吗？"><a href="#11-Linux-系统会使用吗？" class="headerlink" title="11. Linux 系统会使用吗？"></a>11. Linux 系统会使用吗？</h4><p>使用过一段时间，会基本操作</p>
+<h4 id="12-除了-C-C-还掌握例如-Python-之类的语言吗？"><a href="#12-除了-C-C-还掌握例如-Python-之类的语言吗？" class="headerlink" title="12. 除了 C/C++ 还掌握例如 Python 之类的语言吗？"></a>12. 除了 C/C++ 还掌握例如 Python 之类的语言吗？</h4><p>暂时不太会，一直有计划去学习。</p>
+<h4 id="13-代码量大概有多少"><a href="#13-代码量大概有多少" class="headerlink" title="13. 代码量大概有多少"></a>13. 代码量大概有多少</h4><p>没有算过，大概有几万吧。大学期间帮导师写过一些小项目的。</p>
+<h4 id="14-你简历上写的路面材料试验是什么"><a href="#14-你简历上写的路面材料试验是什么" class="headerlink" title="14. 你简历上写的路面材料试验是什么"></a>14. 你简历上写的路面材料试验是什么</h4><p>研究的新型路面材料，用的沥青等等。</p>
+<hr>
+<h4 id="15-你还有什么问我的"><a href="#15-你还有什么问我的" class="headerlink" title="15. 你还有什么问我的"></a>15. 你还有什么问我的</h4><p>下面就是开始和面试官姐姐聊聊天了，问了下对华为公司文化的理解、能否接受等。</p>
+<p>然后介绍了一下岗位主要内容，这里才解释给我说刚才为什么问那些问题，现在成都这边做的 5G 设备相关，几个方面——软件、硬件、业务方面。软件就是要求对设计模式等的要求，大公司有标准的规范，因此比较看重。另外，也是需要经常和硬件打交道，主要是芯片。所以需要对底层有一定了解，开关中断什么的。然后就是业务，就是看对语法、基础数据结构的掌握。</p>
+<p>然后还说了下，我这是第一次工作面试。想问问简历和这次面试的建议和提升的地方。面试官姐姐也给写建议。</p>
+<p>总的感觉，这次问的问题应该都是比较基础的问题，也没有手撕代码，但是表现一般，刚开始蛮紧张的，然后后面算法、数据结构、操作系统方面的答的还可以，但是通讯和软件工程的一些没有学过的内容就很懵逼。也不知道能不能过，什么时候通知。希望能过。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>Post author:  </strong>SunZhenliang
+  </li>
+  <li class="post-copyright-link">
+      <strong>Post link: </strong>
+      <a href="https://alliswell.top/wiki/%E5%8D%8E%E4%B8%BA%E6%8A%80%E6%9C%AF%E9%9D%A2%E8%AE%B0%E5%BD%95/" title="华为技术面记录">https://alliswell.top/wiki/华为技术面记录/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>Copyright Notice:  </strong>All articles in this blog are licensed under <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> unless stating additionally.
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/C/" rel="tag"><i class="fa fa-tag"></i> C++</a>
+              <a href="/tags/%E5%8D%8E%E4%B8%BA/" rel="tag"><i class="fa fa-tag"></i> 华为</a>
+              <a href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag"><i class="fa fa-tag"></i> 面试</a>
+              <a href="/tags/%E6%8A%80%E6%9C%AF%E9%9D%A2/" rel="tag"><i class="fa fa-tag"></i> 技术面</a>
+              <a href="/tags/%E4%BA%8C%E9%9D%A2/" rel="tag"><i class="fa fa-tag"></i> 二面</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/wiki/%E9%9D%A2%E8%AF%95%E5%B8%B8%E8%A7%81%E6%89%8B%E5%86%99%E7%AE%97%E6%B3%95%E8%AE%B0%E5%BD%95(%E6%9B%B4%E6%96%B0)/" rel="prev" title="面试常见手写算法记录（更新）">
+                  <i class="fa fa-chevron-left"></i> 面试常见手写算法记录（更新）
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/wiki/C++%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF/" rel="next" title="C/C++ 学习路线">
+                  C/C++ 学习路线 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2019 – 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">SunZhenliang</span>
+</div>
+<div class="busuanzi-count">
+    <span class="post-meta-item" id="busuanzi_container_site_uv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-user"></i>
+      </span>
+      <span class="site-uv" title="Total Visitors">
+        <span id="busuanzi_value_site_uv"></span>
+      </span>
+    </span>
+    <span class="post-meta-item" id="busuanzi_container_site_pv" style="display: none;">
+      <span class="post-meta-item-icon">
+        <i class="fa fa-eye"></i>
+      </span>
+      <span class="site-pv" title="Total Views">
+        <span id="busuanzi_value_site_pv"></span>
+      </span>
+    </span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/next-boot.js"></script>
+
+  
+  <script>
+    (function(){
+      var bp = document.createElement('script');
+      var curProtocol = window.location.protocol.split(':')[0];
+      bp.src = (curProtocol === 'https') ? 'https://zz.bdstatic.com/linksubmit/push.js' : 'http://push.zhanzhang.baidu.com/push.js';
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(bp, s);
+    })();
+  </script>
+
+<script src="/js/local-search.js"></script>
+
+
+
+
+<script>
+if (document.querySelectorAll('.mermaid').length) {
+  NexT.utils.getScript('//cdn.jsdelivr.net/npm/mermaid@8.8.3/dist/mermaid.min.js', () => {
+    mermaid.init({
+      theme    : 'forest',
+      logLevel : 3,
+      flowchart: { curve     : 'linear' },
+      gantt    : { axisFormat: '%m/%d/%Y' },
+      sequence : { actorMargin: 50 }
+    }, '.mermaid');
+  }, window.mermaid);
+}
+</script>
+
+
+  
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+
+
+
+
+
+</body>
+</html>
