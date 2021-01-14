@@ -1,0 +1,373 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>库调用的那点事 | Alliswell&#39;s blog</title>
+  <meta name="author" content="SunZhenliang">
+  
+  <meta name="description" content="动态库调用的那些事调用动态库的两种方式1. 类似静态库—-头文件这种方式生成的程序会在启动时候就加载so动态库。
+12//add.hint add(int x, int y)
+
+1234//add.cint add(int x, int y)&amp;#123;    return x + y;&amp;#125;
+
+12345678910//main.c#include &amp;lt;stdio.h&amp;gt;#include &amp;quot;add.h&amp;quot;int main()&amp;#123;    int sum = add(7, 8);    printf(&amp;quot;7+8 = %d\n&amp;quot;, sum);    return 0;&amp;#125;
+
+编译生成libadd.so
+1gcc -shared -fPIC -o libadd.so add.c
+
+
+-shared表明生成共享库
+
+如果不加-fPIC,则加载.so文件的代码段时,代码段引用的数据对象需要重定位, 重定位会修改代码段的内容, 这就造成每个使用这个.so文件代码段的进程在内核里都会生成这个.so文件代码段的copy.每个copy都不一样, 取决于这个.so文件代码段和数据段内存映射的位置.
+
+另外比较重要的第一点是最好显式添加-fPIC表明使用地址无关代码        PIC：Position Independent Code
+
+-shared
+       Produce a shared object which can then be linked with other objects to form an executable.  Not all systems support this option.  For predictable results, you must also specify the same set of
+       options used for compilation (-fpic, -fPIC, or model suboptions) when you specify this linker option.[1]"> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="库调用的那点事"/>
+  <meta property="og:site_name" content="Alliswell&#39;s blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Alliswell&#39;s blog" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Alliswell&#39;s blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> 库调用的那点事</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h1 id="动态库调用的那些事"><a href="#动态库调用的那些事" class="headerlink" title="动态库调用的那些事"></a>动态库调用的那些事</h1><h2 id="调用动态库的两种方式"><a href="#调用动态库的两种方式" class="headerlink" title="调用动态库的两种方式"></a>调用动态库的两种方式</h2><h3 id="1-类似静态库—-头文件"><a href="#1-类似静态库—-头文件" class="headerlink" title="1. 类似静态库—-头文件"></a>1. 类似静态库—-头文件</h3><p>这种方式生成的程序会在启动时候就加载so动态库。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//add.h</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//add.c</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span></span>&#123;</span><br><span class="line">    <span class="keyword">return</span> x + y;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;add.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> sum = add(<span class="number">7</span>, <span class="number">8</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;7+8 = %d\n&quot;</span>, sum);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译生成<code>libadd.so</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -shared -fPIC -o libadd.so add.c</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>-shared</code>表明生成共享库</p>
+</li>
+<li><p>如果不加<code>-fPIC</code>,则加载<code>.so</code>文件的代码段时,代码段引用的数据对象需要重定位, 重定位会修改代码段的内容, 这就造成每个使用这个<code>.so</code>文件代码段的进程在内核里都会生成这个<code>.so</code>文件代码段的copy.每个copy都不一样, 取决于<br>这个<code>.so</code>文件代码段和数据段内存映射的位置.</p>
+</li>
+<li><p>另外比较重要的第一点是最好显式添加<code>-fPIC</code>表明使用地址无关代码        PIC：Position Independent Code</p>
+<blockquote>
+<p>-shared</p>
+<pre><code>       Produce a shared object which can then be linked with other objects to form an executable.  Not all systems support this option.  For predictable results, you must also specify the same set of
+       options used for compilation (-fpic, -fPIC, or model suboptions) when you specify this linker option.[1] </code></pre>
+</blockquote>
+</li>
+</ul>
+<p>编译main，使用<code>-L./</code>指定add库在当前目录。</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o main main.c -L./ -ladd</span><br></pre></td></tr></table></figure>
+
+<p>此时如果不使用<code>-L</code>来指定动态库路径的话, 可以使用<code>LIBRARY_PATH</code></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export LIBRARY_PATH=LIBDIR1:LIBDIR2:$LIBRARY_PATH</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p><code>LIBRARY_PATH</code>为<em>程序编译期间</em>查找共享库的路径. </p>
+<p>开发时，设置<code>LIBRARY_PATH</code>，以便gcc能够找到编译时需要的动态链接库</p>
+</li>
+</ul>
+<h2 id="2-使用dlopen-dlsum动态加载动态库—-不使用头文件"><a href="#2-使用dlopen-dlsum动态加载动态库—-不使用头文件" class="headerlink" title="2. 使用dlopen/dlsum动态加载动态库—-不使用头文件"></a>2. 使用dlopen/dlsum动态加载动态库—-不使用头文件</h2><p>这种方式生成的程序会在代码执行到<strong>指定行位置</strong>加载so动态库。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//add.c</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">add</span><span class="params">(<span class="keyword">int</span> x, <span class="keyword">int</span> y)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">return</span> (x + y);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//main.c</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;dlfcn.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span>&#123;</span><br><span class="line">    <span class="comment">/*手动加载指定位置的so动态库*/</span></span><br><span class="line">    <span class="keyword">void</span>* handle = dlopen(<span class="string">&quot;./libadd.so&quot;</span>, RTLD_LAZY);</span><br><span class="line">    <span class="keyword">int</span> (*add)(<span class="keyword">int</span> a, <span class="keyword">int</span> b);</span><br><span class="line"></span><br><span class="line">    <span class="comment">/*根据动态链接库操作句柄与符号，返回符号对应的地址*/</span></span><br><span class="line">    add = dlsym(handle, <span class="string">&quot;add&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">int</span> sum = add(<span class="number">7</span>, <span class="number">8</span>);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;7+8 = %d\n&quot;</span>, sum);</span><br><span class="line"></span><br><span class="line">    dlclose(handle);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>编译<code>so</code>，生成<code>libadd.so</code></p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -shared -fPIC -o libadd.so add.c</span><br></pre></td></tr></table></figure>
+
+<p>编译main，不需要指定<code>libadd.so</code>相关信息进行编译，执行时候会在指定目录加载</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gcc -o main main.c -ldl</span><br></pre></td></tr></table></figure>
+
+<p>一般需要添加<code>LD_LIBRARY_PATH</code></p>
+<p><code>LD_LIBRARY_PATH</code>环境变量用于在<em>程序加载运行期间</em>查找动态链接库时指定除了系统默认路径之外的其他路径</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">export LD_LIBRARY_PATH=LIBDIR1:LIBDIR2:$LD_LIBRARY_PATH</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>发布和使用时，设置<code>LD_LIBRARY_PATH</code>，以便程序加载运行时能够自动找到需要的动态链接库。</li>
+</ul>
+
+	  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+	</div>
+
+	
+	<span id="/wiki/%E5%BA%93%E8%B0%83%E7%94%A8%E7%9A%84%E9%82%A3%E7%82%B9%E4%BA%8B/" class="leancloud-visitors view" data-flag-title="库调用的那点事">
+		<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+	</span>
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
+    
+    
+    <a href="/wiki/wav文件格式详解/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> Prev</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/wiki/pkg-config的一点用法/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+-->
+	
+		<section id="comments" class="comments">
+			<style>
+			.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+			@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var valineConfig = {"enable":true,"appId":"ueIePJtaGryN9FhXJieFg0zv-MdYXbMMI","appKey":"YrCpNBNF8jxrR28HotIjP2Gb","placeholder":"提交评论时留下邮箱收到回复后将自动通知","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"]}
+valineConfig.el='#vcomment';
+new Valine(valineConfig);
+    // new Valine({
+    //     el: '#vcomment',
+    //     appId: "",
+    //     appKey: "",
+    //     placeholder: "提交评论时留下邮箱收到回复后将自动通知",
+    //     avatar:"monsterid",
+    //     visitor: "true",
+    //     requiredFields: "nick,mail".split(','),
+    // });
+</script>
+
+		</section>
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2020-11-17 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Linux/">Linux<span>3</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/tools/">tools<span>2</span></a></li> <li><a href="/tags/总结/">总结<span>4</span></a></li> <li><a href="/tags/动态库/">动态库<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2021 SunZhenliang's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

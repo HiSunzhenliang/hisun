@@ -1,0 +1,353 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>G.711 编解码原理 | Alliswell&#39;s blog</title>
+  <meta name="author" content="SunZhenliang">
+  
+  <meta name="description" content="G.711 编解码原理G.711 是 ITU-T 定制出来的一套语音压缩标准，它代表了对数 PCM（logarithmic pulse-code modulation）抽样标准，是主流的波形声音编解码标准，主要用于电话。
+G.711 编码采用 8kHz 采样率，有 A-law 和μ-law 两种编码方式，分别是将 13bit 和 14bit 编码为 8bit，因此 G711 固定码率是 8kHz×8bit=64kbps。两者都是对数变换，A-law 更加方便计算机处理。μ-law 提供了略微高一些的动态范围，但代价是对于弱信号的量化误差相对 A-law 高一些。
+转换公式下面分别介绍两种算法的转换公式。
+A-law:
+
+一般采用 A=87.6, 画出图来则是如下图，用 x 表示输入的采样值，F(x) 表示通过 A-law 变换后的采样值，y 是对 F(x) 进行量化后的采样值。
+
+
+由此可见在输入的 x 为高值的时候，F(x) 的变化是缓慢的，有较大范围的 x 对应的 F(x) 最终被量化为同一个 y，精度较低。相反在低声强区域，也就是 x 为低值的时候，F(x) 的变化很剧烈，有较少的不同 x 对应的 F(x) 被量化为同一个 y。意思就是说在声音比较小的区域，精度较高，便于区分，而声音比较大的区域，精度不是那么高。"> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="G.711 编解码原理"/>
+  <meta property="og:site_name" content="Alliswell&#39;s blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Alliswell&#39;s blog" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Alliswell&#39;s blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> G.711 编解码原理</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h1 id="G-711-编解码原理"><a href="#G-711-编解码原理" class="headerlink" title="G.711 编解码原理"></a>G.711 编解码原理</h1><p>G.711 是 ITU-T 定制出来的一套语音压缩标准，它代表了对数 PCM（logarithmic pulse-code modulation）抽样标准，是主流的波形声音编解码标准，主要用于电话。</p>
+<p>G.711 编码采用 8kHz 采样率，有 A-law 和μ-law 两种编码方式，分别是将 13bit 和 14bit 编码为 8bit，因此 G711 固定码率是 8kHz×8bit=64kbps。两者都是对数变换，A-law 更加方便计算机处理。μ-law 提供了略微高一些的动态范围，但代价是对于弱信号的量化误差相对 A-law 高一些。</p>
+<h2 id="转换公式"><a href="#转换公式" class="headerlink" title="转换公式"></a>转换公式</h2><p>下面分别介绍两种算法的转换公式。</p>
+<p>A-law:</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144349406.png"></p>
+<p>一般采用 A=87.6, 画出图来则是如下图，用 x 表示输入的采样值，F(x) 表示通过 A-law 变换后的采样值，y 是对 F(x) 进行量化后的采样值。</p>
+<img src="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144420043.png" alt="image-20201130144420043" style="zoom:80%;" />
+
+<p>由此可见在输入的 x 为高值的时候，F(x) 的变化是缓慢的，有较大范围的 x 对应的 F(x) 最终被量化为同一个 y，精度较低。相反在低声强区域，也就是 x 为低值的时候，F(x) 的变化很剧烈，有较少的不同 x 对应的 F(x) 被量化为同一个 y。意思就是说在声音比较小的区域，精度较高，便于区分，而声音比较大的区域，精度不是那么高。</p>
+<p> μ-law 的公式如下，μ取值一般为 255</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144523378.png"></p>
+<p>和 A-law 画在同一个坐标轴中就能发现 A-law 在低强度信号下，精度要稍微高一些。</p>
+<img src="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144536867.png" alt="image-20201130144536867" style="zoom:80%;" />
+
+<p>实际应用中，采用浮点数计算的方式计算，然后进行量化，计算量会比较大，实际上对于 A-law（A=87.6 时），是采用 13 折线近似的方式来计算的，而μ-law（μ=255 时）则是 15 段折线近似的方式。</p>
+<p>A-law 如下表计算，第一列是采样点，共 13bit，最高位为符号位。对于前两行，折线斜率均为 1/2，跟负半段的相应区域位于同一段折线上，对于 3 到 8 行，斜率分别是 1/4 到 1/128，共 6 段折线，加上负半段对应的 6 段折线，总共 13 段折线，这就是所谓的 A-law 十三段折线法</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/74797-20180415174356930-1878134610.png"></p>
+<p>解码公式：</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/image-20201130144809068.png"></p>
+<p>相应的μ-law 的计算方法如下表。</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/74797-20180415181431844-1395002987.png"></p>
+<p>本质上跟 A-law 的区别不大</p>
+<h2 id="16bitPCM-转-alaw-代码"><a href="#16bitPCM-转-alaw-代码" class="headerlink" title="16bitPCM 转 alaw 代码"></a>16bitPCM 转 alaw 代码</h2><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pcm2alaw.c</span></span><br><span class="line"><span class="comment">// https://blog.csdn.net/wzying25/article/details/79398055</span></span><br><span class="line"><span class="comment">// @sun 2020.06.23</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stdio.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SIGN_BIT (0x80)  <span class="comment">/* Sign bit for a A-law byte. */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> QUANT_MASK (0xf) <span class="comment">/* Quantization field mask.   */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> NSEGS (8)        <span class="comment">/* Number of A-law segments.  */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SEG_SHIFT (4)    <span class="comment">/* Left shift for segment number. */</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> SEG_MASK (0x70)  <span class="comment">/* Segment field mask. */</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">static</span> <span class="keyword">short</span> seg_end[<span class="number">8</span>] = &#123;</span><br><span class="line">    <span class="number">0xFF</span>,   <span class="number">0x1FF</span>,  <span class="number">0x3FF</span>, <span class="number">0x7FF</span>, <span class="number">0xFFF</span>,</span><br><span class="line">    <span class="number">0x1FFF</span>, <span class="number">0x3FFF</span>, <span class="number">0x7FFF</span>&#125;;  <span class="comment">//分成不均匀的8个分段，算上负数，总共是16个分段</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">static</span> <span class="keyword">int</span> <span class="title">search</span><span class="params">(<span class="keyword">int</span> val, <span class="keyword">short</span> *table, <span class="keyword">int</span> size)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> i;</span><br><span class="line">    <span class="keyword">for</span> (i = <span class="number">0</span>; i &lt; size; i++) &#123;</span><br><span class="line">        <span class="keyword">if</span> (val &lt;= *table++) <span class="keyword">return</span> (i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> (size);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*********************************************************************</span></span><br><span class="line"><span class="comment"> * 输入参数范围 ：-32768~32767</span></span><br><span class="line"><span class="comment"> * 返回8位无符号整数</span></span><br><span class="line"><span class="comment"> * linear2alaw() - Convert a 16-bit linear PCM value to 8-bit A-law</span></span><br><span class="line"><span class="comment"> * For further information see John C. Bellamy&#x27;s Digital Telephony, 1982,</span></span><br><span class="line"><span class="comment"> * John Wiley &amp; Sons, pps 98-111 and 472-476.</span></span><br><span class="line"><span class="comment"> *********************************************************************/</span></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="title">linear2alaw</span><span class="params">(<span class="keyword">short</span> <span class="keyword">int</span> pcm_val)</span> <span class="comment">/* 2&#x27;s complement (16-bit range) */</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> mask;</span><br><span class="line">    <span class="keyword">int</span> seg;</span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">char</span> aval;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//这里右移3位，因为采样值是16bit，而A-law是13bit，存储在高13位上，低3位被舍弃</span></span><br><span class="line">    pcm_val = pcm_val &gt;&gt; <span class="number">3</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (pcm_val &gt;= <span class="number">0</span>) &#123;</span><br><span class="line">        mask = <span class="number">0xD5</span>; <span class="comment">/* sign (7th) bit = 1 二进制的11010101*/</span></span><br><span class="line">    &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">        mask = <span class="number">0x55</span>;             <span class="comment">/* sign bit = 0  二进制的01010101*/</span></span><br><span class="line">        pcm_val = -pcm_val - <span class="number">1</span>;  <span class="comment">//负数转换为正数计算</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Convert the scaled magnitude to segment number. */</span></span><br><span class="line">    seg = search(pcm_val, seg_end, <span class="number">8</span>);  <span class="comment">//返回pcm_val属于哪个分段</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">/* Combine the sign, segment, and quantization bits. */</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (seg &gt;= <span class="number">8</span>) <span class="comment">/* out of range, return maximum value. */</span></span><br><span class="line">        <span class="keyword">return</span> (<span class="number">0x7F</span> ^ mask);</span><br><span class="line">    <span class="keyword">else</span> &#123;</span><br><span class="line">        aval = seg &lt;&lt; SEG_SHIFT;</span><br><span class="line">        <span class="comment">// aval为每一段的偏移，分段量化后的数据需要加上该偏移（aval）</span></span><br><span class="line">        <span class="comment">//分段量化</span></span><br><span class="line">        <span class="comment">//量化方法： (pcm_val-分段值)，然后取有效的高4位   （0分段例外）</span></span><br><span class="line">        <span class="comment">//比如 pcm_val = 0x7000 ，那么seg=7 ，第7段的范围是0x4000~0x7FFF</span></span><br><span class="line">        <span class="comment">//，段偏移aval=7&lt;&lt;4=0x7F 0x7000-0x4000=0x3000</span></span><br><span class="line">        <span class="comment">// ，然后取有效的高4位，即右移10(seg+3)，0x3000&gt;&gt;10=0xC</span></span><br><span class="line">        <span class="comment">//上一步等效为：(0x7000&gt;&gt;10)&amp;0xF=0xC 。也就是： (pcm_val &gt;&gt; (seg + 3)) &amp;</span></span><br><span class="line">        <span class="comment">// QUANT_MASK 然后加上段偏移 0x7F(aval) ，加法等效于或运算，即 |aval</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (seg &lt; <span class="number">2</span>)</span><br><span class="line">            aval |= (pcm_val &gt;&gt; <span class="number">4</span>) &amp; QUANT_MASK;  <span class="comment">// 0、1段折线的斜率一样</span></span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            aval |= (pcm_val &gt;&gt; (seg + <span class="number">3</span>)) &amp; QUANT_MASK;</span><br><span class="line">        <span class="keyword">return</span> (</span><br><span class="line">            aval ^</span><br><span class="line">            mask);  <span class="comment">//异或0x55，目的是尽量避免出现连续的0，或连续的1，提高传输过程的可靠性</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// pcm2alaw.h</span></span><br><span class="line"><span class="comment">// @sun 2020.06.23</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> once</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;stdio.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">unsigned</span> <span class="keyword">char</span> <span class="title">linear2alaw</span><span class="params">(<span class="keyword">int</span> pcm_val)</span></span>;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/***********************************************************************</span></span><br><span class="line"><span class="comment"> * @Copyright (C)  2020  all right reserved</span></span><br><span class="line"><span class="comment"> * @file main.c</span></span><br><span class="line"><span class="comment"> * @ingroup wav</span></span><br><span class="line"><span class="comment"> * @author SunZhenliang</span></span><br><span class="line"><span class="comment"> * @date 2020-06</span></span><br><span class="line"><span class="comment"> * @brief pcm2alaw</span></span><br><span class="line"><span class="comment"> ***********************************************************************/</span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&quot;pcm2alaw.h&quot;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">WAV_HEADER</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> ChunkID[<span class="number">4</span>];         <span class="comment">// &quot;RIFF&quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> ChunkSize;  <span class="comment">// 文件长度(WAVE文件的大小, 不含前8个字节)</span></span><br><span class="line">    <span class="keyword">char</span> Format[<span class="number">4</span>];          <span class="comment">// &quot;WAVE&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> SubChunk1ID[<span class="number">4</span>];             <span class="comment">// &quot;fmt &quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SubChunk1Size;      <span class="comment">// 过渡字节(不定)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> AudioFormat;  <span class="comment">// 格式类别(10H为PCM格式的声音数据)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> NumChannels;  <span class="comment">// 通道数(单声道为1, 双声道为2)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SampleRate;         <span class="comment">// 采样率</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> ByteRate;           <span class="comment">// 波形音频数据传输速率</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> BlockAlign;   <span class="comment">// data数据块长度、字节</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> BitsPerSample;  <span class="comment">// PCM 位宽</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> SubChunk2ID[<span class="number">4</span>];         <span class="comment">// &quot;data&quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SubChunk2Size;  <span class="comment">// data数据的长度</span></span><br><span class="line">&#125; WAV_HEADER;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> <span class="class"><span class="keyword">struct</span> <span class="title">ALAW_HEADER</span> &#123;</span></span><br><span class="line">    <span class="keyword">char</span> ChunkID[<span class="number">4</span>];         <span class="comment">// &quot;RIFF&quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> ChunkSize;  <span class="comment">// 文件长度(WAVE文件的大小, 不含前8个字节)</span></span><br><span class="line">    <span class="keyword">char</span> Format[<span class="number">4</span>];          <span class="comment">// &quot;WAVE&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> SubChunk1ID[<span class="number">4</span>];             <span class="comment">// &quot;fmt &quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SubChunk1Size;      <span class="comment">// 过渡字节(不定)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> AudioFormat;  <span class="comment">// 格式类别(10H为PCM格式的声音数据)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> NumChannels;  <span class="comment">// 通道数(单声道为1, 双声道为2)</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SampleRate;         <span class="comment">// 采样率</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> ByteRate;           <span class="comment">// 波形音频数据传输速率</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> BlockAlign;   <span class="comment">// data数据块长度、字节</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">short</span> <span class="keyword">int</span> BitsPerSample;  <span class="comment">// PCM 位宽</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> SubChunk3ID[<span class="number">4</span>];         <span class="comment">// &quot;fact&quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SubChunk3Size;  <span class="comment">// fact数据的长度</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SampleLength;   <span class="comment">// data数据的长度</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> SubChunk2ID[<span class="number">4</span>];         <span class="comment">// &quot;data&quot;</span></span><br><span class="line">    <span class="keyword">unsigned</span> <span class="keyword">int</span> SubChunk2Size;  <span class="comment">// data数据的长度</span></span><br><span class="line">&#125; ALAW_HEADER;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">    FILE *fpin = <span class="literal">NULL</span>;</span><br><span class="line">    FILE *fout = <span class="literal">NULL</span>;</span><br><span class="line">    WAV_HEADER wav;</span><br><span class="line">    ALAW_HEADER alaw;</span><br><span class="line">    <span class="keyword">char</span> tmp;</span><br><span class="line">    <span class="keyword">short</span> <span class="keyword">int</span> pcm_val;</span><br><span class="line"></span><br><span class="line">    fpin = fopen(<span class="string">&quot;./M1F1-int16-AFsp.wav&quot;</span>, <span class="string">&quot;rb&quot;</span>);</span><br><span class="line">    fread(&amp;wav, <span class="keyword">sizeof</span>(struct WAV_HEADER), <span class="number">1</span>, fpin);</span><br><span class="line">    fout = fopen(<span class="string">&quot;./8bitalaw.wav&quot;</span>, <span class="string">&quot;w+b&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// WAV_HEADER</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;ChunkID=%c%c%c%c\n&quot;</span>, wav.ChunkID[<span class="number">0</span>], wav.ChunkID[<span class="number">1</span>], wav.ChunkID[<span class="number">2</span>],</span><br><span class="line">           wav.ChunkID[<span class="number">3</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;ChunkSize=%d\n&quot;</span>, wav.ChunkSize);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;Format=%c%c%c%c\n&quot;</span>, wav.Format[<span class="number">0</span>], wav.Format[<span class="number">1</span>], wav.Format[<span class="number">2</span>],</span><br><span class="line">           wav.Format[<span class="number">3</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;SubChunk1ID=%c%c%c%c\n&quot;</span>, wav.SubChunk1ID[<span class="number">0</span>], wav.SubChunk1ID[<span class="number">1</span>],</span><br><span class="line">           wav.SubChunk1ID[<span class="number">2</span>], wav.SubChunk1ID[<span class="number">3</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;SubChunk1Size=%d\n&quot;</span>, wav.SubChunk1Size);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;AudioFormat=%d\n&quot;</span>, wav.AudioFormat);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;NumChannels=%d\n&quot;</span>, wav.NumChannels);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;SampleRate=%d\n&quot;</span>, wav.SampleRate);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;ByteRate=%d\n&quot;</span>, wav.ByteRate);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;BlockAlign=%d\n&quot;</span>, wav.BlockAlign);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;BitsPerSample=%d\n&quot;</span>, wav.BitsPerSample);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;SubChunk2ID=%c%c%c%c\n&quot;</span>, wav.SubChunk2ID[<span class="number">0</span>], wav.SubChunk2ID[<span class="number">1</span>],</span><br><span class="line">           wav.SubChunk2ID[<span class="number">2</span>], wav.SubChunk2ID[<span class="number">3</span>]);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;SubChunk2Size=%d\n&quot;</span>, wav.SubChunk2Size);</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get alaw header</span></span><br><span class="line">    <span class="built_in">strcpy</span>(alaw.ChunkID, wav.ChunkID);</span><br><span class="line">    alaw.ChunkSize = (wav.ChunkSize - <span class="number">36</span>) / <span class="number">2</span> + <span class="number">48</span>;</span><br><span class="line">    <span class="built_in">strcpy</span>(alaw.Format, wav.Format);</span><br><span class="line">    <span class="built_in">strcpy</span>(alaw.SubChunk1ID, wav.SubChunk1ID);</span><br><span class="line">    alaw.SubChunk1Size = wav.SubChunk1Size;</span><br><span class="line">    alaw.AudioFormat = wav.AudioFormat;</span><br><span class="line">    alaw.NumChannels = wav.NumChannels;</span><br><span class="line">    alaw.SampleRate = wav.SampleRate;</span><br><span class="line">    alaw.ByteRate = wav.ByteRate;</span><br><span class="line">    alaw.BlockAlign = wav.BlockAlign;</span><br><span class="line">    alaw.BitsPerSample = wav.BitsPerSample;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">strcpy</span>(alaw.SubChunk3ID, <span class="string">&quot;fact&quot;</span>);</span><br><span class="line">    alaw.SubChunk3Size = <span class="number">4</span>;</span><br><span class="line">    alaw.SampleLength = (wav.ChunkSize - <span class="number">36</span>) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">strcpy</span>(alaw.SubChunk2ID, wav.SubChunk2ID);</span><br><span class="line">    alaw.SubChunk2Size = (wav.ChunkSize - <span class="number">36</span>) / <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// write into 8bitalaw.wav</span></span><br><span class="line">    fwrite(&amp;alaw, <span class="keyword">sizeof</span>(ALAW_HEADER), <span class="number">1</span>, fout);</span><br><span class="line">    <span class="keyword">while</span> (<span class="number">1</span> == fread(&amp;pcm_val, <span class="keyword">sizeof</span>(<span class="keyword">short</span> <span class="keyword">int</span>), <span class="number">1</span>, fpin)) &#123;</span><br><span class="line">        tmp = linear2alaw(pcm_val);  <span class="comment">// 16bit in, 8bit out</span></span><br><span class="line">        fputc(tmp, fout);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    fclose(fpin);</span><br><span class="line">    fclose(fout);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>G.71 的原理和计算也比较简单，但是其中用到的一些基本原理同样在其他编码算法中得到了应用，对其进行深入的了解有助于更好的理解其他的算法。</p>
+<p>源代码中关于移位运算，掩码运算，还不是完全的理解，只能根据自己的经验进行一些猜测，之后会继续学习，希望对这方面能有更深入的认识。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/A-law_algorithm">Alaw-Wikipedia</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/quatanium/foscam-ios-sdk/blob/master/g726lib/g711.c">g711.c source code</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/512ce6566f8a">G.711编码原理</a></li>
+</ul>
+</blockquote>
+
+	  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+	</div>
+
+	
+	<span id="/wiki/G-711%E7%BC%96%E8%A7%A3%E7%A0%81%E5%8E%9F%E7%90%86/" class="leancloud-visitors view" data-flag-title="G.711 编解码原理">
+		<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+	</span>
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
+    
+    
+    <a href="/wiki/MP3文件格式解析/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> Prev</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/wiki/wav文件格式详解/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+-->
+	
+		<section id="comments" class="comments">
+			<style>
+			.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+			@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var valineConfig = {"enable":true,"appId":"ueIePJtaGryN9FhXJieFg0zv-MdYXbMMI","appKey":"YrCpNBNF8jxrR28HotIjP2Gb","placeholder":"提交评论时留下邮箱收到回复后将自动通知","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"]}
+valineConfig.el='#vcomment';
+new Valine(valineConfig);
+    // new Valine({
+    //     el: '#vcomment',
+    //     appId: "",
+    //     appKey: "",
+    //     placeholder: "提交评论时留下邮箱收到回复后将自动通知",
+    //     avatar:"monsterid",
+    //     visitor: "true",
+    //     requiredFields: "nick,mail".split(','),
+    // });
+</script>
+
+		</section>
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2020-11-30 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Audio/">Audio<span>3</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/Audio/">Audio<span>3</span></a></li> <li><a href="/tags/G-711/">G.711<span>1</span></a></li> <li><a href="/tags/alaw/">alaw<span>1</span></a></li> <li><a href="/tags/ulaw/">ulaw<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+		   <span class="toc-title">Contents</span>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#G-711-%E7%BC%96%E8%A7%A3%E7%A0%81%E5%8E%9F%E7%90%86"><span class="toc-article-text">G.711 编解码原理</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E8%BD%AC%E6%8D%A2%E5%85%AC%E5%BC%8F"><span class="toc-article-text">转换公式</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#16bitPCM-%E8%BD%AC-alaw-%E4%BB%A3%E7%A0%81"><span class="toc-article-text">16bitPCM 转 alaw 代码</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-article-text">总结</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-article-text">参考资料</span></a></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2021 SunZhenliang's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

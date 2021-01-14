@@ -1,0 +1,385 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>三种存储类型 | Alliswell&#39;s blog</title>
+  <meta name="author" content="SunZhenliang">
+  
+  <meta name="description" content="Storage Research块存储定义：最底层的数据组织方式，所有数据按照固定的大小分块写入，每一块赋予一个用于寻址的编号。
+应用方式：
+为了方便管理，硬盘这样的块设备通常可以划分为多个逻辑块设备，也就是我们熟悉的硬盘分区（Partition）。
+单个介质的容量、性能有限，可以通过某些技术手段把多个物理块设备组合成一个逻辑块设备，例如各种级别的RAID，JBOD，某些操作系统的卷管理系统（Volume Manager）如Windows的动态磁盘、Linux的LVM等。
+
+优点
+这种方式的好处当然是因为通过了Raid与LVM等手段，对数据提供了保护；
+可以将多块廉价的硬盘组合起来，称为一个大容量的逻辑盘对外提供服务，提高了容量；
+写入数据时，由于是多块磁盘组合出来的逻辑盘，所以几块硬盘可以并行写入的，提升了读写效率；
+
+缺点
+主机之间数据无法共享，在服务器不做集群的情况下，块存储裸盘映射给主机，在格式化使用后，对于主机来说相当于本地盘，那么主机A的本地盘根本不能给主机B去使用，无法共享数据
+无目录系统"> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="三种存储类型"/>
+  <meta property="og:site_name" content="Alliswell&#39;s blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Alliswell&#39;s blog" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Alliswell&#39;s blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> 三种存储类型</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h1 id="Storage-Research"><a href="#Storage-Research" class="headerlink" title="Storage Research"></a>Storage Research</h1><h2 id="块存储"><a href="#块存储" class="headerlink" title="块存储"></a>块存储</h2><h3 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h3><p>最底层的数据组织方式，所有数据按照固定的大小分块写入，每一块赋予一个用于寻址的编号。</p>
+<h3 id="应用方式："><a href="#应用方式：" class="headerlink" title="应用方式："></a>应用方式：</h3><ol>
+<li>为了方便管理，硬盘这样的块设备通常可以划分为多个逻辑块设备，也就是我们熟悉的硬盘分区（Partition）。</li>
+<li>单个介质的容量、性能有限，可以通过某些技术手段把多个物理块设备组合成一个逻辑块设备，例如各种级别的RAID，JBOD，某些操作系统的卷管理系统（Volume Manager）如Windows的动态磁盘、Linux的LVM等。</li>
+</ol>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>这种方式的好处当然是因为通过了Raid与LVM等手段，对数据提供了保护；</li>
+<li>可以将多块廉价的硬盘组合起来，称为一个大容量的逻辑盘对外提供服务，提高了容量；</li>
+<li>写入数据时，由于是多块磁盘组合出来的逻辑盘，所以几块硬盘可以并行写入的，提升了读写效率；</li>
+</ol>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>主机之间数据无法共享，在服务器不做集群的情况下，块存储裸盘映射给主机，在格式化使用后，对于主机来说相当于本地盘，那么主机A的本地盘根本不能给主机B去使用，无法共享数据</li>
+<li>无目录系统</li>
+</ol>
+<h2 id="文件存储"><a href="#文件存储" class="headerlink" title="文件存储"></a>文件存储</h2><h3 id="定义：-1"><a href="#定义：-1" class="headerlink" title="定义："></a>定义：</h3><p>用“文件”这个概念对这些数据进行组织，所有用于同一用途的数据，按照不同应用程序要求的结构方式组成不同类型的文件（通常用不同的后缀来指代不同的类型），然后我们给每一个文件起一个方便理解记忆的名字。而当文件很多的时候，我们按照某种划分方式给这些文件分组，每一组文件放在同一个目录（或者叫文件夹）里面，当然我们也需要给这些目录起一个容易理解和记忆的名字。而且目录下面除了文件还可以有下一级目录（称之为子目录或者子文件夹），所有的文件、目录形成一个树状结构</p>
+<h3 id="应用方式：-1"><a href="#应用方式：-1" class="headerlink" title="应用方式："></a>应用方式：</h3><p>把存储介质上的数据组织成目录-子目录-文件这种形式的数据结构，用于从这个结构中寻找、添加、修改、删除文件的程序，以及用于维护这个结构的程序，组成的系统有一个专用的名字：<strong>文件系统（File System）</strong></p>
+<p>文件系统有很多，常见的有Windows的FAT/FAT32/NTFS，Linux的EXT2/EXT3/EXT4/XFS/BtrFS等。而在网络存储中，底层数据并非存储在本地的存储介质，而是另外一台服务器上，不同的客户端都可以用类似文件系统的方式访问这台服务器上的文件，这样的系统叫<strong>网络文件系统（Network File System）</strong>，常见的网络文件系统有Windows网络的CIFS（也叫SMB）、类Unix系统网络的NFS等。而文件存储除了网络文件系统外，FTP、HTTP其实也算是文件存储的某种特殊实现，都是可以通过某个url来访问一个文件。</p>
+<h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h3><ol>
+<li>有目录检索，用户友好。</li>
+<li>方便共享。</li>
+</ol>
+<h3 id="缺点："><a href="#缺点：" class="headerlink" title="缺点："></a>缺点：</h3><ol>
+<li>读写速度较慢，因为需要遍历树状目录结构。</li>
+</ol>
+<h2 id="对象存储"><a href="#对象存储" class="headerlink" title="对象存储"></a>对象存储</h2><h3 id="定义：-2"><a href="#定义：-2" class="headerlink" title="定义："></a>定义：</h3><p>对象存储一般体现形式是一个ID，数据和元数据打包在一起作为一个整体对象存在一个超大池子里。对于对象访问，只需要报出它的ID，就能立即找到它，但访问的时候对象是作为一个整体访问的。</p>
+<h3 id="应用方式：-2"><a href="#应用方式：-2" class="headerlink" title="应用方式："></a>应用方式：</h3><ul>
+<li>大多数对象存储的实现本质上是键值对存储系统</li>
+<li>采用扁平化的管理方式(根据键，找到值)<strong>无层次结构</strong></li>
+<li>值可以是任何东西，可以是小文件(小二进制片段)，可以是大文件</li>
+</ul>
+<h3 id="优点：-1"><a href="#优点：-1" class="headerlink" title="优点："></a>优点：</h3><p>对象存储将元数据独立了出来，控制节点叫元数据服务器（服务器+对象存储管理软件），里面主要负责存储对象的属性（主要是对象的数据被打散存放到了那几台分布式服务器中的信息），而其他负责存储数据的分布式服务器叫做OSD，主要负责存储文件的数据部分。当用户访问对象，会先访问元数据服务器，元数据服务器只负责反馈对象存储在哪些OSD，假设反馈文件A存储在B、C、D三台OSD，那么用户就会再次直接访问3台OSD服务器去读取数据。</p>
+<p>这时候由于是3台OSD同时对外传输数据，所以传输的速度就加快了。当OSD服务器数量越多，这种读写速度的提升就越大，通过此种方式，实现了<strong>读写快</strong>的目的。</p>
+<p>另一方面，对象存储软件是有专门的文件系统的，所以OSD对外又相当于<strong>文件服务器</strong>，那么就不存在文件共享方面的困难了，也解决了文件共享方面的问题。</p>
+<p>所以对象存储的出现，很好地结合了块存储与文件存储的优点。</p>
+<p>对象存储的无层次结构特点，对象存储有以下优点：</p>
+<ul>
+<li>效率更高。不受复杂目录系统对性能的影响。</li>
+<li>可扩展性更强。分布式架构，更便于进行水平扩展，从而容纳进任意大规模的数据。</li>
+<li>可用性更强。数据一般都会有多个位于不同机器的复制，确保数据不丢失。</li>
+</ul>
+<h2 id="三种存储类型的联系"><a href="#三种存储类型的联系" class="headerlink" title="三种存储类型的联系"></a>三种存储类型的联系</h2><p>块存储、文件存储、对象存储的关系：</p>
+<ol>
+<li>它们就是不同的接口。块存储就是最接近存储介质的接口，也就是包装最薄的，或者说没有包装。文件和对象存储都是对块存储的包装。可以简单认为对象存储就是不分层次的文件存储。</li>
+</ol>
+<p>分布式存储的应用场景相对于其存储接口，现在流行分为三种:</p>
+<ol>
+<li>对象存储: 也就是通常意义的键值存储，其接口就是简单的GET、PUT、DEL和其他扩展，如七牛、又拍、Swift、S3</li>
+<li>块存储: 这种接口通常以QEMU Driver或者Kernel Module的方式存在，这种接口需要实现Linux的Block Device的接口或者QEMU提供的Block Driver接口，如Sheepdog，AWS的EBS，青云的云硬盘和阿里云的盘古系统，还有Ceph的RBD（RBD是Ceph面向块存储的接口）</li>
+<li>文件存储: 通常意义是支持POSIX接口，它跟传统的文件系统如Ext4是一个类型的，但区别在于分布式存储提供了并行化的能力，如Ceph的CephFS(CephFS是Ceph面向文件存储的接口)，但是有时候又会把GFS，HDFS这种非POSIX接口的类文件存储接口归入此类。</li>
+</ol>
+<p>元数据管理的差别: </p>
+<ol>
+<li>块存储，服务端不维护元数据，服务端只保留blockid到block的映射关系。</li>
+<li>对象存储，保存简单的元数据，为了管理和隔离，加入了volumn bucket等概念。最根本的存储方面，实际上是以key value形式组织的。其中key之间没有关联，value是block序列组成的对象。</li>
+<li>文件存储的元数据相对对象存储元数据更加复杂，元数据以目录树(inode tree)的形式管理，每个inode tree的文件节点对应一个value是block序列组成的文件。</li>
+</ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/21536660">https://www.zhihu.com/question/21536660</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/hukey/p/8323853.html">https://www.cnblogs.com/hukey/p/8323853.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.redhat.com/zh/topics/data-storage/file-block-object-storage">https://www.redhat.com/zh/topics/data-storage/file-block-object-storage</a></li>
+<li><a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/63136.html">https://help.aliyun.com/document_detail/63136.html</a></li>
+<li><a target="_blank" rel="noopener" href="https://help.aliyun.com/document_detail/140812.html?spm=a2c4g.11186623.6.543.460845d7sDlUAA">https://help.aliyun.com/document_detail/140812.html?spm=a2c4g.11186623.6.543.460845d7sDlUAA</a></li>
+</ul>
+</blockquote>
+
+	  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+	</div>
+
+	
+	<span id="/wiki/%E4%B8%89%E7%A7%8D%E5%AD%98%E5%82%A8%E7%B1%BB%E5%9E%8B/" class="leancloud-visitors view" data-flag-title="三种存储类型">
+		<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+	</span>
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
+    
+    
+    <a href="/wiki/do-while-0-特殊用法/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> Prev</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/wiki/视频编解码基础概念/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+-->
+	
+		<section id="comments" class="comments">
+			<style>
+			.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+			@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var valineConfig = {"enable":true,"appId":"ueIePJtaGryN9FhXJieFg0zv-MdYXbMMI","appKey":"YrCpNBNF8jxrR28HotIjP2Gb","placeholder":"提交评论时留下邮箱收到回复后将自动通知","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"]}
+valineConfig.el='#vcomment';
+new Valine(valineConfig);
+    // new Valine({
+    //     el: '#vcomment',
+    //     appId: "",
+    //     appKey: "",
+    //     placeholder: "提交评论时留下邮箱收到回复后将自动通知",
+    //     avatar:"monsterid",
+    //     visitor: "true",
+    //     requiredFields: "nick,mail".split(','),
+    // });
+</script>
+
+		</section>
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2020-12-29 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Storage/">Storage<span>1</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/存储/">存储<span>1</span></a></li> <li><a href="/tags/块存储/">块存储<span>1</span></a></li> <li><a href="/tags/对象存储/">对象存储<span>1</span></a></li> <li><a href="/tags/文件存储/">文件存储<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+		   <span class="toc-title">Contents</span>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#Storage-Research"><span class="toc-article-text">Storage Research</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%9D%97%E5%AD%98%E5%82%A8"><span class="toc-article-text">块存储</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%AE%9A%E4%B9%89%EF%BC%9A"><span class="toc-article-text">定义：</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%BA%94%E7%94%A8%E6%96%B9%E5%BC%8F%EF%BC%9A"><span class="toc-article-text">应用方式：</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E4%BC%98%E7%82%B9"><span class="toc-article-text">优点</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E7%BC%BA%E7%82%B9"><span class="toc-article-text">缺点</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8"><span class="toc-article-text">文件存储</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%AE%9A%E4%B9%89%EF%BC%9A-1"><span class="toc-article-text">定义：</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%BA%94%E7%94%A8%E6%96%B9%E5%BC%8F%EF%BC%9A-1"><span class="toc-article-text">应用方式：</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A"><span class="toc-article-text">优点：</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E7%BC%BA%E7%82%B9%EF%BC%9A"><span class="toc-article-text">缺点：</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%AF%B9%E8%B1%A1%E5%AD%98%E5%82%A8"><span class="toc-article-text">对象存储</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%AE%9A%E4%B9%89%EF%BC%9A-2"><span class="toc-article-text">定义：</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%BA%94%E7%94%A8%E6%96%B9%E5%BC%8F%EF%BC%9A-2"><span class="toc-article-text">应用方式：</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E4%BC%98%E7%82%B9%EF%BC%9A-1"><span class="toc-article-text">优点：</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E4%B8%89%E7%A7%8D%E5%AD%98%E5%82%A8%E7%B1%BB%E5%9E%8B%E7%9A%84%E8%81%94%E7%B3%BB"><span class="toc-article-text">三种存储类型的联系</span></a></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-article-text">参考资料</span></a></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2021 SunZhenliang's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

@@ -1,0 +1,351 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>视频编解码基础概念 | Alliswell&#39;s blog</title>
+  <meta name="author" content="SunZhenliang">
+  
+  <meta name="description" content="概述原始图像信息被采集后，视频数据体积非常大，不利于传输和储存，必须进行编码压缩。播放时只需要采用对应的解码技术就可以恢复播放。本文只涉及这个编解码流程中的基础概念、定义等。
+基础概念
+以下摘录自https://www.cnblogs.com/leisure_chn/p/10285829.html
+
+熵与冗余引自参考资料[1]第1.5节
+
+在所有的实际节目素材中，存在着两种类型的信号分量：即异常的、不可预见的信号分量和可以预见的信号分量。异常分量称为熵，它是信号中的真正信息。其余部分称为冗余，因为它不是必需的信息。冗余可以是空间性的，如在图像的大片区域中，邻近像素几乎具有相同的数值。冗余也可以是时间性的，例如连续图像之间的相似部分。在所有的压缩系统编码器中都是将熵与冗余相分离，只有熵被编码和传输，而在解码器中再从编码器的发送的信号中计算出冗余。
+
+帧内编码帧内编码是空间域编码，利用图像空间性冗余度进行图像压缩，处理的是一幅独立的图像，不会跨越多幅图像。空间域编码依赖于一幅图像中相邻像素间的相似性和图案区的主要空间域频率。
+JPEG标准用于静止图像(即图片)，只使用了空间域压缩，只使用帧内编码。"> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="视频编解码基础概念"/>
+  <meta property="og:site_name" content="Alliswell&#39;s blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Alliswell&#39;s blog" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Alliswell&#39;s blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> 视频编解码基础概念</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>原始图像信息被采集后，视频数据体积非常大，不利于传输和储存，必须进行编码压缩。播放时只需要采用对应的解码技术就可以恢复播放。<br>本文只涉及这个编解码流程中的基础概念、定义等。</p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><blockquote>
+<p>以下摘录自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/leisure_chn/p/10285829.html">https://www.cnblogs.com/leisure_chn/p/10285829.html</a></p>
+</blockquote>
+<h3 id="熵与冗余"><a href="#熵与冗余" class="headerlink" title="熵与冗余"></a>熵与冗余</h3><p>引自参考资料[1]第1.5节</p>
+<blockquote>
+<p>在所有的实际节目素材中，存在着两种类型的信号分量：即异常的、不可预见的信号分量和可以预见的信号分量。异常分量称为<strong>熵</strong>，它是信号中的真正信息。其余部分称为<strong>冗余</strong>，因为它不是必需的信息。冗余可以是空间性的，如在图像的大片区域中，邻近像素几乎具有相同的数值。冗余也可以是时间性的，例如连续图像之间的相似部分。在所有的压缩系统编码器中都是将熵与冗余相分离，只有熵被编码和传输，而在解码器中再从编码器的发送的信号中计算出冗余。</p>
+</blockquote>
+<h3 id="帧内编码"><a href="#帧内编码" class="headerlink" title="帧内编码"></a>帧内编码</h3><p>帧内编码是空间域编码，利用图像空间性冗余度进行图像压缩，处理的是一幅独立的图像，不会跨越多幅图像。空间域编码依赖于一幅图像中相邻像素间的相似性和图案区的主要空间域频率。</p>
+<p>JPEG标准用于静止图像(即图片)，只使用了空间域压缩，只使用帧内编码。</p>
+<h3 id="帧间编码"><a href="#帧间编码" class="headerlink" title="帧间编码"></a>帧间编码</h3><p>帧间编码是时间域编码，是利用一组连续图像间的时间性冗余度进行图像压缩。如果某帧图像可被解码器使用，那么解码器只须利用两帧图像的差异即可得到下一帧图像。比如运动平缓的几帧图像的相似性大，差异性小，而运动剧烈的几幅图像则相似性小，差异性大。当得到一帧完整的图像信息后，可以利用与后一帧图像的差异值推算得到后一帧图像，这样就实现了数据量的压缩。时间域编码依赖于连续图像帧间的相似性，尽可能利用已接收处理的图像信息来“预测”生成当前图像。</p>
+<p>MPEG标准用于运动图像(即视频)，会使用空间域编码和时间域编码，因此是帧内编码和帧间编码结合使用。</p>
+<h3 id="运动矢量"><a href="#运动矢量" class="headerlink" title="运动矢量"></a>运动矢量</h3><p>一组连续图像记录了目标的运动。运动矢量用于衡量两帧图像间目标的运动程度，运动矢量由水平位移量和垂直位移量二者构成。</p>
+<h3 id="运动补偿"><a href="#运动补偿" class="headerlink" title="运动补偿"></a>运动补偿</h3><p>目标的运动降低了图像间的相似性，增加了差异数据量。而运动补偿则通过运行矢量来降低图像间的差异数据量。</p>
+<p>下图为运动补偿的示意图。当某一目标运动时，其位置会变化但形状颜色等基本不变。编码器则可利用运动矢量减低图像差值，解码器根据图像差值中的运动矢量移动目标到合适的位置即可。假设图中是理想情况，目标除移动位置外其他任何属性无任何变化，则两幅图像间的差值仅包含运动矢量这一数据量。显然运动补偿可以显著减少图像差值数据量。<br><img src="https://leichn.github.io/img/avideo_basics/motion_compensation.jpg" alt="图1 运动补偿"></p>
+<h3 id="双向预测"><a href="#双向预测" class="headerlink" title="双向预测"></a>双向预测</h3><p>先看示意图：<br><img src="https://leichn.github.io/img/avideo_basics/bi-directionally_predicted.jpg" alt="图2 双向预测"></p>
+<p>连续的三幅图像中，目标块有垂直位置上的移动，背景块无位置移动。我们考虑如何取得当前帧图像(画面N)：<br>画面N中，目标向上移动后，露出背景块。<br>画面N-1中，因为背景块被目标块遮挡住了，因此没有背景块相关信息。<br>画面N+1中，完整包含背景块的数据，因此画面N可以从画面N-1中取得背景块。<br>如何可以得到画面N呢？解码器可以先解码得到画面N-1和画面N+1，通过画面N-1中的目标块数据结合运动矢量即可得到画面N中的目标块数据，通过画面N+1中的背景块数据则可得到画面N中的背景块数据。三幅画面的解码顺序为：N-1, N+1, N。三幅画面的显示顺序为：N-1, N, N+1。画面N通过其前一幅画面N-1和后一幅画面N+1推算(预测，predicted)得到，因此这种方式称为双向预测(或前向预测、双向参考)。</p>
+<h3 id="I帧-IDR帧-P帧-B帧"><a href="#I帧-IDR帧-P帧-B帧" class="headerlink" title="I帧/IDR帧/P帧/B帧"></a>I帧/IDR帧/P帧/B帧</h3><p><strong>I帧</strong>：I帧(Intra-coded picture, 帧内编码帧，常称为关键帧)包含一幅完整的图像信息，属于帧内编码图像，不含运动矢量，在解码时不需要参考其他帧图像。因此在I帧图像处可以切换频道，而不会导致图像丢失或无法解码。I帧图像用于阻止误差的累积和扩散。在闭合式GOP中，每个GOP的第一个帧一定是I帧，且当前GOP的数据不会参考前后GOP的数据。</p>
+<p><strong>IDR帧</strong>：IDR帧(Instantaneous Decoding Refresh picture, 即时解码刷新帧)是一种特殊的I帧。当解码器解码到IDR帧时，会将DPB(Decoded Picture Buffer，指前后向参考帧列表)清空，将已解码的数据全部输出或抛弃，然后开始一次全新的解码序列。IDR帧之后的图像不会参考IDR帧之前的图像，因此IDR帧可以阻止视频流中的错误传播，同时IDR帧也是解码器、播放器的一个安全访问点。</p>
+<p><strong>P帧</strong>：P帧(Predictive-coded picture, 预测编码图像帧)是帧间编码帧，利用之前的I帧或P帧进行预测编码。</p>
+<p><strong>B帧</strong>：B帧(Bi-directionally predicted picture, 双向预测编码图像帧)是帧间编码帧，利用之前和(或)之后的I帧或P帧进行双向预测编码。B帧不可以作为参考帧。<br>B帧具有更高的压缩率，但需要更多的缓冲时间以及更高的CPU占用率，因此B帧适合本地存储以及视频点播，而不适用对实时性要求较高的直播系统。</p>
+<h3 id="GOP"><a href="#GOP" class="headerlink" title="GOP"></a>GOP</h3><p>GOP(Group Of Pictures, 图像组)是一组连续的图像，由一个I帧和多个B/P帧组成，是编解码器存取的基本单位。GOP结构常用的两个参数M和N，M指定GOP中两个anchor frame(anchor frame指可被其他帧参考的帧，即I帧或P帧)之间的距离，N指定一个GOP的大小。例如M=3，N=15，GOP结构为：IBBPBBPBBPBBPBB</p>
+<p>TODO: GOP中是否每两个anchor frame的间隔是相同的？推测：未必相同。实际上分析不少视频文件，规律并不一致。此处没有彻底弄清楚，待进一步积累素材、分析与确认。</p>
+<p>GOP有两种：闭合式GOP和开放式GOP：</p>
+<p><strong>闭合式GOP</strong>：闭合式GOP只需要参考本GOP内的图像即可，不需参考前后GOP的数据。这种模式决定了，闭合式GOP的显示顺序总是以I帧开始以P帧结束</p>
+<p>TODO: 闭合式GOP是否一定是以P帧结束？推测：可能未必有此定义。有看到某些视频文件GOP以B帧结束。</p>
+<p><strong>开放式GOP</strong>：开放式GOP中的B帧解码时可能要用到其前一个GOP或后一个GOP的某些帧。码流里面包含B帧的时候才会出现开放式GOP。</p>
+<p>TODO: 开放式GOP是否规定是以B帧开始，P帧结束？推测：可能未必有此定义。是否以B帧开始？网上资料说法不一。是否以P帧结束？有看到某些视频文件GOP以B帧结束。</p>
+<p>在开放式GOP中，普通I帧和IDR帧功能是有差别的，需要明确区分两种帧类型。在闭合式GOP中，普通I帧和IDR帧功能没有差别，可以不作区分。</p>
+<p>开放式GOP和闭合式GOP中I帧、P帧、B帧的依赖关系如下图所示：<br><img src="https://leichn.github.io/img/avideo_basics/gop_mode.jpg" alt="图3 GOP模式"></p>
+<h3 id="DTS和PTS"><a href="#DTS和PTS" class="headerlink" title="DTS和PTS"></a>DTS和PTS</h3><p>DTS(Decoding Time Stamp, 解码时间戳)，表示压缩帧的解码时间。<br>PTS(Presentation Time Stamp, 显示时间戳)，表示将压缩帧解码后得到的原始帧的显示时间。<br>音频中DTS和PTS是相同的。视频中由于B帧需要双向预测，B帧依赖于其前和其后的帧，因此含B帧的视频解码顺序与显示顺序不同，即DTS与PTS不同。当然，不含B帧的视频，其DTS和PTS是相同的。下图以一个开放式GOP示意图为例，说明视频流的解码顺序和显示顺序<br><img src="https://leichn.github.io/img/avideo_basics/decode_order.jpg" alt="图4 解码和显示顺序"><br><strong>采集顺序</strong>指图像传感器采集原始信号得到图像帧的顺序。<br><strong>编码顺序</strong>指编码器编码后图像帧的顺序。存储到磁盘的本地视频文件中图像帧的顺序与编码顺序相同。<br><strong>传输顺序</strong>指编码后的流在网络中传输过程中图像帧的顺序。<br><strong>解码顺序</strong>指解码器解码图像帧的顺序。<br><strong>显示顺序</strong>指图像帧在显示器上显示的顺序。<br><strong>采集顺序与显示顺序相同。编码顺序、传输顺序和解码顺序相同。</strong><br>以图中“B[1]”帧为例进行说明，“B[1]”帧解码时需要参考“I[0]”帧和“P[3]”帧，因此“P[3]”帧必须比“B[1]”帧先解码。这就导致了解码顺序和显示顺序的不一致，后显示的帧需要先解码。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<p>[1] 泰克Tektronic, MPEG基础和协议分析指南<br>[2] <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/04b5b1e4ff27">视频直播的理论知识</a>，<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/04b5b1e4ff27">https://www.jianshu.com/p/04b5b1e4ff27</a><br>[3] <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d30c051b4106">open GOP &amp; close GOP</a>, <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/d30c051b4106">https://www.jianshu.com/p/d30c051b4106</a><br>[4] <a target="_blank" rel="noopener" href="https://blog.csdn.net/abcsunl/article/details/68190136">I帧/B帧/P帧/GOP</a>, <a target="_blank" rel="noopener" href="https://blog.csdn.net/abcsunl/article/details/68190136">https://blog.csdn.net/abcsunl/article/details/68190136</a><br>[5] <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3578e794f6b5">FFmpeg音视频同步原理与实现</a>, <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/3578e794f6b5">https://www.jianshu.com/p/3578e794f6b5</a><br>[6] <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/27279255f67e">FFmpeg音视频同步</a>, <a target="_blank" rel="noopener" href="https://www.jianshu.com/p/27279255f67e">https://www.jianshu.com/p/27279255f67e</a><br>[7] <a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S1319157819301867">The GOP Inter Prediction of H.264 AVC</a>, <a target="_blank" rel="noopener" href="https://www.sciencedirect.com/science/article/pii/S1319157819301867">https://www.sciencedirect.com/science/article/pii/S1319157819301867</a><br>[8] <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Group_of_pictures">WiKi Group of pictures</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Group_of_pictures">https://en.wikipedia.org/wiki/Group_of_pictures</a><br>[9] <a target="_blank" rel="noopener" href="https://streaminglearningcenter.com/articles/open-and-closed-gops-all-you-need-to-know.html">Open and Closed GOPs – All You Need to Know</a>, <a target="_blank" rel="noopener" href="https://streaminglearningcenter.com/articles/open-and-closed-gops-all-you-need-to-know.html">https://streaminglearningcenter.com/articles/open-and-closed-gops-all-you-need-to-know.html</a></p>
+</blockquote>
+
+	  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+	</div>
+
+	
+	<span id="/wiki/%E8%A7%86%E9%A2%91%E7%BC%96%E8%A7%A3%E7%A0%81%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5/" class="leancloud-visitors view" data-flag-title="视频编解码基础概念">
+		<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+	</span>
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
+    
+    
+    <a href="/wiki/三种存储类型/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> Prev</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/wiki/FFmpeg安装/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+-->
+	
+		<section id="comments" class="comments">
+			<style>
+			.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+			@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var valineConfig = {"enable":true,"appId":"ueIePJtaGryN9FhXJieFg0zv-MdYXbMMI","appKey":"YrCpNBNF8jxrR28HotIjP2Gb","placeholder":"提交评论时留下邮箱收到回复后将自动通知","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"]}
+valineConfig.el='#vcomment';
+new Valine(valineConfig);
+    // new Valine({
+    //     el: '#vcomment',
+    //     appId: "",
+    //     appKey: "",
+    //     placeholder: "提交评论时留下邮箱收到回复后将自动通知",
+    //     avatar:"monsterid",
+    //     visitor: "true",
+    //     requiredFields: "nick,mail".split(','),
+    // });
+</script>
+
+		</section>
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2020-12-18 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Video/">Video<span>3</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/video/">video<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
+	   <div id="toc" class="toc collapse in">
+		   <span class="toc-title">Contents</span>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-article-text">概述</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%9F%BA%E7%A1%80%E6%A6%82%E5%BF%B5"><span class="toc-article-text">基础概念</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E7%86%B5%E4%B8%8E%E5%86%97%E4%BD%99"><span class="toc-article-text">熵与冗余</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%B8%A7%E5%86%85%E7%BC%96%E7%A0%81"><span class="toc-article-text">帧内编码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%B8%A7%E9%97%B4%E7%BC%96%E7%A0%81"><span class="toc-article-text">帧间编码</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E8%BF%90%E5%8A%A8%E7%9F%A2%E9%87%8F"><span class="toc-article-text">运动矢量</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E8%BF%90%E5%8A%A8%E8%A1%A5%E5%81%BF"><span class="toc-article-text">运动补偿</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#%E5%8F%8C%E5%90%91%E9%A2%84%E6%B5%8B"><span class="toc-article-text">双向预测</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#I%E5%B8%A7-IDR%E5%B8%A7-P%E5%B8%A7-B%E5%B8%A7"><span class="toc-article-text">I帧&#x2F;IDR帧&#x2F;P帧&#x2F;B帧</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#GOP"><span class="toc-article-text">GOP</span></a></li><li class="toc-article-item toc-article-level-3"><a class="toc-article-link" href="#DTS%E5%92%8CPTS"><span class="toc-article-text">DTS和PTS</span></a></li></ol></li><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-article-text">参考资料</span></a></li></ol></li></ol>
+		</div>
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2021 SunZhenliang's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

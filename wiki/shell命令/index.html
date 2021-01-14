@@ -1,0 +1,329 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>shell 命令 | Alliswell&#39;s blog</title>
+  <meta name="author" content="SunZhenliang">
+  
+  <meta name="description" content="shell 常用命令rpm12345rpmbuild -ba *.spec  #编译打包rpmrpm -ivh *.rpm   #安装rpm包rpm -qpR *.rpm   #列出包依赖的库rpm -ql  *.rpm   #列出安装的内容rpm -qpl *.rpm   #列出未安装的包里内容
+
+scp12scp [-P port] file usr@x.x.x.x:~/dir  #local to remotescp [-P port] usr@x.x.x.x:~/dir/file  ./dir  #remote to local
+
+cp1cp -d or -P symbolic-link dir/   #复制软连接而不是文件本身
+
+ssh1ssh [-p port] usr@x.x.x.x  #ssh登录远端
+
+user"> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="shell 命令"/>
+  <meta property="og:site_name" content="Alliswell&#39;s blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Alliswell&#39;s blog" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Alliswell&#39;s blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> shell 命令</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h1 id="shell-常用命令"><a href="#shell-常用命令" class="headerlink" title="shell 常用命令"></a>shell 常用命令</h1><h2 id="rpm"><a href="#rpm" class="headerlink" title="rpm"></a>rpm</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">rpmbuild -ba *.spec  #编译打包rpm</span><br><span class="line">rpm -ivh *.rpm   #安装rpm包</span><br><span class="line">rpm -qpR *.rpm   #列出包依赖的库</span><br><span class="line">rpm -ql  *.rpm   #列出安装的内容</span><br><span class="line">rpm -qpl *.rpm   #列出未安装的包里内容</span><br></pre></td></tr></table></figure>
+
+<h2 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">scp [-P port] file usr@x.x.x.x:~/dir  #local to remote</span><br><span class="line">scp [-P port] usr@x.x.x.x:~/dir/file  ./dir  #remote to local</span><br></pre></td></tr></table></figure>
+
+<h2 id="cp"><a href="#cp" class="headerlink" title="cp"></a>cp</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp -d or -P symbolic-link dir/   #复制软连接而不是文件本身</span><br></pre></td></tr></table></figure>
+
+<h2 id="ssh"><a href="#ssh" class="headerlink" title="ssh"></a>ssh</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh [-p port] usr@x.x.x.x  #ssh登录远端</span><br></pre></td></tr></table></figure>
+
+<h2 id="user"><a href="#user" class="headerlink" title="user"></a>user</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">adduser &lt;username&gt;  #添加新用户</span><br><span class="line">usermod -aG sudo/wheel &lt;username&gt;  #用户添加到sudo组</span><br></pre></td></tr></table></figure>
+
+<h2 id="系统"><a href="#系统" class="headerlink" title="系统"></a>系统</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br></pre></td><td class="code"><pre><span class="line">lsb_release -a #查看系统版本信息的命令</span><br><span class="line">cat /etc/redhat-release</span><br><span class="line">uname -a</span><br><span class="line">hostnamectl</span><br><span class="line">uptime</span><br><span class="line">cat /proc/version #查看系统版本信息的命令</span><br><span class="line">cat /proc/sys/fs/inotify/max_user_watches #最大文件监控数</span><br><span class="line"><span class="meta">#</span><span class="bash"> The <span class="built_in">limit</span> can be increased to its maximum by editing /etc/sysctl.conf (except on Arch Linux, <span class="built_in">read</span> below) and adding this line to the end of the file:</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> fs.inotify.max_user_watches=524288</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> The new value can <span class="keyword">then</span> be loaded <span class="keyword">in</span> by running sudo sysctl -p.</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> While 524,288 is the maximum number of files that can be watched, <span class="keyword">if</span> you<span class="string">&#x27;re in an environment that is particularly memory constrained, you may wish to lower the number. Each file watch takes up 1080 bytes, so assuming that all 524,288 watches are consumed, that results in an upper bound of around 540 MiB.</span></span></span><br><span class="line"></span><br><span class="line">ls /proc[pid]  #查看进程信息</span><br><span class="line">watch -n 1 &quot;nstat | grep Tcp&quot; #查看机器网络变化信息, 排错可用</span><br><span class="line">df -lhT  #查看文件系统类型</span><br><span class="line">who  </span><br><span class="line">who -Hu #查看谁可以访问</span><br><span class="line">grep sh$ /etc/passwd  #查看谁有shell访问权限</span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看是否物理机</span></span><br><span class="line">dmidecode -s system-manufacturer        </span><br><span class="line">dmidecode -s system-product-name        </span><br><span class="line">lshw -c system | grep product | head -1        </span><br><span class="line">cat /sys/class/dmi/id/product_name        </span><br><span class="line">cat /sys/class/dmi/id/sys_vendor        </span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看硬件信息</span></span><br><span class="line">lscpu or cat /proc/cpuinfo</span><br><span class="line">lsmem or cat /proc/meminfo</span><br><span class="line">ifconfig -a</span><br><span class="line">ethtool &lt;devname&gt;</span><br><span class="line">lshw</span><br><span class="line">lspci</span><br><span class="line">dmidecode</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 查看进程和服务</span></span><br><span class="line">pstree -pa 1</span><br><span class="line">ps -ef</span><br><span class="line">ps auxf</span><br><span class="line">systemctl</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 网路</span></span><br><span class="line">netstat -tulpn</span><br><span class="line">netstat -anp</span><br><span class="line">lsof -i</span><br><span class="line">ss</span><br><span class="line">iptables -L -n</span><br><span class="line">cat /etc/resolv.conf</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 内核</span></span><br><span class="line">[https://www.oreilly.com/library/view/red-hat-enterprise/9781785283550/ch10s05.html](https://www.oreilly.com/library/view/red-hat-enterprise/9781785283550/ch10s05.html)</span><br><span class="line">uname -r</span><br><span class="line">cat /proc/cmdline</span><br><span class="line">lsmod</span><br><span class="line">modinfo &lt;module&gt;</span><br><span class="line">sysctl -a</span><br><span class="line">cat /boot/grub2/grub.cfg</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 日志</span></span><br><span class="line">dmesg</span><br><span class="line">tail -f /var/log/messages</span><br><span class="line">journalctl</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 追踪</span></span><br><span class="line">strace</span><br></pre></td></tr></table></figure>
+
+<h2 id="git"><a href="#git" class="headerlink" title="git"></a>git</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git archive --prefix=output/ -o &quot;../output.tar.gz&quot; develop  #git库打包</span><br></pre></td></tr></table></figure>
+
+<h2 id="yum"><a href="#yum" class="headerlink" title="yum"></a>yum</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum reinstall packagename  #可以在/var/cache/yum目录下找到包</span><br><span class="line">yum provides *.so.version  #查询哪个包提供这个库</span><br></pre></td></tr></table></figure>
+
+<h2 id="pkg-config"><a href="#pkg-config" class="headerlink" title="pkg-config"></a>pkg-config</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pkg-config --variable pc_path pkg-config #查看pc路径</span><br></pre></td></tr></table></figure>
+
+<h2 id="make"><a href="#make" class="headerlink" title="make"></a>make</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">make V=1 #展示出具体编译命令</span><br></pre></td></tr></table></figure>
+
+	  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+	</div>
+
+	
+	<span id="/wiki/shell%E5%91%BD%E4%BB%A4/" class="leancloud-visitors view" data-flag-title="shell 命令">
+		<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+	</span>
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
+    
+    
+    <a href="/wiki/pkg-config的一点用法/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> Prev</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/wiki/LeetCode-136. 只出现一次的数字/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+-->
+	
+		<section id="comments" class="comments">
+			<style>
+			.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+			@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var valineConfig = {"enable":true,"appId":"ueIePJtaGryN9FhXJieFg0zv-MdYXbMMI","appKey":"YrCpNBNF8jxrR28HotIjP2Gb","placeholder":"提交评论时留下邮箱收到回复后将自动通知","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"]}
+valineConfig.el='#vcomment';
+new Valine(valineConfig);
+    // new Valine({
+    //     el: '#vcomment',
+    //     appId: "",
+    //     appKey: "",
+    //     placeholder: "提交评论时留下邮箱收到回复后将自动通知",
+    //     avatar:"monsterid",
+    //     visitor: "true",
+    //     requiredFields: "nick,mail".split(','),
+    // });
+</script>
+
+		</section>
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2020-10-13 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Linux/">Linux<span>3</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/总结/">总结<span>4</span></a></li> <li><a href="/tags/shell/">shell<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2021 SunZhenliang's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

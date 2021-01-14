@@ -1,0 +1,985 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>Alliswell&#39;s blog</title>
+  <meta name="author" content="SunZhenliang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Alliswell&#39;s blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Alliswell&#39;s blog" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Alliswell&#39;s blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 <div class="page-header logo">
+  <h1>Alliswell&#39;s blog<span class="blink-fast">|</span></h1>
+</div>
+
+<div class="row page">
+
+	
+	<div class="col-md-9">
+	
+
+		<div class="slogan">
+
+
+		<i class="fa fa-heart blink-slow"></i>
+
+		the brown fox jumps over the lazy dog.
+
+</div>    
+
+		<div id="top_search"></div>
+		<div class="mypage">
+		
+		<!-- title and entry -->
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/使用openmp进行多线程编程/" >使用openmp进行多线程编程</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2021-01-08  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<p>转载:<a target="_blank" rel="noopener" href="https://blog.csdn.net/acaiwlj/article/details/49818965">https://blog.csdn.net/acaiwlj/article/details/49818965</a></p>
+<blockquote>
+<p>声明：本文是基于Joel Yliluoma写的Guid into OpenMP:Easy multithreading programming for C++而写的，基本是按照自己的理解，用自己语言组织的。其中大部分例子依然用原来文章的例子，本文仅作为学习笔记之用。</p>
+</blockquote>
+<p>前言<br>多线程在实际的编程中的重要性不言而喻。对于C++而言，当我们需要使用多线程时，可以使用boost::thread库或者自从C++ 11开始支持的std::thread，也可以使用操作系统相关的线程API，如在Linux上，可以使用pthread库。除此之外，还可以使用omp来使用多线程。它的好处是跨平台，使用简单。<br>在Linux平台上，如果需要使用omp，只需在编译时使用”-fopenmp”指令。在Windows的visual studio开发环境中，开启omp支持的步骤为“项目属性 -&gt; C/C++ -&gt; 所有选项 -&gt; openmp支持 -&gt; 是(/openmp)”。<br>本文我们就介绍omp在C++中的使用方法。<br>c++ openmp入门简介<br>openmp是由一系列#paragma指令组成，这些指令控制如何多线程的执行程序。另外，即使编译器不支持omp，程序也也能够正常运行，只是程序不会多线程并行运行。以下为使用omp的简单的例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">vecInt</span><span class="params">(<span class="number">100</span>)</span></span>;</span><br><span class="line">  <span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vecInt.size(); ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    vecInt[i] = i*i;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+
+	
+
+	</div>
+  <a type="button" href="/wiki/使用openmp进行多线程编程/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<p>转载:<a target="_blank" rel="noopener" href="https://blog.csdn.net/acaiwlj/article/details/49818965">https://blog.csdn.net/acaiwlj/article/details/49818965</a></p>
+<blockquote>
+<p>声明：本文是基于Joel Yliluoma写的Guid into OpenMP:Easy multithreading programming for C++而写的，基本是按照自己的理解，用自己语言组织的。其中大部分例子依然用原来文章的例子，本文仅作为学习笔记之用。</p>
+</blockquote>
+<p>前言<br>多线程在实际的编程中的重要性不言而喻。对于C++而言，当我们需要使用多线程时，可以使用boost::thread库或者自从C++ 11开始支持的std::thread，也可以使用操作系统相关的线程API，如在Linux上，可以使用pthread库。除此之外，还可以使用omp来使用多线程。它的好处是跨平台，使用简单。<br>在Linux平台上，如果需要使用omp，只需在编译时使用”-fopenmp”指令。在Windows的visual studio开发环境中，开启omp支持的步骤为“项目属性 -&gt; C/C++ -&gt; 所有选项 -&gt; openmp支持 -&gt; 是(/openmp)”。<br>本文我们就介绍omp在C++中的使用方法。<br>c++ openmp入门简介<br>openmp是由一系列#paragma指令组成，这些指令控制如何多线程的执行程序。另外，即使编译器不支持omp，程序也也能够正常运行，只是程序不会多线程并行运行。以下为使用omp的简单的例子：</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">  <span class="function"><span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; <span class="title">vecInt</span><span class="params">(<span class="number">100</span>)</span></span>;</span><br><span class="line">  <span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; vecInt.size(); ++i)</span><br><span class="line">  &#123;</span><br><span class="line">    vecInt[i] = i*i;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<hr>
+
+	
+	</div>
+  <a type="button" href="/wiki/使用openmp进行多线程编程/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/openmp的的一点多线程应用/" >openmp 的的一点多线程应用</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2021-01-05  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<p><code>#pragma omp parallel for</code> 的使用</p>
+<p>openmp 一般随 gcc 一起，编译时使用 <code>-fopenmp</code>打开。会多一个<code>_OPENMP</code>宏定义生效，然后就可以用了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for <span class="comment">// newline is for-loop</span></span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;i = %d\n&quot;</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;end\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.2/com.ibm.xlc1312.aix.doc/compiler_ref/tuoptppp.html">tuoptppp</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.2/com.ibm.xlc1312.aix.doc/compiler_ref/prag_omp_parallel.html">prag_omp_parallel</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.openmp.org/specifications/">https://www.openmp.org/specifications/</a></li>
+</ul>
+</blockquote>
+
+	
+
+	</div>
+  <a type="button" href="/wiki/openmp的的一点多线程应用/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<p><code>#pragma omp parallel for</code> 的使用</p>
+<p>openmp 一般随 gcc 一起，编译时使用 <code>-fopenmp</code>打开。会多一个<code>_OPENMP</code>宏定义生效，然后就可以用了。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">pragma</span> omp parallel for <span class="comment">// newline is for-loop</span></span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++ )</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;i = %d\n&quot;</span>, i);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;end\n&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.2/com.ibm.xlc1312.aix.doc/compiler_ref/tuoptppp.html">tuoptppp</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.ibm.com/support/knowledgecenter/SSGH2K_13.1.2/com.ibm.xlc1312.aix.doc/compiler_ref/prag_omp_parallel.html">prag_omp_parallel</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.openmp.org/specifications/">https://www.openmp.org/specifications/</a></li>
+</ul>
+</blockquote>
+
+	
+	</div>
+  <a type="button" href="/wiki/openmp的的一点多线程应用/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/do-while-0-特殊用法/" >do...while(0)特殊用法</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2021-01-01  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<p>最近在FFmpeg和sox源码中发现有<code>#define do...while(0)</code>的用法，不太能理解就查了下。发现在Linux内核中也有这些用法。</p>
+<p>总结大概有以下几点：</p>
+<ol>
+<li>空语句编译时会产生警告<code>#define FOO do&#123; &#125; while(0)</code></li>
+<li>创建一个局部空间，可以在其中定义局部变量</li>
+<li>在宏定义中使用复杂语法，单只产生单条语句而不是语句块<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> exch(x,y) &#123; int tmp; tmp=x; x=y; y=tmp; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这样调用上面的宏</span></span><br><span class="line"><span class="keyword">if</span> (x &gt; y)</span><br><span class="line">　　exch(x,y);          <span class="comment">// Branch 1</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">　　do_something();     <span class="comment">// Branch 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 但展开是这样</span></span><br><span class="line"><span class="keyword">if</span> (x &gt; y) &#123;                <span class="comment">// 单分支if</span></span><br><span class="line">　　<span class="keyword">int</span> tmp;</span><br><span class="line">　　tmp = x;</span><br><span class="line">　　x = y;</span><br><span class="line">　　y = tmp;</span><br><span class="line">&#125;</span><br><span class="line">　;                           <span class="comment">// 空语句</span></span><br><span class="line"><span class="keyword">else</span>                        <span class="comment">// 错误!!! &quot;parse error before else&quot;</span></span><br><span class="line">　　do_something();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 采用do while</span></span><br><span class="line"><span class="keyword">if</span> (x &gt; y)</span><br><span class="line">　　<span class="keyword">do</span> &#123;</span><br><span class="line">　　<span class="keyword">int</span> tmp;</span><br><span class="line">　　tmp = x;</span><br><span class="line">　　x = y;</span><br><span class="line">　　y = tmp;</span><br><span class="line">　　&#125; <span class="keyword">while</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">　　do_something();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>具体参考以下内核说明文档<a target="_blank" rel="noopener" href="https://kernelnewbies.org/FAQ/DoWhile0">https://kernelnewbies.org/FAQ/DoWhile0</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://kernelnewbies.org/FAQ/DoWhile0">https://kernelnewbies.org/FAQ/DoWhile0</a></li>
+</ul>
+</blockquote>
+
+	
+
+	</div>
+  <a type="button" href="/wiki/do-while-0-特殊用法/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<p>最近在FFmpeg和sox源码中发现有<code>#define do...while(0)</code>的用法，不太能理解就查了下。发现在Linux内核中也有这些用法。</p>
+<p>总结大概有以下几点：</p>
+<ol>
+<li>空语句编译时会产生警告<code>#define FOO do&#123; &#125; while(0)</code></li>
+<li>创建一个局部空间，可以在其中定义局部变量</li>
+<li>在宏定义中使用复杂语法，单只产生单条语句而不是语句块<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> exch(x,y) &#123; int tmp; tmp=x; x=y; y=tmp; &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 这样调用上面的宏</span></span><br><span class="line"><span class="keyword">if</span> (x &gt; y)</span><br><span class="line">　　exch(x,y);          <span class="comment">// Branch 1</span></span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">　　do_something();     <span class="comment">// Branch 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 但展开是这样</span></span><br><span class="line"><span class="keyword">if</span> (x &gt; y) &#123;                <span class="comment">// 单分支if</span></span><br><span class="line">　　<span class="keyword">int</span> tmp;</span><br><span class="line">　　tmp = x;</span><br><span class="line">　　x = y;</span><br><span class="line">　　y = tmp;</span><br><span class="line">&#125;</span><br><span class="line">　;                           <span class="comment">// 空语句</span></span><br><span class="line"><span class="keyword">else</span>                        <span class="comment">// 错误!!! &quot;parse error before else&quot;</span></span><br><span class="line">　　do_something();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 采用do while</span></span><br><span class="line"><span class="keyword">if</span> (x &gt; y)</span><br><span class="line">　　<span class="keyword">do</span> &#123;</span><br><span class="line">　　<span class="keyword">int</span> tmp;</span><br><span class="line">　　tmp = x;</span><br><span class="line">　　x = y;</span><br><span class="line">　　y = tmp;</span><br><span class="line">　　&#125; <span class="keyword">while</span>(<span class="number">0</span>);</span><br><span class="line"><span class="keyword">else</span></span><br><span class="line">　　do_something();</span><br></pre></td></tr></table></figure>
+
+</li>
+</ol>
+<p>具体参考以下内核说明文档<a target="_blank" rel="noopener" href="https://kernelnewbies.org/FAQ/DoWhile0">https://kernelnewbies.org/FAQ/DoWhile0</a></p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://kernelnewbies.org/FAQ/DoWhile0">https://kernelnewbies.org/FAQ/DoWhile0</a></li>
+</ul>
+</blockquote>
+
+	
+	</div>
+  <a type="button" href="/wiki/do-while-0-特殊用法/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/三种存储类型/" >三种存储类型</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-12-29  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="Storage-Research"><a href="#Storage-Research" class="headerlink" title="Storage Research"></a>Storage Research</h1><h2 id="块存储"><a href="#块存储" class="headerlink" title="块存储"></a>块存储</h2><h3 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h3><p>最底层的数据组织方式，所有数据按照固定的大小分块写入，每一块赋予一个用于寻址的编号。</p>
+<h3 id="应用方式："><a href="#应用方式：" class="headerlink" title="应用方式："></a>应用方式：</h3><ol>
+<li>为了方便管理，硬盘这样的块设备通常可以划分为多个逻辑块设备，也就是我们熟悉的硬盘分区（Partition）。</li>
+<li>单个介质的容量、性能有限，可以通过某些技术手段把多个物理块设备组合成一个逻辑块设备，例如各种级别的RAID，JBOD，某些操作系统的卷管理系统（Volume Manager）如Windows的动态磁盘、Linux的LVM等。</li>
+</ol>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>这种方式的好处当然是因为通过了Raid与LVM等手段，对数据提供了保护；</li>
+<li>可以将多块廉价的硬盘组合起来，称为一个大容量的逻辑盘对外提供服务，提高了容量；</li>
+<li>写入数据时，由于是多块磁盘组合出来的逻辑盘，所以几块硬盘可以并行写入的，提升了读写效率；</li>
+</ol>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>主机之间数据无法共享，在服务器不做集群的情况下，块存储裸盘映射给主机，在格式化使用后，对于主机来说相当于本地盘，那么主机A的本地盘根本不能给主机B去使用，无法共享数据</li>
+<li>无目录系统</li>
+</ol>
+	
+
+	</div>
+  <a type="button" href="/wiki/三种存储类型/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="Storage-Research"><a href="#Storage-Research" class="headerlink" title="Storage Research"></a>Storage Research</h1><h2 id="块存储"><a href="#块存储" class="headerlink" title="块存储"></a>块存储</h2><h3 id="定义："><a href="#定义：" class="headerlink" title="定义："></a>定义：</h3><p>最底层的数据组织方式，所有数据按照固定的大小分块写入，每一块赋予一个用于寻址的编号。</p>
+<h3 id="应用方式："><a href="#应用方式：" class="headerlink" title="应用方式："></a>应用方式：</h3><ol>
+<li>为了方便管理，硬盘这样的块设备通常可以划分为多个逻辑块设备，也就是我们熟悉的硬盘分区（Partition）。</li>
+<li>单个介质的容量、性能有限，可以通过某些技术手段把多个物理块设备组合成一个逻辑块设备，例如各种级别的RAID，JBOD，某些操作系统的卷管理系统（Volume Manager）如Windows的动态磁盘、Linux的LVM等。</li>
+</ol>
+<h3 id="优点"><a href="#优点" class="headerlink" title="优点"></a>优点</h3><ol>
+<li>这种方式的好处当然是因为通过了Raid与LVM等手段，对数据提供了保护；</li>
+<li>可以将多块廉价的硬盘组合起来，称为一个大容量的逻辑盘对外提供服务，提高了容量；</li>
+<li>写入数据时，由于是多块磁盘组合出来的逻辑盘，所以几块硬盘可以并行写入的，提升了读写效率；</li>
+</ol>
+<h3 id="缺点"><a href="#缺点" class="headerlink" title="缺点"></a>缺点</h3><ol>
+<li>主机之间数据无法共享，在服务器不做集群的情况下，块存储裸盘映射给主机，在格式化使用后，对于主机来说相当于本地盘，那么主机A的本地盘根本不能给主机B去使用，无法共享数据</li>
+<li>无目录系统</li>
+</ol>
+	
+	</div>
+  <a type="button" href="/wiki/三种存储类型/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/视频编解码基础概念/" >视频编解码基础概念</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-12-18  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>原始图像信息被采集后，视频数据体积非常大，不利于传输和储存，必须进行编码压缩。播放时只需要采用对应的解码技术就可以恢复播放。<br>本文只涉及这个编解码流程中的基础概念、定义等。</p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><blockquote>
+<p>以下摘录自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/leisure_chn/p/10285829.html">https://www.cnblogs.com/leisure_chn/p/10285829.html</a></p>
+</blockquote>
+<h3 id="熵与冗余"><a href="#熵与冗余" class="headerlink" title="熵与冗余"></a>熵与冗余</h3><p>引自参考资料[1]第1.5节</p>
+<blockquote>
+<p>在所有的实际节目素材中，存在着两种类型的信号分量：即异常的、不可预见的信号分量和可以预见的信号分量。异常分量称为<strong>熵</strong>，它是信号中的真正信息。其余部分称为<strong>冗余</strong>，因为它不是必需的信息。冗余可以是空间性的，如在图像的大片区域中，邻近像素几乎具有相同的数值。冗余也可以是时间性的，例如连续图像之间的相似部分。在所有的压缩系统编码器中都是将熵与冗余相分离，只有熵被编码和传输，而在解码器中再从编码器的发送的信号中计算出冗余。</p>
+</blockquote>
+<h3 id="帧内编码"><a href="#帧内编码" class="headerlink" title="帧内编码"></a>帧内编码</h3><p>帧内编码是空间域编码，利用图像空间性冗余度进行图像压缩，处理的是一幅独立的图像，不会跨越多幅图像。空间域编码依赖于一幅图像中相邻像素间的相似性和图案区的主要空间域频率。</p>
+<p>JPEG标准用于静止图像(即图片)，只使用了空间域压缩，只使用帧内编码。</p>
+	
+
+	</div>
+  <a type="button" href="/wiki/视频编解码基础概念/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><p>原始图像信息被采集后，视频数据体积非常大，不利于传输和储存，必须进行编码压缩。播放时只需要采用对应的解码技术就可以恢复播放。<br>本文只涉及这个编解码流程中的基础概念、定义等。</p>
+<h2 id="基础概念"><a href="#基础概念" class="headerlink" title="基础概念"></a>基础概念</h2><blockquote>
+<p>以下摘录自<a target="_blank" rel="noopener" href="https://www.cnblogs.com/leisure_chn/p/10285829.html">https://www.cnblogs.com/leisure_chn/p/10285829.html</a></p>
+</blockquote>
+<h3 id="熵与冗余"><a href="#熵与冗余" class="headerlink" title="熵与冗余"></a>熵与冗余</h3><p>引自参考资料[1]第1.5节</p>
+<blockquote>
+<p>在所有的实际节目素材中，存在着两种类型的信号分量：即异常的、不可预见的信号分量和可以预见的信号分量。异常分量称为<strong>熵</strong>，它是信号中的真正信息。其余部分称为<strong>冗余</strong>，因为它不是必需的信息。冗余可以是空间性的，如在图像的大片区域中，邻近像素几乎具有相同的数值。冗余也可以是时间性的，例如连续图像之间的相似部分。在所有的压缩系统编码器中都是将熵与冗余相分离，只有熵被编码和传输，而在解码器中再从编码器的发送的信号中计算出冗余。</p>
+</blockquote>
+<h3 id="帧内编码"><a href="#帧内编码" class="headerlink" title="帧内编码"></a>帧内编码</h3><p>帧内编码是空间域编码，利用图像空间性冗余度进行图像压缩，处理的是一幅独立的图像，不会跨越多幅图像。空间域编码依赖于一幅图像中相邻像素间的相似性和图案区的主要空间域频率。</p>
+<p>JPEG标准用于静止图像(即图片)，只使用了空间域压缩，只使用帧内编码。</p>
+	
+	</div>
+  <a type="button" href="/wiki/视频编解码基础概念/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/FFmpeg安装/" >FFmpeg 开发环境构建</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-12-18  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="安装平台"><a href="#安装平台" class="headerlink" title="安装平台"></a>安装平台</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">             ............</span><br><span class="line">         .&#x27;;;;;;.       .,;,.            ----------</span><br><span class="line">      .,;;;;;;;.       &#x27;;;;;;;;.         OS: Deepin 20 x86_64</span><br><span class="line">    .;::::::::&#x27;     .,::;;,&#x27;&#x27;&#x27;&#x27;&#x27;,.       Model: 10SMCTO1WW ThinkCentre M920t-N000</span><br><span class="line">   ,&#x27;.::::::::    .;;&#x27;.          &#x27;;      Kernel: 5.4.70-amd64-desktop</span><br><span class="line">  ;&#x27;  &#x27;cccccc,   ,&#x27; :: &#x27;..        .:     Uptime: 4 days, 4 hours, 14 minutes</span><br><span class="line"> ,,    :ccccc.  ;: .c, &#x27;&#x27; :.       ,;    Packages: 2561 (dpkg), 9 (snap)</span><br><span class="line">.l.     cllll&#x27; ., .lc  :; .l&#x27;       l.   Shell: zsh 5.7.1</span><br><span class="line">.c       :lllc  ;cl:  .l&#x27; .ll.      :&#x27;   Resolution: 1920x1080</span><br><span class="line">.l        &#x27;looc. .   ,o:  &#x27;oo&#x27;      c,   DE: Deepin</span><br><span class="line">.o.         .:ool::coc&#x27;  .ooo&#x27;      o.   WM: KWin</span><br><span class="line"> ::            .....   .;dddo      ;c    Theme: deepin-dark [GTK2/3]</span><br><span class="line">  l:...            .&#x27;;lddddo.     ,o     Icons: Papirus [GTK3]</span><br><span class="line">   lxxxxxdoolllodxxxxxxxxxc      :l      Terminal: konsole</span><br><span class="line">    ,dxxxxxxxxxxxxxxxxxxl.     &#x27;o,       CPU: Intel i5-9500F (6) @ 4.400GHz</span><br><span class="line">      ,dkkkkkkkkkkkkko;.    .;o;         GPU: AMD ATI Radeon HD 8570 / R7 240/340 / R520 OEM</span><br><span class="line">        .;okkkkkdl;.    .,cl:.           Memory: 4032MiB / 7836MiB</span><br><span class="line">            .,:cccccccc:,.</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装本体"><a href="#安装本体" class="headerlink" title="安装本体"></a>安装本体</h2><p>ffmpeg-4.3.git<br>官网<a target="_blank" rel="noopener" href="https://ffmpeg.org/">https://ffmpeg.org/</a></p>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><h3 id="SDL"><a href="#SDL" class="headerlink" title="SDL"></a>SDL</h3><p>Simple DirectMedia Layer 是一个跨平台的开发库，旨在通过 OpenGL 和 Direct3D 提供对音频、键盘、鼠标、操纵杆和图形硬件的低级访问。它用于视频播放软件、模拟器和流行游戏。<br>SDL官网<a target="_blank" rel="noopener" href="https://www.libsdl.org/">https://www.libsdl.org/</a></p>
+<h3 id="nasm"><a href="#nasm" class="headerlink" title="nasm"></a>nasm</h3><p>Netwide Assembler 是 x86 架构的汇编与反汇编工具。<br>如果在在 arm 等其他平台，交叉编译工具链中包含有对应的汇编器，则交叉编译 ffmpeg 时需要 <code>--disable-x86asm</code> 选项。<br>NASM 官网：<a target="_blank" rel="noopener" href="https://www.nasm.us/">https://www.nasm.us/</a></p>
+<h3 id="x264"><a href="#x264" class="headerlink" title="x264"></a>x264</h3>
+	
+
+	</div>
+  <a type="button" href="/wiki/FFmpeg安装/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="安装平台"><a href="#安装平台" class="headerlink" title="安装平台"></a>安装平台</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">             ............</span><br><span class="line">         .&#x27;;;;;;.       .,;,.            ----------</span><br><span class="line">      .,;;;;;;;.       &#x27;;;;;;;;.         OS: Deepin 20 x86_64</span><br><span class="line">    .;::::::::&#x27;     .,::;;,&#x27;&#x27;&#x27;&#x27;&#x27;,.       Model: 10SMCTO1WW ThinkCentre M920t-N000</span><br><span class="line">   ,&#x27;.::::::::    .;;&#x27;.          &#x27;;      Kernel: 5.4.70-amd64-desktop</span><br><span class="line">  ;&#x27;  &#x27;cccccc,   ,&#x27; :: &#x27;..        .:     Uptime: 4 days, 4 hours, 14 minutes</span><br><span class="line"> ,,    :ccccc.  ;: .c, &#x27;&#x27; :.       ,;    Packages: 2561 (dpkg), 9 (snap)</span><br><span class="line">.l.     cllll&#x27; ., .lc  :; .l&#x27;       l.   Shell: zsh 5.7.1</span><br><span class="line">.c       :lllc  ;cl:  .l&#x27; .ll.      :&#x27;   Resolution: 1920x1080</span><br><span class="line">.l        &#x27;looc. .   ,o:  &#x27;oo&#x27;      c,   DE: Deepin</span><br><span class="line">.o.         .:ool::coc&#x27;  .ooo&#x27;      o.   WM: KWin</span><br><span class="line"> ::            .....   .;dddo      ;c    Theme: deepin-dark [GTK2/3]</span><br><span class="line">  l:...            .&#x27;;lddddo.     ,o     Icons: Papirus [GTK3]</span><br><span class="line">   lxxxxxdoolllodxxxxxxxxxc      :l      Terminal: konsole</span><br><span class="line">    ,dxxxxxxxxxxxxxxxxxxl.     &#x27;o,       CPU: Intel i5-9500F (6) @ 4.400GHz</span><br><span class="line">      ,dkkkkkkkkkkkkko;.    .;o;         GPU: AMD ATI Radeon HD 8570 / R7 240/340 / R520 OEM</span><br><span class="line">        .;okkkkkdl;.    .,cl:.           Memory: 4032MiB / 7836MiB</span><br><span class="line">            .,:cccccccc:,.</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装本体"><a href="#安装本体" class="headerlink" title="安装本体"></a>安装本体</h2><p>ffmpeg-4.3.git<br>官网<a target="_blank" rel="noopener" href="https://ffmpeg.org/">https://ffmpeg.org/</a></p>
+<h2 id="安装依赖"><a href="#安装依赖" class="headerlink" title="安装依赖"></a>安装依赖</h2><h3 id="SDL"><a href="#SDL" class="headerlink" title="SDL"></a>SDL</h3><p>Simple DirectMedia Layer 是一个跨平台的开发库，旨在通过 OpenGL 和 Direct3D 提供对音频、键盘、鼠标、操纵杆和图形硬件的低级访问。它用于视频播放软件、模拟器和流行游戏。<br>SDL官网<a target="_blank" rel="noopener" href="https://www.libsdl.org/">https://www.libsdl.org/</a></p>
+<h3 id="nasm"><a href="#nasm" class="headerlink" title="nasm"></a>nasm</h3><p>Netwide Assembler 是 x86 架构的汇编与反汇编工具。<br>如果在在 arm 等其他平台，交叉编译工具链中包含有对应的汇编器，则交叉编译 ffmpeg 时需要 <code>--disable-x86asm</code> 选项。<br>NASM 官网：<a target="_blank" rel="noopener" href="https://www.nasm.us/">https://www.nasm.us/</a></p>
+<h3 id="x264"><a href="#x264" class="headerlink" title="x264"></a>x264</h3>
+	
+	</div>
+  <a type="button" href="/wiki/FFmpeg安装/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/sip协议学习/" >sip协议学习</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-12-16  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="sip协议学习"><a href="#sip协议学习" class="headerlink" title="sip协议学习"></a>sip协议学习</h1><p>最近项目接触到几个通讯协议, 这里来学习一下.</p>
+<h2 id="sip简介"><a href="#sip简介" class="headerlink" title="sip简介"></a>sip简介</h2><p>SIP（Session Initiation Protocol，会话初始协议）, 一种多媒体通讯协议, 支持并应用于语言、视频等多媒体业务。<br>SIP is an application-layer control protocol that can establish,<br>modify, and terminate multimedia sessions (conferences) such as<br>Internet telephony calls.</p>
+<p>SIP协议总的来说就是一堆协议拼起来使用。实现媒体通信、控制等业务功能。</p>
+<p>注意，SIP消息和具体的媒体流并不是在一个层面运作的。例如，一个VoIP电话是先通过SIP信令完成交互后再开始具体媒体流的传输的。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc3428">Session Initiation Protocol (SIP) Extension for Instant Messaging</a></li>
+<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc3261">SIP: Session Initiation Protocol</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaxveliang/p/12434170.html">SIP 协议详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/gnuhpc/archive/2012/01/16/2323637.html">【SIP协议】学习初学笔记</a></li>
+</ul>
+</blockquote>
+
+	
+
+	</div>
+  <a type="button" href="/wiki/sip协议学习/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="sip协议学习"><a href="#sip协议学习" class="headerlink" title="sip协议学习"></a>sip协议学习</h1><p>最近项目接触到几个通讯协议, 这里来学习一下.</p>
+<h2 id="sip简介"><a href="#sip简介" class="headerlink" title="sip简介"></a>sip简介</h2><p>SIP（Session Initiation Protocol，会话初始协议）, 一种多媒体通讯协议, 支持并应用于语言、视频等多媒体业务。<br>SIP is an application-layer control protocol that can establish,<br>modify, and terminate multimedia sessions (conferences) such as<br>Internet telephony calls.</p>
+<p>SIP协议总的来说就是一堆协议拼起来使用。实现媒体通信、控制等业务功能。</p>
+<p>注意，SIP消息和具体的媒体流并不是在一个层面运作的。例如，一个VoIP电话是先通过SIP信令完成交互后再开始具体媒体流的传输的。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc3428">Session Initiation Protocol (SIP) Extension for Instant Messaging</a></li>
+<li><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/rfc3261">SIP: Session Initiation Protocol</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/xiaxveliang/p/12434170.html">SIP 协议详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/gnuhpc/archive/2012/01/16/2323637.html">【SIP协议】学习初学笔记</a></li>
+</ul>
+</blockquote>
+
+	
+	</div>
+  <a type="button" href="/wiki/sip协议学习/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/Python深浅拷贝/" >Python 深浅拷贝</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-12-14  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在很多语言中都存在<strong>深浅拷贝</strong>两种拷贝数据的方式，Python中也不例外。本文中详细介绍了Python中的深浅拷贝的相关知识，文章的内容包含：</p>
+<ul>
+<li>对象、数据类型、引用</li>
+<li>赋值</li>
+<li>浅拷贝</li>
+<li>深拷贝</li>
+</ul>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/20201215230531.png"></p>
+<p>我们经常听到：<strong>在Python中一切皆对象</strong>。其实，说的就是我们在Python中构造的任何数据类型都是一个对象，不管是数字、字符串、字典等常见的数据结构，还是函数，甚至是我们导入的模块等，Python都会把它当做是一个对象来处理。</p>
+<p>所有的Python对象都拥有3个属性：</p>
+<ul>
+<li>身份</li>
+<li>类型</li>
+<li>值</li>
+</ul>
+<p>我们看一个简单的例子来理解上面的3个属性：</p>
+<p>假设我们声明了一个name变量，通过id、type方法能够查看对象的身份和类型：</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/20201215230633.png"></p>
+	
+
+	</div>
+  <a type="button" href="/wiki/Python深浅拷贝/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>在很多语言中都存在<strong>深浅拷贝</strong>两种拷贝数据的方式，Python中也不例外。本文中详细介绍了Python中的深浅拷贝的相关知识，文章的内容包含：</p>
+<ul>
+<li>对象、数据类型、引用</li>
+<li>赋值</li>
+<li>浅拷贝</li>
+<li>深拷贝</li>
+</ul>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/20201215230531.png"></p>
+<p>我们经常听到：<strong>在Python中一切皆对象</strong>。其实，说的就是我们在Python中构造的任何数据类型都是一个对象，不管是数字、字符串、字典等常见的数据结构，还是函数，甚至是我们导入的模块等，Python都会把它当做是一个对象来处理。</p>
+<p>所有的Python对象都拥有3个属性：</p>
+<ul>
+<li>身份</li>
+<li>类型</li>
+<li>值</li>
+</ul>
+<p>我们看一个简单的例子来理解上面的3个属性：</p>
+<p>假设我们声明了一个name变量，通过id、type方法能够查看对象的身份和类型：</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/20201215230633.png"></p>
+	
+	</div>
+  <a type="button" href="/wiki/Python深浅拷贝/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/code-review行话/" >code review 行话</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-12-11  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<blockquote>
+<p>最近在和大佬交流时，发现很多缩写不太懂，这里记录一下</p>
+</blockquote>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">LGTM  —  Looks good <span class="keyword">to</span> <span class="keyword">me</span>，表示认可这次 PR，同意 merge 合并代码到远程仓库</span><br><span class="line">ASAP -— <span class="keyword">as</span> soon <span class="keyword">as</span> possible! 尽快</span><br><span class="line">ACK  —  acknowledgement, i.e. agreed/accepted change</span><br><span class="line">NACK/NAK — negative acknowledgement, i.e. disagree <span class="keyword">with</span> change <span class="keyword">and</span>/<span class="keyword">or</span> concept</span><br><span class="line">RFC  —  request <span class="keyword">for</span> comments, i.e. I think this <span class="keyword">is</span> a good idea, lets discuss</span><br><span class="line">WIP：Work <span class="keyword">In</span> Progress 「进展中」，常见词汇，这里做为 Best Practice 单独提出来，主要针对改动较多的 PR，可以先提交部分，标题或 Tag 加上 WIP，表示尚未完成，这样别人可以先 review 已提交的部分</span><br><span class="line">AFAIK/AFAICT  —  <span class="keyword">as</span> far <span class="keyword">as</span> I know / can tell</span><br><span class="line">IIRC  —  <span class="keyword">if</span> I recall correctly</span><br><span class="line">IANAL  — “ I am <span class="keyword">not</span> a lawyer ”, but I smell licensing issues</span><br><span class="line">IMO  — （<span class="keyword">In</span> my opinion），在我看来</span><br><span class="line">TL;DR  —  Too <span class="built_in">Long</span>; Didn<span class="comment">&#x27;t Read 「太长懒得看」，README 文档常见。</span></span><br><span class="line">PR  —  Pull request「合并请求」</span><br><span class="line">CR  —  Code Review 「代码审查」</span><br><span class="line">PTAL  —  Please <span class="keyword">Take</span> A Look. 你来瞅瞅？用来提示别人来看一下</span><br><span class="line">TBR  —  <span class="keyword">To</span> Be Reviewed. 提示维护者进行 review</span><br><span class="line">TBD  —  <span class="keyword">To</span> Be Done(<span class="keyword">or</span> Defined/Discussed/Decided/Determined). 根据语境不同意义有所区别，但一般都是还没搞定的意思。</span><br><span class="line">TBH  —  <span class="keyword">To</span> be honest 「老实说」</span><br><span class="line">atm  —  at the moment 「现阶段」，</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/238a1e1f4037">code review 行话</a></li>
+</ul>
+</blockquote>
+
+	
+
+	</div>
+  <a type="button" href="/wiki/code-review行话/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<blockquote>
+<p>最近在和大佬交流时，发现很多缩写不太懂，这里记录一下</p>
+</blockquote>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">LGTM  —  Looks good <span class="keyword">to</span> <span class="keyword">me</span>，表示认可这次 PR，同意 merge 合并代码到远程仓库</span><br><span class="line">ASAP -— <span class="keyword">as</span> soon <span class="keyword">as</span> possible! 尽快</span><br><span class="line">ACK  —  acknowledgement, i.e. agreed/accepted change</span><br><span class="line">NACK/NAK — negative acknowledgement, i.e. disagree <span class="keyword">with</span> change <span class="keyword">and</span>/<span class="keyword">or</span> concept</span><br><span class="line">RFC  —  request <span class="keyword">for</span> comments, i.e. I think this <span class="keyword">is</span> a good idea, lets discuss</span><br><span class="line">WIP：Work <span class="keyword">In</span> Progress 「进展中」，常见词汇，这里做为 Best Practice 单独提出来，主要针对改动较多的 PR，可以先提交部分，标题或 Tag 加上 WIP，表示尚未完成，这样别人可以先 review 已提交的部分</span><br><span class="line">AFAIK/AFAICT  —  <span class="keyword">as</span> far <span class="keyword">as</span> I know / can tell</span><br><span class="line">IIRC  —  <span class="keyword">if</span> I recall correctly</span><br><span class="line">IANAL  — “ I am <span class="keyword">not</span> a lawyer ”, but I smell licensing issues</span><br><span class="line">IMO  — （<span class="keyword">In</span> my opinion），在我看来</span><br><span class="line">TL;DR  —  Too <span class="built_in">Long</span>; Didn<span class="comment">&#x27;t Read 「太长懒得看」，README 文档常见。</span></span><br><span class="line">PR  —  Pull request「合并请求」</span><br><span class="line">CR  —  Code Review 「代码审查」</span><br><span class="line">PTAL  —  Please <span class="keyword">Take</span> A Look. 你来瞅瞅？用来提示别人来看一下</span><br><span class="line">TBR  —  <span class="keyword">To</span> Be Reviewed. 提示维护者进行 review</span><br><span class="line">TBD  —  <span class="keyword">To</span> Be Done(<span class="keyword">or</span> Defined/Discussed/Decided/Determined). 根据语境不同意义有所区别，但一般都是还没搞定的意思。</span><br><span class="line">TBH  —  <span class="keyword">To</span> be honest 「老实说」</span><br><span class="line">atm  —  at the moment 「现阶段」，</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/238a1e1f4037">code review 行话</a></li>
+</ul>
+</blockquote>
+
+	
+	</div>
+  <a type="button" href="/wiki/code-review行话/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/zsh快捷键/" >zsh快捷键</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-12-06  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<ul>
+<li>⌃ + a：移动到行首</li>
+<li>⌃ + e：移动到行尾</li>
+<li>⌃ + f：向前移动</li>
+<li>⌃ + b：向后移动</li>
+<li>⌃ + p：上一条命令</li>
+<li>⌃ + n：下一条命令</li>
+<li>⌃ + r：搜索历史命令</li>
+<li>⌃ + y：召回最近用命令删除的文字</li>
+<li>⌃ + h：删除光标之前的字符</li>
+<li>⌃ + d：删除光标所指的字符</li>
+<li>⌃ + w：删除光标之前的单词</li>
+<li>⌃ + k：删除从光标到行尾的内容</li>
+<li>⌃ + t：交换光标和之前的字符</li>
+</ul>
+
+	
+
+	</div>
+  <a type="button" href="/wiki/zsh快捷键/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<ul>
+<li>⌃ + a：移动到行首</li>
+<li>⌃ + e：移动到行尾</li>
+<li>⌃ + f：向前移动</li>
+<li>⌃ + b：向后移动</li>
+<li>⌃ + p：上一条命令</li>
+<li>⌃ + n：下一条命令</li>
+<li>⌃ + r：搜索历史命令</li>
+<li>⌃ + y：召回最近用命令删除的文字</li>
+<li>⌃ + h：删除光标之前的字符</li>
+<li>⌃ + d：删除光标所指的字符</li>
+<li>⌃ + w：删除光标之前的单词</li>
+<li>⌃ + k：删除从光标到行尾的内容</li>
+<li>⌃ + t：交换光标和之前的字符</li>
+</ul>
+
+	
+	</div>
+  <a type="button" href="/wiki/zsh快捷键/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+
+		</div>
+
+		<!-- pagination -->
+		<div>
+  		<center>
+		<div class="pagination">
+
+   
+    
+           <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>Prev</a>
+        
+
+        <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+ 
+       <a href="/page/2/" type="button" class="btn btn-default ">Next<i class="fa fa-arrow-circle-o-right"></i></a>     
+        
+
+  
+</div>
+
+  		</center>
+		</div>
+
+		
+		
+	</div> <!-- col-md-9 -->
+
+	
+		<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>Categories</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/Algorithm/">Algorithm<span>36</span></a></li>
+		
+			<li><a href="/categories/Audio/">Audio<span>3</span></a></li>
+		
+			<li><a href="/categories/Language/C-C/">C/C++<span>3</span></a></li>
+		
+			<li><a href="/categories/Video/FFmpeg/">FFmpeg<span>1</span></a></li>
+		
+			<li><a href="/categories/Git/">Git<span>1</span></a></li>
+		
+			<li><a href="/categories/Algorithm/Huawei/">Huawei<span>10</span></a></li>
+		
+			<li><a href="/categories/Interview/">Interview<span>2</span></a></li>
+		
+			<li><a href="/categories/Language/">Language<span>6</span></a></li>
+		
+			<li><a href="/categories/Algorithm/LeetCode/">LeetCode<span>13</span></a></li>
+		
+			<li><a href="/categories/Linux/">Linux<span>3</span></a></li>
+		
+			<li><a href="/categories/Multi-threads/">Multi-threads<span>2</span></a></li>
+		
+			<li><a href="/categories/Algorithm/Others/">Others<span>5</span></a></li>
+		
+			<li><a href="/categories/Algorithm/PAT-B/">PAT-B<span>8</span></a></li>
+		
+			<li><a href="/categories/Projects/">Projects<span>3</span></a></li>
+		
+			<li><a href="/categories/Protocols/">Protocols<span>1</span></a></li>
+		
+			<li><a href="/categories/Language/Python/">Python<span>2</span></a></li>
+		
+			<li><a href="/categories/Storage/">Storage<span>1</span></a></li>
+		
+			<li><a href="/categories/Video/">Video<span>3</span></a></li>
+		
+			<li><a href="/categories/zsh/">zsh<span>1</span></a></li>
+		
+		</ul>
+	</div>
+
+		
+			
+	<div class="widget">
+		<h4>Tag Cloud</h4>
+		<ul class="tag_box inline list-unstyled">		
+		
+			<li><a href="/tags/FFmpeg/">FFmpeg<span>1</span></a></li>
+		
+			<li><a href="/tags/指针/">指针<span>1</span></a></li>
+		
+			<li><a href="/tags/c/">c++<span>2</span></a></li>
+		
+			<li><a href="/tags/STL/">STL<span>2</span></a></li>
+		
+			<li><a href="/tags/二叉树/">二叉树<span>2</span></a></li>
+		
+			<li><a href="/tags/string/">string<span>1</span></a></li>
+		
+			<li><a href="/tags/查找/">查找<span>2</span></a></li>
+		
+			<li><a href="/tags/Markdown/">Markdown<span>1</span></a></li>
+		
+			<li><a href="/tags/总结/">总结<span>4</span></a></li>
+		
+			<li><a href="/tags/贪心/">贪心<span>1</span></a></li>
+		
+			<li><a href="/tags/wav/">wav<span>1</span></a></li>
+		
+			<li><a href="/tags/双指针/">双指针<span>1</span></a></li>
+		
+			<li><a href="/tags/事件推送/">事件推送<span>1</span></a></li>
+		
+			<li><a href="/tags/勾股定理/">勾股定理<span>1</span></a></li>
+		
+			<li><a href="/tags/kernel/">kernel<span>1</span></a></li>
+		
+			<li><a href="/tags/时间复杂度/">时间复杂度<span>1</span></a></li>
+		
+			<li><a href="/tags/笔试/">笔试<span>1</span></a></li>
+		
+			<li><a href="/tags/tools/">tools<span>2</span></a></li>
+		
+			<li><a href="/tags/文件存储/">文件存储<span>1</span></a></li>
+		
+			<li><a href="/tags/闰年/">闰年<span>1</span></a></li>
+		
+		
+		   <li><a href="/tags">...<span>93</span></a></li>
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>Recent Posts</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/wiki/使用openmp进行多线程编程/" ><i class="fa fa-file-o"></i>使用openmp进行多线程编程</a>
+      </li>
+    
+      <li>
+        <a href="/wiki/openmp的的一点多线程应用/" ><i class="fa fa-file-o"></i>openmp 的的一点多线程应用</a>
+      </li>
+    
+      <li>
+        <a href="/wiki/do-while-0-特殊用法/" ><i class="fa fa-file-o"></i>do...while(0)特殊用法</a>
+      </li>
+    
+      <li>
+        <a href="/wiki/三种存储类型/" ><i class="fa fa-file-o"></i>三种存储类型</a>
+      </li>
+    
+      <li>
+        <a href="/wiki/视频编解码基础概念/" ><i class="fa fa-file-o"></i>视频编解码基础概念</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>Links</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="false"></i><a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" title="" target="_blank"]);">hexo-theme-bithack</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+	
+	
+</div> <!-- row-fluid -->
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2021 SunZhenliang's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

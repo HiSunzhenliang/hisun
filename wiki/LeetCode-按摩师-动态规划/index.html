@@ -1,0 +1,379 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>LeetCode- 按摩师 - 动态规划 | Alliswell&#39;s blog</title>
+  <meta name="author" content="SunZhenliang">
+  
+  <meta name="description" content="按摩师 - 动态规划一个有名的按摩师会收到源源不断的预约请求，每个预约都可以选择接或不接。在每次预约服务之间要有休息时间，因此她不能接受相邻的预约。给定一个预约请求序列，替按摩师找到最优的预约集合（总预约时间最长），返回总的分钟数。"> 
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <meta property="og:title" content="LeetCode- 按摩师 - 动态规划"/>
+  <meta property="og:site_name" content="Alliswell&#39;s blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Alliswell&#39;s blog" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Alliswell&#39;s blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 
+
+
+	
+		<div class="page-header">
+			<h1> LeetCode- 按摩师 - 动态规划</h1>
+		</div>
+	
+
+
+
+<div class="row post">
+	<!-- cols -->
+	
+	<div id="top_meta"></div>
+	<div class="col-md-9">
+	
+
+	<!-- content -->
+	<div class="mypage">		
+	  		
+
+	  <h3 id="按摩师-动态规划"><a href="#按摩师-动态规划" class="headerlink" title="按摩师 - 动态规划"></a>按摩师 - 动态规划</h3><p>一个有名的按摩师会收到源源不断的预约请求，每个预约都可以选择接或不接。在每次预约服务之间要有休息时间，因此她不能接受相邻的预约。给定一个预约请求序列，替按摩师找到最优的预约集合（总预约时间最长），返回总的分钟数。</p>
+<a id="more"></a>
+
+<p>注意：本题相对原题稍作改动</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">示例 <span class="number">1</span>：</span><br><span class="line"></span><br><span class="line">输入： [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">1</span>]</span><br><span class="line">输出： <span class="number">4</span></span><br><span class="line">解释： 选择 <span class="number">1</span> 号预约和 <span class="number">3</span> 号预约，总时长 = <span class="number">1</span> + <span class="number">3</span> = <span class="number">4</span>。</span><br><span class="line">示例 <span class="number">2</span>：</span><br><span class="line"></span><br><span class="line">输入： [<span class="number">2</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="number">3</span>,<span class="number">1</span>]</span><br><span class="line">输出： <span class="number">12</span></span><br><span class="line">解释： 选择 <span class="number">1</span> 号预约、 <span class="number">3</span> 号预约和 <span class="number">5</span> 号预约，总时长 = <span class="number">2</span> + <span class="number">9</span> + <span class="number">1</span> = <span class="number">12</span>。</span><br><span class="line">示例 <span class="number">3</span>：</span><br><span class="line"></span><br><span class="line">输入： [<span class="number">2</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">3</span>,<span class="number">1</span>,<span class="number">1</span>,<span class="number">3</span>]</span><br><span class="line">输出： <span class="number">12</span></span><br><span class="line">解释： 选择 <span class="number">1</span> 号预约、 <span class="number">3</span> 号预约、 <span class="number">5</span> 号预约和 <span class="number">8</span> 号预约，总时长 = <span class="number">2</span> + <span class="number">4</span> + <span class="number">3</span> + <span class="number">3</span> = <span class="number">12</span>。</span><br><span class="line"><span class="comment">//来源：力扣（LeetCode）</span></span><br><span class="line"><span class="comment">//链接：https://leetcode-cn.com/problems/the-masseuse-lcci</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="思路题解"><a href="#思路题解" class="headerlink" title="思路题解"></a>思路题解</h3><p>引用自评论区@<a target="_blank" rel="noopener" href="https://leetcode-cn.com/u/liweiwei1419/">liweiwei1419</a>的<a target="_blank" rel="noopener" href="https://leetcode-cn.com/problems/the-masseuse-lcci/solution/dong-tai-gui-hua-by-liweiwei1419-8/">题解</a></p>
+<p>这道题其实就是经典的「力扣」第 198 题：打家劫舍。题目只问最优值，并没有问最优解，因此绝大多数情况下可以考虑使用「动态规划」的方法。</p>
+<p>方法一：设计二维状态变量<br>第 1 步：设计状态<br>「状态」这个词可以理解为「记录了求解问题到了哪一个阶段」。</p>
+<p>由于当前这一天有按摩师有两种选择：（1）接预约；（2）不接预约。但根据题意，今天是否接预约，是受到昨天影响的。为了消除这种影响，我们在状态数组要设置这个维度。</p>
+<p><code>dp[i][0]</code> 表示：区间 <code>[0，i]</code> 里接受预约请求，并且下标为<code>i</code>的这一天不接受预约的最大时长；<br><code>dp[i][1] </code>表示：区间 <code>[0，i] </code>里接受预约请求，并且下标为 <code>i </code>的这一天接受预约的最大时长。</p>
+<p>说明：这个定义是有前缀性质的，即当前的状态值考虑了（或者说综合了）之前的相关的状态值，第 2 维保存了当前最优值的决策，这种通过增加维度，消除后效性的操作在「动态规划」问题里是非常常见的。</p>
+<p>无后效性的理解：1、后面的决策不会影响到前面的决策； 2、之前的状态怎么来的并不重要。</p>
+<p>一般的情况是，只要有约束，就可以增加一个维度消除这种约束带来的影响，再具体一点说，就是把「状态」定义得清楚、准确，「状态转移方程」就容易得到了。「力扣」的几道股票问题基本都是这个思路，而且设置状态的思想和这道题是完全一致的。</p>
+<p>第 2 步：状态转移方程<br>「状态转移方程」可以理解为「不同阶段之间的联系」。</p>
+<p>今天只和昨天的状态相关，依然是分类讨论：</p>
+<p>今天不接受预约：或者是昨天不接受预约，或者是昨天接受了预约，取二者最大值，即：<code>dp[i][0] = max(dp[i - 1][0], dp[i - 1][1])；</code><br>今天接受预约：只需要从昨天不接受预约转移而来，加上今天的时常，即：<code>dp[i][1] = dp[i - 1][0] + nums[i]</code>。<br>第 3 步：考虑初始化<br>从第 2 天开始，每天的状态值只与前一天有关，因此第 1 天就只好老老实实算了。好在不难判断：<code>dp[0][0] = 0 与 dp[0][1] = nums[0]；</code></p>
+<p>这里有一种技巧，可以把状态数组多设置一行，这样可以减少对第 1 天的初始化，这样的代码把第 1 天的情况考虑了进去，但编码的时候要注意状态数组下标的设置， 请见题解最后的「参考代码 3」。</p>
+<p>第 4 步：考虑输出<br>由于状态值的定义是前缀性质的，因此最后一天的状态值就考虑了之前所有的天数的情况。按摩师最后一天可以接受预约，也可以不接受预约，取二者最大值。</p>
+<p>第 5 步：考虑是否可以状态压缩<br>由于今天只参考昨天的值，状态可以压缩，可以使用「滚动数组」完成，状态压缩的代码丢失了一定可读性，也会给编码增加一点点难度，请见题解后的「参考代码 4」。</p>
+<p>参考代码 1：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//Java</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">massage</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (len == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// dp[i][0]：区间 [0, i] 里接受预约请求，并且下标为 i 的这一天不接受预约的最大时长</span></span><br><span class="line">        <span class="comment">// dp[i][1]：区间 [0, i] 里接受预约请求，并且下标为 i 的这一天接受预约的最大时长</span></span><br><span class="line">        <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[len][<span class="number">2</span>];</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">        dp[<span class="number">0</span>][<span class="number">1</span>] = nums[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">            dp[i][<span class="number">0</span>] = Math.max(dp[i - <span class="number">1</span>][<span class="number">0</span>], dp[i - <span class="number">1</span>][<span class="number">1</span>]);</span><br><span class="line">            dp[i][<span class="number">1</span>] = dp[i - <span class="number">1</span>][<span class="number">0</span>] + nums[i];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> Math.max(dp[len - <span class="number">1</span>][<span class="number">0</span>], dp[len - <span class="number">1</span>][<span class="number">1</span>]);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Solution solution = <span class="keyword">new</span> Solution();</span><br><span class="line">        <span class="comment">// int[] nums = &#123;1, 2, 3, 1&#125;;</span></span><br><span class="line">        <span class="comment">// int[] nums = &#123;2, 7, 9, 3, 1&#125;;</span></span><br><span class="line">        <span class="keyword">int</span>[] nums = &#123;<span class="number">2</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> res = solution.massage(nums);</span><br><span class="line">        System.out.println(res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复杂度分析：</p>
+<p>时间复杂度：<code>O(N)</code>，<code>N </code>是数组的长度；<br>空间复杂度：<code>O(N)</code>，状态数组的大小为 <code>2N</code>，可以优化到常数级别，请见题解后的「参考代码 4」。<br>以上是中规中矩的写法。在这里根据问题本身的特点，状态可以不用设置那么具体，就将题目问的设计成状态，状态转移方程依然好写。</p>
+<p>方法二：设计一维状态变量<br>第 1 步：定义状态<br><code>dp[i]</code>：区间 <code>[0，i] </code>里接受预约请求的最大时长。</p>
+<p>第 2 步：状态转移方程<br>这个时候因为不限定下标为 i 这一天是否接受预约，因此需要分类讨论：</p>
+<p>接受预约，那么昨天就一定休息，由于状态<code>dp[i - 1]</code>的定义涵盖了下标为<code>i - 1</code>这一天接收预约的情况，状态只能从下标为 <code>i - 2 </code>的状态转移而来：<code>dp[i - 2] + nums[i]；</code><br>不接受预约，那么昨天可以休息，也可以不休息，状态从下标为 <code>i - 1 </code>的状态转移而来：<code>dp[i - 1]；</code><br>二者取最大值，因此状态转移方程为 <code>dp[i] = max(dp[i - 1], dp[i - 2] + nums[i])</code>。</p>
+<p>第 3 步：思考初始化<br>看状态转移方程，下标最小到 <code>i - 2</code>，因此初始化的时候要把 <code>dp[0] </code>和<code> dp[1]</code> 算出来，从 <code>dp[2]</code> 开始计算。</p>
+<p><code>dp[0]</code>：只有 1 天的时候，必须接受预约，因此 <code>dp[0] = nums[0]；</code><br><code>dp[1]</code>：头 2 天的时候，由于不能同时接受预约，因此最优值是这两天接受预约时长的最大值 <code>dp[1] = max(nums[0], nums[1])；</code><br>第 4 步：思考输出<br>由于定义的状态有前缀性质，并且对于下标为 i 的这一天也考虑了接受预约与不接受预约的情况，因此输出就是最后一天的状态值。</p>
+<p>第 5 步：思考状态压缩<br>看状态转移方程。当前状态只与前两个状态相关，我们只关心最后一天的状态值，因此依然可以使用「滚动变量」的技巧，这个时候滚动起来的就是 3 个变量了。这样的代码依然是丢失了可读性，也存在一定编码错误的风险，请见题解后的「参考代码 5」。</p>
+<p>参考代码 2：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line">    <span class="comment">//Java</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">Solution</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">massage</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> len = nums.length;</span><br><span class="line">        <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (len == <span class="number">1</span>) &#123;</span><br><span class="line">            <span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="comment">// dp[i]：区间 [0, i] 里接受预约请求的最大时长</span></span><br><span class="line">        <span class="keyword">int</span>[] dp = <span class="keyword">new</span> <span class="keyword">int</span>[len];</span><br><span class="line">        dp[<span class="number">0</span>] = nums[<span class="number">0</span>];</span><br><span class="line">        dp[<span class="number">1</span>] = Math.max(nums[<span class="number">0</span>], nums[<span class="number">1</span>]);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">2</span>; i &lt; len; i++) &#123;</span><br><span class="line">            <span class="comment">// 今天在选与不选中，选择一个最优的</span></span><br><span class="line">            dp[i] = Math.max(dp[i - <span class="number">1</span>], dp[i - <span class="number">2</span>] + nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[len - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</span><br><span class="line">        Solution solution = <span class="keyword">new</span> Solution();</span><br><span class="line">        <span class="comment">// int[] nums = &#123;1, 2, 3, 1&#125;;</span></span><br><span class="line">        <span class="comment">// int[] nums = &#123;2, 7, 9, 3, 1&#125;;</span></span><br><span class="line">        <span class="keyword">int</span>[] nums = &#123;<span class="number">2</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">5</span>, <span class="number">3</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">3</span>&#125;;</span><br><span class="line">        <span class="keyword">int</span> res = solution.massage(nums);</span><br><span class="line">        System.out.println(res);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复杂度分析：</p>
+<p>时间复杂度：<code>O(N)</code>，<code>N</code> 是数组的长度；<br>空间复杂度：<code>O(N)</code>，状态数组的大小为 <code>N</code>，可以优化到 33，请见题解后的「参考代码 5」。<br>我们看到解决这个问题的复杂程度与如何定义状态是相关的，定义状态的角度没有固定的模式，但有一个方向是可以考虑的，那就是从「状态转移方程」容易得到的角度去考虑如何设计状态。</p>
+<p>「状态」和「状态转移方程」得到以后，这个问题其实就得到了解决，剩下的一些细节的问题在编码的时候只要稍微留意一点就行了。</p>
+<p>总结<br>「动态规划」其实不是什么特别难懂的东西（只是说思想），只是这一类问题刚接触的时候有点不太适应，并且这类问题容易被包装得很过分，而且没有明显的套路，题型多样，所以学习「动态规划」会有一些些吃力，这没有办法，见多了就好。如果是准备面试，不需要掌握特别复杂的「动态规划」问题（当然前提是你没有在简历上说你是算法竞赛高手）。</p>
+<p>「动态规划」告诉了我们另一种求解问题的思路。我们学习编程，习惯了自顶向下求解问题（递归），在自顶向下求解问题的过程中，发现了重复子问题，我们再加上缓存。而「动态规划」告诉我们，其实有一类问题我们可以从一个最简单的情况开始考虑，通过逐步递推，每一步都记住当前问题的答案，得到最终问题的答案，即「动态规划」告诉了我们「自底向上」思考问题的思路。</p>
+<p>也就是说「动态规划」告诉我们的新的思路是：不是直接针对问题求解，由于我们找到了这个问题最开始的样子，因此后面在求解的过程中，每一步都可以参考之前的结果（在处理最优化问题的时候，叫「最优子结构」），由于之前的结果有重复计算（「重复子问题」），因此必须记录下来。</p>
+<p>这种感觉不同于「记忆化递归」，「记忆化递归」是直接面对问题求解，遇到一个问题解决了以后，就记下来，随时可能面对新问题。而「动态规划」由于我们发现了这个问题「最初」的样子，因此每一步参考的以前的结果都是知道的，就像我们去考试，所有的考题我们都见过，并且已经计算出了答案一样，我们只需要参考以前做题的答案，就能得到这一题的答案，这是「状态转移」。应用「最优子结构」是同一回事，即：综合以前计算的结果，直接得到当前的最优值。</p>
+<p>「动态规划」的内涵和外延很丰富，不是几句话和几个问题能够理解清楚的，需要我们做一些经典的问题去慢慢理解它，和掌握「动态规划」问题思考的方向。</p>
+<p>参考代码 3：根据方法一：状态数组多设置一行，以避免对极端用例进行讨论。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">massage</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = nums.length;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// dp 数组多设置一行，相应地定义就要改变，遍历的一些细节也要相应改变</span></span><br><span class="line">    <span class="comment">// dp[i][0]：区间 [0, i) 里接受预约请求，并且下标为 i 的这一天不接受预约的最大时长</span></span><br><span class="line">    <span class="comment">// dp[i][1]：区间 [0, i) 里接受预约请求，并且下标为 i 的这一天接受预约的最大时长</span></span><br><span class="line">    <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[len + <span class="number">1</span>][<span class="number">2</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 注意：外层循环从 1 到 =len，相对 dp 数组而言，引用到 nums 数组的时候就要 -1</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= len; i++) &#123;</span><br><span class="line">        dp[i][<span class="number">0</span>] = Math.max(dp[i - <span class="number">1</span>][<span class="number">0</span>], dp[i - <span class="number">1</span>][<span class="number">1</span>]);</span><br><span class="line">        dp[i][<span class="number">1</span>] = dp[i - <span class="number">1</span>][<span class="number">0</span>] + nums[i - <span class="number">1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Math.max(dp[len][<span class="number">0</span>], dp[len][<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复杂度分析：</p>
+<p>时间复杂度：<code>O(N)</code>，<code>N</code> 是数组的长度；<br>空间复杂度：<code>O(N)</code>，状态数组的大小为 <code>2(N + 1)</code>，记为 <code>O(N)</code>。<br>参考代码 4：根据方法一，使用「滚动数组」技巧，将空间优化到常数级别</p>
+<p>在编码的时候，需要注意，只要访问到 dp 数组的时候，需要对下标<code> % 2</code>，等价的写法是 <code>&amp; 1</code>。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">massage</span><span class="params">(<span class="keyword">int</span>[] nums)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> len = nums.length;</span><br><span class="line">    <span class="keyword">if</span> (len == <span class="number">0</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (len == <span class="number">1</span>) &#123;</span><br><span class="line">        <span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// dp[i &amp; 1][0]：区间 [0, i] 里接受预约请求，并且下标为 i 的这一天不接受预约的最大时长</span></span><br><span class="line">    <span class="comment">// dp[i &amp; 1][1]：区间 [0, i] 里接受预约请求，并且下标为 i 的这一天接受预约的最大时长</span></span><br><span class="line">    <span class="keyword">int</span>[][] dp = <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">2</span>][<span class="number">2</span>];</span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">0</span>] = <span class="number">0</span>;</span><br><span class="line">    dp[<span class="number">0</span>][<span class="number">1</span>] = nums[<span class="number">0</span>];</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; len; i++) &#123;</span><br><span class="line">        dp[i &amp; <span class="number">1</span>][<span class="number">0</span>] = Math.max(dp[(i - <span class="number">1</span>) &amp; <span class="number">1</span>][<span class="number">0</span>], dp[(i - <span class="number">1</span>) &amp; <span class="number">1</span>][<span class="number">1</span>]);</span><br><span class="line">        dp[i &amp; <span class="number">1</span>][<span class="number">1</span>] = dp[(i - <span class="number">1</span>) &amp; <span class="number">1</span>][<span class="number">0</span>] + nums[i];</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> Math.max(dp[(len - <span class="number">1</span>) &amp; <span class="number">1</span>][<span class="number">0</span>], dp[(len - <span class="number">1</span>) &amp; <span class="number">1</span>][<span class="number">1</span>]);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>复杂度分析：</p>
+<p>时间复杂度：<code>O(N)</code>，<code>N</code> 是数组的长度；<br>空间复杂度：<code>O(1)</code>，状态数组的大小为 4，常数空间。<br>参考代码 5：根据方法二，使用 3 个变量滚动完成计算，将空间优化到常数级别。</p>
+<p>在实现上可以在取下标的时候对 3 取模。</p>
+<pre><code>public int massage(int[] nums) &#123;
+    int len = nums.length;
+    if (len == 0) &#123;
+        return 0;
+    &#125;
+    if (len == 1) &#123;
+        return nums[0];
+    &#125;
+
+    // dp[i % 3]：区间 [0，i] 里接受预约请求的最大时长
+    int[] dp = new int[3];
+    dp[0] = nums[0];
+    dp[1] = Math.max(nums[0], nums[1]);
+
+    for (int i = 2; i &lt; len; i++) &#123;
+        // 今天在选与不选中，选择一个最优的
+        dp[i % 3] = Math.max(dp[(i - 1) % 3], dp[(i - 2) % 3] + nums[i]);
+    &#125;
+    return dp[(len - 1) % 3];
+&#125;</code></pre>
+<p>复杂度分析：</p>
+<p>时间复杂度：O(N)O(N)，NN 是数组的长度；<br>空间复杂度：O(1)O(1)，状态数组的大小为 3，常数空间。</p>
+<h3 id="个人代码"><a href="#个人代码" class="headerlink" title="个人代码"></a>个人代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">massage</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n=nums.size();</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">0</span>)</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">if</span>(n==<span class="number">1</span>)</span><br><span class="line">            <span class="keyword">return</span> nums[<span class="number">0</span>];</span><br><span class="line">        <span class="keyword">int</span> dp[n];</span><br><span class="line">        dp[<span class="number">0</span>]=nums[<span class="number">0</span>];</span><br><span class="line">        dp[<span class="number">1</span>]=max(nums[<span class="number">0</span>],nums[<span class="number">1</span>]);</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">2</span>;i&lt;n;i++)&#123;</span><br><span class="line">            dp[i]=max(dp[i<span class="number">-1</span>],dp[i<span class="number">-2</span>]+nums[i]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> dp[n<span class="number">-1</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id=""><a href="#" class="headerlink" title=""></a></h3>
+	  <div class="article-footer-copyright">
+
+    本博客采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh" target="_blank">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议(CC BY-NC-SA 4.0) 发布.</a>
+</div>
+
+	</div>
+
+	
+	<span id="/wiki/LeetCode-%E6%8C%89%E6%91%A9%E5%B8%88-%E5%8A%A8%E6%80%81%E8%A7%84%E5%88%92/" class="leancloud-visitors view" data-flag-title="LeetCode- 按摩师 - 动态规划">
+		<em class="post-meta-item-text"> Page View </em> <i class="leancloud-visitors-count"></i>
+	</span>
+	
+	<div>
+  	<center>
+
+	<div class="pagination">
+
+    
+    
+    <a href="/wiki/二叉搜索树/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> Prev</a>
+    
+
+    <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+    
+    <a href="/wiki/LeetCode-面试题64.求1+2+…+n/" type="button" class="btn btn-default ">Next<i
+                class="fa fa-arrow-circle-o-right"></i></a>
+    
+
+    
+</div>
+
+
+    </center>
+	</div>
+	
+	<!-- comment -->
+	<!--
+<section id="comment">
+    <h2 class="title">Comments</h2>
+
+    
+</section>
+
+-->
+	
+		<section id="comments" class="comments">
+			<style>
+			.comments{margin:30px;padding:10px;background:rgb(0, 0, 0)}
+			@media screen and (max-width:800px){.comments{margin:auto;padding:10px;background:#000}}
+			</style>
+			<div id="vcomment" class="comment"></div>
+<script src='//unpkg.com/valine/dist/Valine.min.js'></script>
+<script src="https://cdnjs.loli.net/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script>
+var valineConfig = {"enable":true,"appId":"ueIePJtaGryN9FhXJieFg0zv-MdYXbMMI","appKey":"YrCpNBNF8jxrR28HotIjP2Gb","placeholder":"提交评论时留下邮箱收到回复后将自动通知","visitor":true,"avatar":"monsterid","requiredFields":["nick","mail"]}
+valineConfig.el='#vcomment';
+new Valine(valineConfig);
+    // new Valine({
+    //     el: '#vcomment',
+    //     appId: "",
+    //     appKey: "",
+    //     placeholder: "提交评论时留下邮箱收到回复后将自动通知",
+    //     avatar:"monsterid",
+    //     visitor: "true",
+    //     requiredFields: "nick,mail".split(','),
+    // });
+</script>
+
+		</section>
+	
+	</div> <!-- col-md-9/col-md-12 -->
+
+
+	
+	<div id="side_meta">
+		<div class="col-md-3" id="post_meta"> 
+
+	<!-- date -->
+	
+	<div class="meta-widget">
+	<i class="fa fa-clock-o"></i>
+	2020-03-24 
+	</div>
+	
+
+	<!-- categories -->
+    
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#categorys"><i class="fa fa-folder"></i></a>	
+    <ul id="categorys" class="tag_box list-unstyled collapse in">
+          
+  <li>
+    <li><a href="/categories/Algorithm/">Algorithm<span>36</span></a></li> <li><a href="/categories/Algorithm/LeetCode/">LeetCode<span>13</span></a></li>
+  </li>
+
+    </ul>
+	</div>
+	
+
+	<!-- tags -->
+	
+	<div class="meta-widget">
+	<a data-toggle="collapse" data-target="#tags"><i class="fa fa-tags"></i></a>		  
+    <ul id="tags" class="tag_box list-unstyled collapse in">	  
+	    
+  <li><a href="/tags/C/">C++<span>41</span></a></li> <li><a href="/tags/按摩师/">按摩师<span>1</span></a></li> <li><a href="/tags/动态规划/">动态规划<span>1</span></a></li>
+    </ul>
+	</div>
+		
+
+	<!-- toc -->
+	<div class="meta-widget">
+	
+	</div>
+	
+    <hr>
+	
+</div><!-- col-md-3 -->
+
+		
+
+	</div>
+	
+		
+
+</div><!-- row -->
+
+<!--
+ -->
+
+
+
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2021 SunZhenliang's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>

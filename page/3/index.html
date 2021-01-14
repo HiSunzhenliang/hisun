@@ -1,0 +1,815 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="pragma" content="no-cache">
+  <meta http-equiv="cache-control" content="no-cache">
+  <meta http-equiv="expires" content="0">
+  
+  <title>Page 3 | Alliswell&#39;s blog</title>
+  <meta name="author" content="SunZhenliang">
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  
+  <meta property="og:site_name" content="Alliswell&#39;s blog"/>
+
+  
+    <meta property="og:image" content=""/>
+  
+
+  
+    <link rel="alternative" href="/atom.xml" title="Alliswell&#39;s blog" type="application/atom+xml">
+  
+  
+    <link href="/favicon.ico" rel="icon">
+  
+  
+  <link rel="stylesheet" href="/css/bootstrap.min.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/font-awesome.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/responsive.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/highlight.css" media="screen" type="text/css">
+  <link rel="stylesheet" href="/css/google-fonts.css" media="screen" type="text/css">
+  <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+
+  <script src="/js/jquery-2.0.3.min.js"></script>
+
+  <!-- analytics -->
+  
+
+
+
+
+<meta name="generator" content="Hexo 5.2.0"></head>
+
+ <body>  
+  <nav id="main-nav" class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+    <div class="container">
+      <button type="button" class="navbar-header navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+		<span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+	  <a class="navbar-brand" href="/">Alliswell&#39;s blog</a>
+      <div class="collapse navbar-collapse nav-menu">
+		<ul class="nav navbar-nav">
+		  
+		  <li>
+			<a href="/archives" title="All the articles.">
+			  <i class=""></i>Archives
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/categories" title="All the categories.">
+			  <i class=""></i>Categories
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/tags" title="All the tags.">
+			  <i class=""></i>Tags
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/about" title="About me.">
+			  <i class=""></i>About
+			</a>
+		  </li>
+		  
+		  <li>
+			<a href="/atom.xml" title="Subscribe me.">
+			  <i class=""></i>RSS
+			</a>
+		  </li>
+		  
+		</ul>
+      </div>
+    </div> <!-- container -->
+</nav>
+<div class="clearfix"></div>
+
+  <div class="container">
+  	<div class="content">
+    	 <div class="page-header logo">
+  <h1>Alliswell&#39;s blog<span class="blink-fast">|</span></h1>
+</div>
+
+<div class="row page">
+
+	
+	<div class="col-md-9">
+	
+
+		<div class="slogan">
+
+
+		<i class="fa fa-heart blink-slow"></i>
+
+		the brown fox jumps over the lazy dog.
+
+</div>    
+
+		<div id="top_search"></div>
+		<div class="mypage">
+		
+		<!-- title and entry -->
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/LeetCode-98.验证二叉搜索树/" >LeetCode-98. 验证二叉搜索树</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-05-10  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="98-验证二叉搜索树"><a href="#98-验证二叉搜索树" class="headerlink" title="98. 验证二叉搜索树"></a>98. 验证二叉搜索树</h1><p>给定一个二叉树，判断其是否是一个有效的二叉搜索树。</p>
+<p>假设一个二叉搜索树具有如下特征：</p>
+<p>节点的左子树只包含小于当前节点的数。节点的右子树只包含大于当前节点的数。<br>所有左子树和右子树自身必须也是二叉搜索树。<br>示例 1:</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">    <span class="number">2</span></span><br><span class="line">   / <span class="string">\</span></span><br><span class="line">  <span class="number">1</span>   <span class="number">3</span></span><br><span class="line">输出：<span class="literal">true</span></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line">输入：</span><br><span class="line">    <span class="number">5</span></span><br><span class="line">   / <span class="string">\</span></span><br><span class="line">  <span class="number">1</span>   <span class="number">4</span></span><br><span class="line">     / <span class="string">\</span></span><br><span class="line">    <span class="number">3</span>   <span class="number">6</span></span><br><span class="line">输出：<span class="literal">false</span></span><br><span class="line">解释：输入为：[<span class="number">5</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="literal">null</span>,<span class="literal">null</span>,<span class="number">3</span>,<span class="number">6</span>]。</span><br><span class="line">     根节点的值为 <span class="number">5</span> ，但是其右子节点值为 <span class="number">4</span> 。</span><br></pre></td></tr></table></figure>
+
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//中序递归，只要上一个的val值大于即将判断的（下一个）的值，那么就return false，很精妙！</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span>* last = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!isValidBST(root-&gt;left)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span> (last &amp;&amp; *last&gt;=root-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            last = &amp;root-&gt;val;</span><br><span class="line">            <span class="keyword">if</span>(!isValidBST(root-&gt;right)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//https://leetcode-cn.com/problems/validate-binary-search-tree/comments/</span></span><br></pre></td></tr></table></figure>
+
+
+	
+
+	</div>
+  <a type="button" href="/wiki/LeetCode-98.验证二叉搜索树/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="98-验证二叉搜索树"><a href="#98-验证二叉搜索树" class="headerlink" title="98. 验证二叉搜索树"></a>98. 验证二叉搜索树</h1><p>给定一个二叉树，判断其是否是一个有效的二叉搜索树。</p>
+<p>假设一个二叉搜索树具有如下特征：</p>
+<p>节点的左子树只包含小于当前节点的数。节点的右子树只包含大于当前节点的数。<br>所有左子树和右子树自身必须也是二叉搜索树。<br>示例 1:</p>
+<figure class="highlight livescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">输入：</span><br><span class="line">    <span class="number">2</span></span><br><span class="line">   / <span class="string">\</span></span><br><span class="line">  <span class="number">1</span>   <span class="number">3</span></span><br><span class="line">输出：<span class="literal">true</span></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line">输入：</span><br><span class="line">    <span class="number">5</span></span><br><span class="line">   / <span class="string">\</span></span><br><span class="line">  <span class="number">1</span>   <span class="number">4</span></span><br><span class="line">     / <span class="string">\</span></span><br><span class="line">    <span class="number">3</span>   <span class="number">6</span></span><br><span class="line">输出：<span class="literal">false</span></span><br><span class="line">解释：输入为：[<span class="number">5</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="literal">null</span>,<span class="literal">null</span>,<span class="number">3</span>,<span class="number">6</span>]。</span><br><span class="line">     根节点的值为 <span class="number">5</span> ，但是其右子节点值为 <span class="number">4</span> 。</span><br></pre></td></tr></table></figure>
+
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//中序递归，只要上一个的val值大于即将判断的（下一个）的值，那么就return false，很精妙！</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span>* last = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!isValidBST(root-&gt;left)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span> (last &amp;&amp; *last&gt;=root-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            last = &amp;root-&gt;val;</span><br><span class="line">            <span class="keyword">if</span>(!isValidBST(root-&gt;right)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//https://leetcode-cn.com/problems/validate-binary-search-tree/comments/</span></span><br></pre></td></tr></table></figure>
+
+
+	
+	</div>
+  <a type="button" href="/wiki/LeetCode-98.验证二叉搜索树/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/LeetCode-46.Permutation/" >LeetCode-46.Permutation</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-04-25  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="46-Permutation"><a href="#46-Permutation" class="headerlink" title="46.Permutation"></a>46.Permutation</h1><p>Given a collection of <strong>distinct</strong> integers, return all possible permutations.</p>
+	
+
+	</div>
+  <a type="button" href="/wiki/LeetCode-46.Permutation/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="46-Permutation"><a href="#46-Permutation" class="headerlink" title="46.Permutation"></a>46.Permutation</h1><p>Given a collection of <strong>distinct</strong> integers, return all possible permutations.</p>
+	
+	</div>
+  <a type="button" href="/wiki/LeetCode-46.Permutation/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/LeetCode-1248. 统计「优美子数组」/" >LeetCode-1248. 统计「优美子数组」</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-04-21  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="1248-统计「优美子数组」"><a href="#1248-统计「优美子数组」" class="headerlink" title="1248. 统计「优美子数组」"></a>1248. 统计「优美子数组」</h1><p>给你一个整数数组 nums 和一个整数 k。</p>
+<p>如果某个 连续 子数组中恰好有 k 个奇数数字，我们就认为这个子数组是「优美子数组」。</p>
+<p>请返回这个数组中「优美子数组」的数目。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：nums = <span class="comment">[1,1,2,1,1]</span>, k = 3</span><br><span class="line">输出：2</span><br><span class="line">解释：包含 3 个奇数的子数组是 <span class="comment">[1,1,2,1]</span> 和 <span class="comment">[1,2,1,1]</span> 。</span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：nums = <span class="comment">[2,4,6]</span>, k = 1</span><br><span class="line">输出：0</span><br><span class="line">解释：数列中不包含任何奇数，所以不存在优美子数组。</span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：nums = <span class="comment">[2,2,2,1,2,2,1,2,2,2]</span>, k = 2</span><br><span class="line">输出：16</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line"></span><br><span class="line">1 &lt;= nums.length &lt;= 50000</span><br><span class="line">1 &lt;= nums<span class="comment">[i]</span> &lt;= 10^5</span><br><span class="line">1 &lt;= k &lt;= nums.length</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="自想"><a href="#自想" class="headerlink" title="自想"></a>自想</h3><p>多指针一次遍历，计算前后偶数乘积之和</p>
+<h3 id="官方"><a href="#官方" class="headerlink" title="官方"></a>官方</h3><p><img src="https://gitee.com/SunGitee/src/raw/master/img/20200421102035.png"></p>
+	
+
+	</div>
+  <a type="button" href="/wiki/LeetCode-1248. 统计「优美子数组」/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="1248-统计「优美子数组」"><a href="#1248-统计「优美子数组」" class="headerlink" title="1248. 统计「优美子数组」"></a>1248. 统计「优美子数组」</h1><p>给你一个整数数组 nums 和一个整数 k。</p>
+<p>如果某个 连续 子数组中恰好有 k 个奇数数字，我们就认为这个子数组是「优美子数组」。</p>
+<p>请返回这个数组中「优美子数组」的数目。</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：nums = <span class="comment">[1,1,2,1,1]</span>, k = 3</span><br><span class="line">输出：2</span><br><span class="line">解释：包含 3 个奇数的子数组是 <span class="comment">[1,1,2,1]</span> 和 <span class="comment">[1,2,1,1]</span> 。</span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：nums = <span class="comment">[2,4,6]</span>, k = 1</span><br><span class="line">输出：0</span><br><span class="line">解释：数列中不包含任何奇数，所以不存在优美子数组。</span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：nums = <span class="comment">[2,2,2,1,2,2,1,2,2,2]</span>, k = 2</span><br><span class="line">输出：16</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line"></span><br><span class="line">1 &lt;= nums.length &lt;= 50000</span><br><span class="line">1 &lt;= nums<span class="comment">[i]</span> &lt;= 10^5</span><br><span class="line">1 &lt;= k &lt;= nums.length</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="自想"><a href="#自想" class="headerlink" title="自想"></a>自想</h3><p>多指针一次遍历，计算前后偶数乘积之和</p>
+<h3 id="官方"><a href="#官方" class="headerlink" title="官方"></a>官方</h3><p><img src="https://gitee.com/SunGitee/src/raw/master/img/20200421102035.png"></p>
+	
+	</div>
+  <a type="button" href="/wiki/LeetCode-1248. 统计「优美子数组」/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/LeetCode-55. 跳跃游戏/" >LeetCode-55. 跳跃游戏</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-04-17  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="55-跳跃游戏"><a href="#55-跳跃游戏" class="headerlink" title="55. 跳跃游戏"></a>55. 跳跃游戏</h1><p>给定一个非负整数数组，你最初位于数组的第一个位置。</p>
+	
+
+	</div>
+  <a type="button" href="/wiki/LeetCode-55. 跳跃游戏/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="55-跳跃游戏"><a href="#55-跳跃游戏" class="headerlink" title="55. 跳跃游戏"></a>55. 跳跃游戏</h1><p>给定一个非负整数数组，你最初位于数组的第一个位置。</p>
+	
+	</div>
+  <a type="button" href="/wiki/LeetCode-55. 跳跃游戏/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/LeetCode-542.01Matrix/" >LeetCode-542.01Matrix</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-04-15  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="542-01-Matrix"><a href="#542-01-Matrix" class="headerlink" title="542. 01 Matrix"></a>542. 01 Matrix</h1><p>Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell.</p>
+<p>The distance between two adjacent cells is 1.</p>
+	
+
+	</div>
+  <a type="button" href="/wiki/LeetCode-542.01Matrix/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="542-01-Matrix"><a href="#542-01-Matrix" class="headerlink" title="542. 01 Matrix"></a>542. 01 Matrix</h1><p>Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell.</p>
+<p>The distance between two adjacent cells is 1.</p>
+	
+	</div>
+  <a type="button" href="/wiki/LeetCode-542.01Matrix/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/LeetCode-20.Valid Parentheses/" >LeetCode-20.Valid-Parentheses</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-04-13  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="20-Valid-Parentheses"><a href="#20-Valid-Parentheses" class="headerlink" title="20.Valid-Parentheses"></a>20.Valid-Parentheses</h1><p>Given a string containing just the characters <code>(</code>, <code>)</code>, <code>&#123;</code>, <code>&#125;</code>, <code>[</code> and <code>]</code>, determine if the input string is valid.</p>
+	
+
+	</div>
+  <a type="button" href="/wiki/LeetCode-20.Valid Parentheses/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="20-Valid-Parentheses"><a href="#20-Valid-Parentheses" class="headerlink" title="20.Valid-Parentheses"></a>20.Valid-Parentheses</h1><p>Given a string containing just the characters <code>(</code>, <code>)</code>, <code>&#123;</code>, <code>&#125;</code>, <code>[</code> and <code>]</code>, determine if the input string is valid.</p>
+	
+	</div>
+  <a type="button" href="/wiki/LeetCode-20.Valid Parentheses/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/LeetCode-242.Valid Anagram/" >LeetCode-242.Valid-Anagram</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-04-13  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="LeetCode-242-Valid-Anagram"><a href="#LeetCode-242-Valid-Anagram" class="headerlink" title="LeetCode-242.Valid-Anagram"></a>LeetCode-242.Valid-Anagram</h1><p>Given two strings <code>s</code> and <code>t</code> , write a function to determine if <code>t</code> is an anagram of <code>s</code>.</p>
+<!---more-->
+
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Example <span class="number">1</span>:</span><br><span class="line"></span><br><span class="line"><span class="attr">Input:</span> s = <span class="string">&quot;anagram&quot;</span>, t = <span class="string">&quot;nagaram&quot;</span></span><br><span class="line"><span class="attr">Output:</span> <span class="literal">true</span></span><br><span class="line">Example <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line"><span class="attr">Input:</span> s = <span class="string">&quot;rat&quot;</span>, t = <span class="string">&quot;car&quot;</span></span><br><span class="line"><span class="attr">Output:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>长度不同 返回<code>false</code><br>一遍扫描 Hash 计数，s 出现字母 ++，t 出现字母 –，最后判断是否全为 0 即可</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isAnagram</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s.length()!=t.length()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> hash[<span class="number">26</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++) &#123;</span><br><span class="line">            hash[s[i]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">            hash[t[i]-<span class="string">&#x27;a&#x27;</span>]--;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> it:hash) &#123;</span><br><span class="line">            <span class="keyword">if</span>(it!=<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+	
+
+	</div>
+  <a type="button" href="/wiki/LeetCode-242.Valid Anagram/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="LeetCode-242-Valid-Anagram"><a href="#LeetCode-242-Valid-Anagram" class="headerlink" title="LeetCode-242.Valid-Anagram"></a>LeetCode-242.Valid-Anagram</h1><p>Given two strings <code>s</code> and <code>t</code> , write a function to determine if <code>t</code> is an anagram of <code>s</code>.</p>
+<!---more-->
+
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">Example <span class="number">1</span>:</span><br><span class="line"></span><br><span class="line"><span class="attr">Input:</span> s = <span class="string">&quot;anagram&quot;</span>, t = <span class="string">&quot;nagaram&quot;</span></span><br><span class="line"><span class="attr">Output:</span> <span class="literal">true</span></span><br><span class="line">Example <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line"><span class="attr">Input:</span> s = <span class="string">&quot;rat&quot;</span>, t = <span class="string">&quot;car&quot;</span></span><br><span class="line"><span class="attr">Output:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>长度不同 返回<code>false</code><br>一遍扫描 Hash 计数，s 出现字母 ++，t 出现字母 –，最后判断是否全为 0 即可</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isAnagram</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s.length()!=t.length()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> hash[<span class="number">26</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++) &#123;</span><br><span class="line">            hash[s[i]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">            hash[t[i]-<span class="string">&#x27;a&#x27;</span>]--;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> it:hash) &#123;</span><br><span class="line">            <span class="keyword">if</span>(it!=<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+	
+	</div>
+  <a type="button" href="/wiki/LeetCode-242.Valid Anagram/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/二叉搜索树/" >二叉搜索树相关</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-04-09  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="二叉搜索树的相关操作"><a href="#二叉搜索树的相关操作" class="headerlink" title="二叉搜索树的相关操作"></a>二叉搜索树的相关操作</h1><p>二叉查找树（Binary Search Tree），（又：二叉搜索树，二叉排序树）它或者是一棵空树，或者是具有下列性质的二叉树： 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值； 它的左、右子树也分别为二叉排序树。二叉搜索树作为一种经典的数据结构，它既有链表的快速插入与删除操作的特点，又有数组快速查找的优势；所以应用十分广泛，例如在文件系统和数据库系统一般会采用这种数据结构进行高效率的排序与检索操作。</p>
+	
+
+	</div>
+  <a type="button" href="/wiki/二叉搜索树/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="二叉搜索树的相关操作"><a href="#二叉搜索树的相关操作" class="headerlink" title="二叉搜索树的相关操作"></a>二叉搜索树的相关操作</h1><p>二叉查找树（Binary Search Tree），（又：二叉搜索树，二叉排序树）它或者是一棵空树，或者是具有下列性质的二叉树： 若它的左子树不空，则左子树上所有结点的值均小于它的根结点的值； 若它的右子树不空，则右子树上所有结点的值均大于它的根结点的值； 它的左、右子树也分别为二叉排序树。二叉搜索树作为一种经典的数据结构，它既有链表的快速插入与删除操作的特点，又有数组快速查找的优势；所以应用十分广泛，例如在文件系统和数据库系统一般会采用这种数据结构进行高效率的排序与检索操作。</p>
+	
+	</div>
+  <a type="button" href="/wiki/二叉搜索树/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/LeetCode-按摩师-动态规划/" >LeetCode- 按摩师 - 动态规划</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-03-24  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h3 id="按摩师-动态规划"><a href="#按摩师-动态规划" class="headerlink" title="按摩师 - 动态规划"></a>按摩师 - 动态规划</h3><p>一个有名的按摩师会收到源源不断的预约请求，每个预约都可以选择接或不接。在每次预约服务之间要有休息时间，因此她不能接受相邻的预约。给定一个预约请求序列，替按摩师找到最优的预约集合（总预约时间最长），返回总的分钟数。</p>
+	
+
+	</div>
+  <a type="button" href="/wiki/LeetCode-按摩师-动态规划/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h3 id="按摩师-动态规划"><a href="#按摩师-动态规划" class="headerlink" title="按摩师 - 动态规划"></a>按摩师 - 动态规划</h3><p>一个有名的按摩师会收到源源不断的预约请求，每个预约都可以选择接或不接。在每次预约服务之间要有休息时间，因此她不能接受相邻的预约。给定一个预约请求序列，替按摩师找到最优的预约集合（总预约时间最长），返回总的分钟数。</p>
+	
+	</div>
+  <a type="button" href="/wiki/LeetCode-按摩师-动态规划/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+			
+	
+	<!-- display as entry -->
+<div class="row">
+	<div class="col-md-8">
+		<h3 class="title">
+			<a href="/wiki/LeetCode-面试题64.求1+2+…+n/" >LeetCode-64. 求 1+2+…+n</a>
+		</h3>
+		</div>
+	<div class="col-md-4">
+		<div class="date">post @ 2020-03-23  </div>
+		</div>
+	</div>
+	
+
+
+			<!--
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="求-1-2-…-n"><a href="#求-1-2-…-n" class="headerlink" title="求 1+2+…+n"></a>求 1+2+…+n</h1><p>求 <code>1+2+...+n </code>，要求不能使用乘除法、<code>for、while、if、else、switch、case</code> 等关键字及条件判断语句<code>（A?B:C）</code>。</p>
+<p>示例 1：</p>
+<p>输入：<code>n = 3</code></p>
+<p>输出：<code>6</code><br>示例 2：</p>
+<p>输入：<code>n = 9</code></p>
+<p>输出：<code>45</code></p>
+<p>限制：</p>
+<p><code>1 &lt;= n &lt;= 10000</code></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2>
+	
+
+	</div>
+  <a type="button" href="/wiki/LeetCode-面试题64.求1+2+…+n/#more" class="btn btn-default more">Read More</a>
+</div>
+
+-->
+<div class="entry">
+  <div class="row">
+	
+	
+		<h1 id="求-1-2-…-n"><a href="#求-1-2-…-n" class="headerlink" title="求 1+2+…+n"></a>求 1+2+…+n</h1><p>求 <code>1+2+...+n </code>，要求不能使用乘除法、<code>for、while、if、else、switch、case</code> 等关键字及条件判断语句<code>（A?B:C）</code>。</p>
+<p>示例 1：</p>
+<p>输入：<code>n = 3</code></p>
+<p>输出：<code>6</code><br>示例 2：</p>
+<p>输入：<code>n = 9</code></p>
+<p>输出：<code>45</code></p>
+<p>限制：</p>
+<p><code>1 &lt;= n &lt;= 10000</code></p>
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2>
+	
+	</div>
+  <a type="button" href="/wiki/LeetCode-面试题64.求1+2+…+n/#more" class="btn btn-default more">Read More</a>
+</div>
+
+		
+
+		</div>
+
+		<!-- pagination -->
+		<div>
+  		<center>
+		<div class="pagination">
+
+   
+    
+     <a href="/page/2/" type="button" class="btn btn-default"><i class="fa fa-arrow-circle-o-left"></i> Prev</a>
+      
+
+        <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
+ 
+       <a href="/page/4/" type="button" class="btn btn-default ">Next<i class="fa fa-arrow-circle-o-right"></i></a>     
+        
+
+  
+</div>
+
+  		</center>
+		</div>
+
+		
+		
+	</div> <!-- col-md-9 -->
+
+	
+		<div class="col-md-3">
+	<div id="sidebar">
+	
+			
+  <div id="site_search">
+   <div class="form-group">
+    <input type="text" id="local-search-input" name="q" results="0" placeholder="Search" class="st-search-input st-default-search-input form-control"/>
+   </div>  
+  <div id="local-search-result"></div>
+  </div>
+
+
+		
+			
+	<div class="widget">
+		<h4>Categories</h4>
+		<ul class="tag_box inline list-unstyled">
+		
+			<li><a href="/categories/Algorithm/">Algorithm<span>36</span></a></li>
+		
+			<li><a href="/categories/Audio/">Audio<span>3</span></a></li>
+		
+			<li><a href="/categories/Language/C-C/">C/C++<span>3</span></a></li>
+		
+			<li><a href="/categories/Video/FFmpeg/">FFmpeg<span>1</span></a></li>
+		
+			<li><a href="/categories/Git/">Git<span>1</span></a></li>
+		
+			<li><a href="/categories/Algorithm/Huawei/">Huawei<span>10</span></a></li>
+		
+			<li><a href="/categories/Interview/">Interview<span>2</span></a></li>
+		
+			<li><a href="/categories/Language/">Language<span>6</span></a></li>
+		
+			<li><a href="/categories/Algorithm/LeetCode/">LeetCode<span>13</span></a></li>
+		
+			<li><a href="/categories/Linux/">Linux<span>3</span></a></li>
+		
+			<li><a href="/categories/Multi-threads/">Multi-threads<span>2</span></a></li>
+		
+			<li><a href="/categories/Algorithm/Others/">Others<span>5</span></a></li>
+		
+			<li><a href="/categories/Algorithm/PAT-B/">PAT-B<span>8</span></a></li>
+		
+			<li><a href="/categories/Projects/">Projects<span>3</span></a></li>
+		
+			<li><a href="/categories/Protocols/">Protocols<span>1</span></a></li>
+		
+			<li><a href="/categories/Language/Python/">Python<span>2</span></a></li>
+		
+			<li><a href="/categories/Storage/">Storage<span>1</span></a></li>
+		
+			<li><a href="/categories/Video/">Video<span>3</span></a></li>
+		
+			<li><a href="/categories/zsh/">zsh<span>1</span></a></li>
+		
+		</ul>
+	</div>
+
+		
+			
+	<div class="widget">
+		<h4>Tag Cloud</h4>
+		<ul class="tag_box inline list-unstyled">		
+		
+			<li><a href="/tags/语法树/">语法树<span>1</span></a></li>
+		
+			<li><a href="/tags/贪心/">贪心<span>1</span></a></li>
+		
+			<li><a href="/tags/文件存储/">文件存储<span>1</span></a></li>
+		
+			<li><a href="/tags/getopt/">getopt<span>1</span></a></li>
+		
+			<li><a href="/tags/pkg-config/">pkg-config<span>1</span></a></li>
+		
+			<li><a href="/tags/MP4/">MP4<span>1</span></a></li>
+		
+			<li><a href="/tags/机试/">机试<span>9</span></a></li>
+		
+			<li><a href="/tags/时间复杂度/">时间复杂度<span>1</span></a></li>
+		
+			<li><a href="/tags/事件推送/">事件推送<span>1</span></a></li>
+		
+			<li><a href="/tags/Video/">Video<span>1</span></a></li>
+		
+			<li><a href="/tags/BFS/">BFS<span>2</span></a></li>
+		
+			<li><a href="/tags/数学/">数学<span>3</span></a></li>
+		
+			<li><a href="/tags/DFS/">DFS<span>1</span></a></li>
+		
+			<li><a href="/tags/hash/">hash<span>1</span></a></li>
+		
+			<li><a href="/tags/video/">video<span>1</span></a></li>
+		
+			<li><a href="/tags/浅拷贝/">浅拷贝<span>1</span></a></li>
+		
+			<li><a href="/tags/stl/">stl<span>1</span></a></li>
+		
+			<li><a href="/tags/面试/">面试<span>2</span></a></li>
+		
+			<li><a href="/tags/字符串/">字符串<span>3</span></a></li>
+		
+			<li><a href="/tags/勾股定理/">勾股定理<span>1</span></a></li>
+		
+		
+		   <li><a href="/tags">...<span>93</span></a></li>
+		 
+		</ul>
+	</div>
+
+
+		
+			
+<div class="widget">
+  <h4>Recent Posts</h4>
+  <ul class="entry list-unstyled">
+    
+      <li>
+        <a href="/wiki/使用openmp进行多线程编程/" ><i class="fa fa-file-o"></i>使用openmp进行多线程编程</a>
+      </li>
+    
+      <li>
+        <a href="/wiki/openmp的的一点多线程应用/" ><i class="fa fa-file-o"></i>openmp 的的一点多线程应用</a>
+      </li>
+    
+      <li>
+        <a href="/wiki/do-while-0-特殊用法/" ><i class="fa fa-file-o"></i>do...while(0)特殊用法</a>
+      </li>
+    
+      <li>
+        <a href="/wiki/三种存储类型/" ><i class="fa fa-file-o"></i>三种存储类型</a>
+      </li>
+    
+      <li>
+        <a href="/wiki/视频编解码基础概念/" ><i class="fa fa-file-o"></i>视频编解码基础概念</a>
+      </li>
+    
+  </ul>
+</div>
+
+		
+			
+<div class="widget">
+	<h4>Links</h4>
+	<ul class="blogroll list-unstyled">
+	
+		<li><i class="false"></i><a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" title="" target="_blank"]);">hexo-theme-bithack</a></li>
+	
+	</ul>
+</div>
+
+
+		
+	</div> <!-- sidebar -->
+</div> <!-- col-md-3 -->
+
+	
+	
+</div> <!-- row-fluid -->
+	</div>
+  </div>
+  <div class="container-narrow">
+  <footer> <p>
+  
+  &copy; 2021 SunZhenliang's Blog
+  
+      powered by <a href="http://hexo.io/" target="_blank">Hexo</a>.Theme <a href="https://github.com/Ares-X/hexo-theme-freemind.bithack" target="_blank">freemind.bithack</a>  
+</p>
+ </footer>
+</div> <!-- container-narrow -->
+  
+
+
+  
+<a id="gotop" href="#">   
+  <span>⬆︎TOP</span>
+</a>
+
+<script src="/js/jquery.imagesloaded.min.js"></script>
+<script src="/js/gallery.js"></script>
+<script src="/js/bootstrap.min.js"></script>
+<script src="/js/main.js"></script>
+<script src="/js/search.js"></script> 
+
+
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css" media="screen" type="text/css">
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript">
+(function($){
+  $('.fancybox').fancybox();
+})(jQuery);
+</script>
+
+
+
+   <script type="text/javascript">      
+     var search_path = "search.xml";
+	 if (search_path.length == 0) {
+	 	search_path = "search.xml";
+	 }
+	 var path = "/" + search_path;
+     searchFunc(path, 'local-search-input', 'local-search-result');
+   </script>
+
+</body>
+   </html>
