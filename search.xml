@@ -292,28 +292,6 @@
       </tags>
   </entry>
   <entry>
-    <title>LeetCode-1248. 统计「优美子数组」</title>
-    <url>/wiki/LeetCode-1248.%20%E7%BB%9F%E8%AE%A1%E3%80%8C%E4%BC%98%E7%BE%8E%E5%AD%90%E6%95%B0%E7%BB%84%E3%80%8D/</url>
-    <content><![CDATA[<h1 id="1248-统计「优美子数组」"><a href="#1248-统计「优美子数组」" class="headerlink" title="1248. 统计「优美子数组」"></a>1248. 统计「优美子数组」</h1><p>给你一个整数数组 nums 和一个整数 k。</p>
-<p>如果某个 连续 子数组中恰好有 k 个奇数数字，我们就认为这个子数组是「优美子数组」。</p>
-<p>请返回这个数组中「优美子数组」的数目。</p>
-<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：nums = <span class="comment">[1,1,2,1,1]</span>, k = 3</span><br><span class="line">输出：2</span><br><span class="line">解释：包含 3 个奇数的子数组是 <span class="comment">[1,1,2,1]</span> 和 <span class="comment">[1,2,1,1]</span> 。</span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：nums = <span class="comment">[2,4,6]</span>, k = 1</span><br><span class="line">输出：0</span><br><span class="line">解释：数列中不包含任何奇数，所以不存在优美子数组。</span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：nums = <span class="comment">[2,2,2,1,2,2,1,2,2,2]</span>, k = 2</span><br><span class="line">输出：16</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line"></span><br><span class="line">1 &lt;= nums.length &lt;= 50000</span><br><span class="line">1 &lt;= nums<span class="comment">[i]</span> &lt;= 10^5</span><br><span class="line">1 &lt;= k &lt;= nums.length</span><br></pre></td></tr></table></figure>
-
-<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="自想"><a href="#自想" class="headerlink" title="自想"></a>自想</h3><p>多指针一次遍历，计算前后偶数乘积之和</p>
-<h3 id="官方"><a href="#官方" class="headerlink" title="官方"></a>官方</h3><p><img src="https://gitee.com/SunGitee/src/raw/master/img/20200421102035.png"></p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numberOfSubarrays</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = (<span class="keyword">int</span>)nums.size();</span><br><span class="line">        <span class="keyword">int</span> odd[n + <span class="number">2</span>], ans = <span class="number">0</span>, cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &amp; <span class="number">1</span>) odd[++cnt] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        odd[<span class="number">0</span>] = <span class="number">-1</span>, odd[++cnt] = n;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i + k &lt;= cnt; ++i) &#123;</span><br><span class="line">            ans += (odd[i] - odd[i - <span class="number">1</span>]) * (odd[i + k] - odd[i + k - <span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">作者：LeetCode-Solution</span><br><span class="line">链接：https:<span class="comment">//leetcode-cn.com/problems/count-number-of-nice-subarrays/solution/tong-ji-you-mei-zi-shu-zu-by-leetcode-solution/</span></span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>数组</tag>
-        <tag>双指针</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Git commit message 规范</title>
     <url>/wiki/Git-commit-message-%E8%A7%84%E8%8C%83/</url>
     <content><![CDATA[<h1 id="Git-commit-message-规范"><a href="#Git-commit-message-规范" class="headerlink" title="Git commit message 规范"></a>Git commit message 规范</h1><p>最近使用git,翻找以前的记录, 愈发觉得提交 git 记录时, commit message 很重要, 需要有一定规范. </p>
@@ -335,6 +313,28 @@
       </categories>
       <tags>
         <tag>git</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode-1248. 统计「优美子数组」</title>
+    <url>/wiki/LeetCode-1248.%20%E7%BB%9F%E8%AE%A1%E3%80%8C%E4%BC%98%E7%BE%8E%E5%AD%90%E6%95%B0%E7%BB%84%E3%80%8D/</url>
+    <content><![CDATA[<h1 id="1248-统计「优美子数组」"><a href="#1248-统计「优美子数组」" class="headerlink" title="1248. 统计「优美子数组」"></a>1248. 统计「优美子数组」</h1><p>给你一个整数数组 nums 和一个整数 k。</p>
+<p>如果某个 连续 子数组中恰好有 k 个奇数数字，我们就认为这个子数组是「优美子数组」。</p>
+<p>请返回这个数组中「优美子数组」的数目。</p>
+<figure class="highlight inform7"><table><tr><td class="code"><pre><span class="line">示例 1：</span><br><span class="line"></span><br><span class="line">输入：nums = <span class="comment">[1,1,2,1,1]</span>, k = 3</span><br><span class="line">输出：2</span><br><span class="line">解释：包含 3 个奇数的子数组是 <span class="comment">[1,1,2,1]</span> 和 <span class="comment">[1,2,1,1]</span> 。</span><br><span class="line">示例 2：</span><br><span class="line"></span><br><span class="line">输入：nums = <span class="comment">[2,4,6]</span>, k = 1</span><br><span class="line">输出：0</span><br><span class="line">解释：数列中不包含任何奇数，所以不存在优美子数组。</span><br><span class="line">示例 3：</span><br><span class="line"></span><br><span class="line">输入：nums = <span class="comment">[2,2,2,1,2,2,1,2,2,2]</span>, k = 2</span><br><span class="line">输出：16</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">提示：</span><br><span class="line"></span><br><span class="line">1 &lt;= nums.length &lt;= 50000</span><br><span class="line">1 &lt;= nums<span class="comment">[i]</span> &lt;= 10^5</span><br><span class="line">1 &lt;= k &lt;= nums.length</span><br></pre></td></tr></table></figure>
+
+<h2 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h2><h3 id="自想"><a href="#自想" class="headerlink" title="自想"></a>自想</h3><p>多指针一次遍历，计算前后偶数乘积之和</p>
+<h3 id="官方"><a href="#官方" class="headerlink" title="官方"></a>官方</h3><p><img src="https://gitee.com/SunGitee/src/raw/master/img/20200421102035.png"></p>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">numberOfSubarrays</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt;&amp; nums, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">int</span> n = (<span class="keyword">int</span>)nums.size();</span><br><span class="line">        <span class="keyword">int</span> odd[n + <span class="number">2</span>], ans = <span class="number">0</span>, cnt = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; n; ++i) &#123;</span><br><span class="line">            <span class="keyword">if</span> (nums[i] &amp; <span class="number">1</span>) odd[++cnt] = i;</span><br><span class="line">        &#125;</span><br><span class="line">        odd[<span class="number">0</span>] = <span class="number">-1</span>, odd[++cnt] = n;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i + k &lt;= cnt; ++i) &#123;</span><br><span class="line">            ans += (odd[i] - odd[i - <span class="number">1</span>]) * (odd[i + k] - odd[i + k - <span class="number">1</span>]);</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> ans;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line">作者：LeetCode-Solution</span><br><span class="line">链接：https:<span class="comment">//leetcode-cn.com/problems/count-number-of-nice-subarrays/solution/tong-ji-you-mei-zi-shu-zu-by-leetcode-solution/</span></span><br><span class="line">来源：力扣（LeetCode）</span><br><span class="line">著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>数组</tag>
+        <tag>双指针</tag>
       </tags>
   </entry>
   <entry>
@@ -360,26 +360,6 @@
       </tags>
   </entry>
   <entry>
-    <title>LeetCode-242.Valid-Anagram</title>
-    <url>/wiki/LeetCode-242.Valid%20Anagram/</url>
-    <content><![CDATA[<h1 id="LeetCode-242-Valid-Anagram"><a href="#LeetCode-242-Valid-Anagram" class="headerlink" title="LeetCode-242.Valid-Anagram"></a>LeetCode-242.Valid-Anagram</h1><p>Given two strings <code>s</code> and <code>t</code> , write a function to determine if <code>t</code> is an anagram of <code>s</code>.</p>
-<!---more-->
-
-<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">Example <span class="number">1</span>:</span><br><span class="line"></span><br><span class="line"><span class="attr">Input:</span> s = <span class="string">&quot;anagram&quot;</span>, t = <span class="string">&quot;nagaram&quot;</span></span><br><span class="line"><span class="attr">Output:</span> <span class="literal">true</span></span><br><span class="line">Example <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line"><span class="attr">Input:</span> s = <span class="string">&quot;rat&quot;</span>, t = <span class="string">&quot;car&quot;</span></span><br><span class="line"><span class="attr">Output:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>长度不同 返回<code>false</code><br>一遍扫描 Hash 计数，s 出现字母 ++，t 出现字母 –，最后判断是否全为 0 即可</p>
-<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isAnagram</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s.length()!=t.length()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> hash[<span class="number">26</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++) &#123;</span><br><span class="line">            hash[s[i]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">            hash[t[i]-<span class="string">&#x27;a&#x27;</span>]--;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> it:hash) &#123;</span><br><span class="line">            <span class="keyword">if</span>(it!=<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>Hash</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LeetCode-20.Valid-Parentheses</title>
     <url>/wiki/LeetCode-20.Valid%20Parentheses/</url>
     <content><![CDATA[<h1 id="20-Valid-Parentheses"><a href="#20-Valid-Parentheses" class="headerlink" title="20.Valid-Parentheses"></a>20.Valid-Parentheses</h1><p>Given a string containing just the characters <code>(</code>, <code>)</code>, <code>&#123;</code>, <code>&#125;</code>, <code>[</code> and <code>]</code>, determine if the input string is valid.</p>
@@ -399,6 +379,26 @@
       <tags>
         <tag>C++</tag>
         <tag>Stack</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode-242.Valid-Anagram</title>
+    <url>/wiki/LeetCode-242.Valid%20Anagram/</url>
+    <content><![CDATA[<h1 id="LeetCode-242-Valid-Anagram"><a href="#LeetCode-242-Valid-Anagram" class="headerlink" title="LeetCode-242.Valid-Anagram"></a>LeetCode-242.Valid-Anagram</h1><p>Given two strings <code>s</code> and <code>t</code> , write a function to determine if <code>t</code> is an anagram of <code>s</code>.</p>
+<!---more-->
+
+<figure class="highlight groovy"><table><tr><td class="code"><pre><span class="line">Example <span class="number">1</span>:</span><br><span class="line"></span><br><span class="line"><span class="attr">Input:</span> s = <span class="string">&quot;anagram&quot;</span>, t = <span class="string">&quot;nagaram&quot;</span></span><br><span class="line"><span class="attr">Output:</span> <span class="literal">true</span></span><br><span class="line">Example <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line"><span class="attr">Input:</span> s = <span class="string">&quot;rat&quot;</span>, t = <span class="string">&quot;car&quot;</span></span><br><span class="line"><span class="attr">Output:</span> <span class="literal">false</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="解题思路"><a href="#解题思路" class="headerlink" title="解题思路"></a>解题思路</h3><p>长度不同 返回<code>false</code><br>一遍扫描 Hash 计数，s 出现字母 ++，t 出现字母 –，最后判断是否全为 0 即可</p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isAnagram</span><span class="params">(<span class="built_in">string</span> s, <span class="built_in">string</span> t)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(s.length()!=t.length()) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">        <span class="keyword">int</span> hash[<span class="number">26</span>]=&#123;<span class="number">0</span>&#125;;</span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">int</span> i=<span class="number">0</span>;i&lt;s.length();i++) &#123;</span><br><span class="line">            hash[s[i]-<span class="string">&#x27;a&#x27;</span>]++;</span><br><span class="line">            hash[t[i]-<span class="string">&#x27;a&#x27;</span>]--;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span>(<span class="keyword">auto</span> it:hash) &#123;</span><br><span class="line">            <span class="keyword">if</span>(it!=<span class="number">0</span>)&#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>Hash</tag>
       </tags>
   </entry>
   <entry>
@@ -604,27 +604,6 @@
       </tags>
   </entry>
   <entry>
-    <title>LeetCode-98. 验证二叉搜索树</title>
-    <url>/wiki/LeetCode-98.%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/</url>
-    <content><![CDATA[<h1 id="98-验证二叉搜索树"><a href="#98-验证二叉搜索树" class="headerlink" title="98. 验证二叉搜索树"></a>98. 验证二叉搜索树</h1><p>给定一个二叉树，判断其是否是一个有效的二叉搜索树。</p>
-<p>假设一个二叉搜索树具有如下特征：</p>
-<p>节点的左子树只包含小于当前节点的数。节点的右子树只包含大于当前节点的数。<br>所有左子树和右子树自身必须也是二叉搜索树。<br>示例 1:</p>
-<figure class="highlight livescript"><table><tr><td class="code"><pre><span class="line">输入：</span><br><span class="line">    <span class="number">2</span></span><br><span class="line">   / <span class="string">\</span></span><br><span class="line">  <span class="number">1</span>   <span class="number">3</span></span><br><span class="line">输出：<span class="literal">true</span></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line">输入：</span><br><span class="line">    <span class="number">5</span></span><br><span class="line">   / <span class="string">\</span></span><br><span class="line">  <span class="number">1</span>   <span class="number">4</span></span><br><span class="line">     / <span class="string">\</span></span><br><span class="line">    <span class="number">3</span>   <span class="number">6</span></span><br><span class="line">输出：<span class="literal">false</span></span><br><span class="line">解释：输入为：[<span class="number">5</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="literal">null</span>,<span class="literal">null</span>,<span class="number">3</span>,<span class="number">6</span>]。</span><br><span class="line">     根节点的值为 <span class="number">5</span> ，但是其右子节点值为 <span class="number">4</span> 。</span><br></pre></td></tr></table></figure>
-
-<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//中序递归，只要上一个的val值大于即将判断的（下一个）的值，那么就return false，很精妙！</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span>* last = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!isValidBST(root-&gt;left)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span> (last &amp;&amp; *last&gt;=root-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            last = &amp;root-&gt;val;</span><br><span class="line">            <span class="keyword">if</span>(!isValidBST(root-&gt;right)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//https://leetcode-cn.com/problems/validate-binary-search-tree/comments/</span></span><br></pre></td></tr></table></figure>
-
-]]></content>
-      <categories>
-        <category>Algorithm</category>
-        <category>LeetCode</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>二叉树</tag>
-        <tag>指针</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>LeetCode-542.01Matrix</title>
     <url>/wiki/LeetCode-542.01Matrix/</url>
     <content><![CDATA[<h1 id="542-01-Matrix"><a href="#542-01-Matrix" class="headerlink" title="542. 01 Matrix"></a>542. 01 Matrix</h1><p>Given a matrix consists of 0 and 1, find the distance of the nearest 0 for each cell.</p>
@@ -670,6 +649,27 @@
       <tags>
         <tag>C++</tag>
         <tag>贪心</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>LeetCode-98. 验证二叉搜索树</title>
+    <url>/wiki/LeetCode-98.%E9%AA%8C%E8%AF%81%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91/</url>
+    <content><![CDATA[<h1 id="98-验证二叉搜索树"><a href="#98-验证二叉搜索树" class="headerlink" title="98. 验证二叉搜索树"></a>98. 验证二叉搜索树</h1><p>给定一个二叉树，判断其是否是一个有效的二叉搜索树。</p>
+<p>假设一个二叉搜索树具有如下特征：</p>
+<p>节点的左子树只包含小于当前节点的数。节点的右子树只包含大于当前节点的数。<br>所有左子树和右子树自身必须也是二叉搜索树。<br>示例 1:</p>
+<figure class="highlight livescript"><table><tr><td class="code"><pre><span class="line">输入：</span><br><span class="line">    <span class="number">2</span></span><br><span class="line">   / <span class="string">\</span></span><br><span class="line">  <span class="number">1</span>   <span class="number">3</span></span><br><span class="line">输出：<span class="literal">true</span></span><br><span class="line">示例 <span class="number">2</span>:</span><br><span class="line"></span><br><span class="line">输入：</span><br><span class="line">    <span class="number">5</span></span><br><span class="line">   / <span class="string">\</span></span><br><span class="line">  <span class="number">1</span>   <span class="number">4</span></span><br><span class="line">     / <span class="string">\</span></span><br><span class="line">    <span class="number">3</span>   <span class="number">6</span></span><br><span class="line">输出：<span class="literal">false</span></span><br><span class="line">解释：输入为：[<span class="number">5</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="literal">null</span>,<span class="literal">null</span>,<span class="number">3</span>,<span class="number">6</span>]。</span><br><span class="line">     根节点的值为 <span class="number">5</span> ，但是其右子节点值为 <span class="number">4</span> 。</span><br></pre></td></tr></table></figure>
+
+<h2 id="方法"><a href="#方法" class="headerlink" title="方法"></a>方法</h2><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//中序递归，只要上一个的val值大于即将判断的（下一个）的值，那么就return false，很精妙！</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Solution</span> &#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">int</span>* last = <span class="literal">NULL</span>;</span><br><span class="line">    <span class="function"><span class="keyword">bool</span> <span class="title">isValidBST</span><span class="params">(TreeNode* root)</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (root)&#123;</span><br><span class="line">            <span class="keyword">if</span>(!isValidBST(root-&gt;left)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">if</span> (last &amp;&amp; *last&gt;=root-&gt;val) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            last = &amp;root-&gt;val;</span><br><span class="line">            <span class="keyword">if</span>(!isValidBST(root-&gt;right)) <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">    &#125;;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="comment">//https://leetcode-cn.com/problems/validate-binary-search-tree/comments/</span></span><br></pre></td></tr></table></figure>
+
+]]></content>
+      <categories>
+        <category>Algorithm</category>
+        <category>LeetCode</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>二叉树</tag>
+        <tag>指针</tag>
       </tags>
   </entry>
   <entry>
@@ -2215,6 +2215,272 @@
       </tags>
   </entry>
   <entry>
+    <title>C/C++ 面试总结（更新）</title>
+    <url>/wiki/C++%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93(%E6%9B%B4%E6%96%B0)/</url>
+    <content><![CDATA[<blockquote>
+<p>准备下面试，下面及主要记录下一些知识点</p>
+</blockquote>
+<a id="more"></a>
+
+<h2 id="c-面试题总结"><a href="#c-面试题总结" class="headerlink" title="c++ 面试题总结"></a>c++ 面试题总结</h2><h3 id="1-C-和-C-区别"><a href="#1-C-和-C-区别" class="headerlink" title="1. C 和 C++ 区别"></a>1. C 和 C++ 区别</h3><ul>
+<li>C 是面向过程的结构化语言，C++ 是除了面向过程，也可以面向对象。</li>
+<li>C++ 具有重载、继承和多态三种特性</li>
+<li>C++ 相比 C，增加多许多类型安全的功能，比如强制类型转换</li>
+<li>C++ 支持范式编程，比如模板类、函数模板等</li>
+</ul>
+<h3 id="2-多态实现方法"><a href="#2-多态实现方法" class="headerlink" title="2. 多态实现方法"></a>2. 多态实现方法</h3><ul>
+<li>C++ 中，实现多态有以下方法：虚函数，抽象类，覆盖，模板，条件是要有重写，要有继承，父类指向子类。</li>
+</ul>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/image-20200313184554050.png" alt="image-20200313184554050"></p>
+<h3 id="3-虚函数"><a href="#3-虚函数" class="headerlink" title="3. 虚函数"></a>3. 虚函数</h3><p><strong>虚函数的作用：</strong> 虚函数实现了多态的机制。基类定义了虚函数，子类可以重写该函数，当子类重新定义了父类的虚函数后，父类指针根据赋给它的不同的子类指针，动态地调用属于子类的该函数，且这样的函数调用是无法在编译器期间确认的，而是在运行期确认，也叫做晚绑定。</p>
+<p><strong>实现原理：</strong><br>  它涉及两个工具，<br>  当一个类声明了虚函数或者继承了虚函数，这个类就会有自己的<strong>虚函数表</strong>。虚函数表实际上就是一个函数指针数组，有的编译器用的是链表。虚函数表数组中的每一个元素对应一个函数指针指向该类的一个虚函数，同时该类的每一个对象都会包含一个虚函数表指针，虚函数表指针指向该虚函数表的地址。所以当一个类有虚函数的，是占用内存的，占用一个指针大小的内存。<br>  虚函数表按照其声明顺序放于虚函数表中。<br>  如果子类覆盖了父类的虚函数，将覆盖虚函数表中原来父类虚函数的位置。<br>  如果派生类有多个父类，子类的成员函数存放在第一个父类的表中。</p>
+<h3 id="4-深拷贝和浅拷贝（值拷贝和位拷贝）"><a href="#4-深拷贝和浅拷贝（值拷贝和位拷贝）" class="headerlink" title="4. 深拷贝和浅拷贝（值拷贝和位拷贝）"></a>4. 深拷贝和浅拷贝（值拷贝和位拷贝）</h3><p>深拷贝指拷贝时对象资源重新分配，两个对象的资源内存不同，释放一个对象资源不会影响另一个。<br>浅拷贝指两个对象均指向同一内存空间，释放一个对象的资源，另一个对象的资源也没了，造成野指针。</p>
+<h3 id="5-为什么要有虚析构函数"><a href="#5-为什么要有虚析构函数" class="headerlink" title="5. 为什么要有虚析构函数"></a>5. 为什么要有虚析构函数</h3><p>C++ 中基类采用 virtual 虚析构函数是为了防止内存泄漏。具体地说，如果派生类中申请了内存空间，并在其析构函数中对这些内存空间进行释放。假设基类中采用的是非虚析构函数，当<strong>删除基类指针指向的派生类对象时</strong>就不会触发动态绑定，因而只会调用基类的析构函数，而不会调用派生类的析构函数。那么在这种情况下，派生类中申请的空间就得不到释放从而产生内存泄漏。所以，为了防止这种情况的发生，C++ 中基类的析构函数应采用 virtual 虚析构函数。</p>
+<h3 id="6-构造函数能不能是虚函数"><a href="#6-构造函数能不能是虚函数" class="headerlink" title="6. 构造函数能不能是虚函数"></a>6. 构造函数能不能是虚函数</h3><p>不能</p>
+<p>构造一个对象时，必须知道对象实际类型，而虚函数是在运行期间确定实际类型的。而在构造一个对象时，由于对象还未构造成功，编译器就无法知道对象的实际类型，是该类本身，还是派生类，还是其他。</p>
+<p>虚函数的执行依赖于虚函数表，而虚函数表是在构造函数中进行初始化的，即初始化虚表指针（vptr），使得正确指向虚函数表。而在构造对象期间，虚函数表（vtable）还没有被初始化，将无法进行。</p>
+<h3 id="7-C-里面构造函数能有返回值吗？"><a href="#7-C-里面构造函数能有返回值吗？" class="headerlink" title="7. C++ 里面构造函数能有返回值吗？"></a>7. C++ 里面构造函数能有返回值吗？</h3><ol>
+<li>构造函数没有返回值，他只是描述了类初始化的行为。</li>
+<li>但是 new 一个类实例是有返回值的，因为 new 返回的是类实例的指针</li>
+</ol>
+<h3 id="8-构造函数和析构函数能被继承吗"><a href="#8-构造函数和析构函数能被继承吗" class="headerlink" title="8. 构造函数和析构函数能被继承吗"></a>8. 构造函数和析构函数能被继承吗</h3><p>不能</p>
+<p>不是所有的函数都能自动地从基类继承到派生类中的。构造函数和析构函数是用来处理对象的创建和析构的，它们只知道对在它们的特殊层次的对象做什么。</p>
+<p>所以，在整个层次中的所有的构造函数和析构函数都必须被调用，也就是说，构造函数和析构函数不能被继承。子类的构造函数会显示的调用父类的构造函数或隐式的调用父类的默认的构造函数进行父类部分的初始化。</p>
+<p>析构函数也一样。它们都是每个类都有的东西，如果能被继承，那就没有办法初始化了。</p>
+<h3 id="9-函数与宏的差别"><a href="#9-函数与宏的差别" class="headerlink" title="9. 函数与宏的差别"></a>9. 函数与宏的差别</h3><ol>
+<li>宏做的是简单的字符串替换，不会考虑数据类型；, 而函数是参数的传递，参数是有数据类型的。</li>
+<li>宏的参数替换是不经计算而直接处理的，而函数调用是将实参的值传递给形参，既然说是值，自然是计算得来的。</li>
+<li>宏占用的是编译的时间，而函数占用的是执行时的时间。</li>
+<li>宏的参数是不占内存空间的，因为只做字符串的替换，形参作为函数的局部变量，是占用内存的。</li>
+<li>函数的调用是需要付出一定的时空开销的，因为系统在调用函数时，要保留现场，然后转入被调用函数，执行完后返回主函数，再恢复现场，这些操作在宏中是没有的。</li>
+</ol>
+<h3 id="10-宏函数和-inline-函数的异同点"><a href="#10-宏函数和-inline-函数的异同点" class="headerlink" title="10. 宏函数和 inline 函数的异同点"></a>10. 宏函数和 inline 函数的异同点</h3><p>1、内联函数在编译时展开，而宏在预编译时展开</p>
+<p>2、在编译的时候，内联函数直接被嵌入到目标代码中去，而宏只是一个简单的文本替换。</p>
+<p>3、内联函数可以进行诸如类型安全检查、语句是否正确等编译功能，宏不具有这样的功能。</p>
+<p>4、宏不是函数，而 inline 是函数</p>
+<p>5、宏在定义时要小心处理宏参数，一般用括号括起来，否则容易出现二义性。而内联函数不会出现二义性。</p>
+<p>6、inline 可以不展开，宏一定要展开。因为 inline 指示对编译器来说，只是一个建议，编译器可以选择忽略该建议，不对该函数进行展开。</p>
+<p>7、宏定义在形式上类似于一个函数，但在使用它时，仅仅只是做预处理器符号表中的简单替换，因此它不能进行参数有效性的检测，也就不能享受 C++ 编译器严格类型检查的好处，另外它的返回值也不能被强制转换为可转换的合适的类型，这样，它的使用就存在着一系列的隐患和局限性。</p>
+<h3 id="11-C-的内存管理机制"><a href="#11-C-的内存管理机制" class="headerlink" title="11. C++ 的内存管理机制"></a>11. C++ 的内存管理机制</h3><p>C++ 程序在执行时，将内存大方向划分为<strong>4 个区域</strong></p>
+<ul>
+<li>代码区：存放函数体的二进制代码，由操作系统进行管理的</li>
+<li>全局区：存放全局变量和静态变量以及常量</li>
+<li>栈区：由编译器自动分配释放，存放函数的参数值，局部变量等</li>
+<li>堆区：由程序员<strong>分配</strong>和释放，若程序员不释放，程序结束时由操作系统回收</li>
+</ul>
+<h3 id="12-迭代和递归区别"><a href="#12-迭代和递归区别" class="headerlink" title="12. 迭代和递归区别"></a>12. 迭代和递归区别</h3><p>递归与迭代都是基于控制结构：迭代用重复结构，而递归用选择结构。<br>递归与迭代都涉及重复：迭代显式使用重复结构，而递归通过重复函数调用实现重复。<br>递归与迭代都涉及终止测试：迭代在循环条件失败时终止，递归在遇到基本情况时终止。</p>
+<h3 id="13-C-11-新特性了解吗"><a href="#13-C-11-新特性了解吗" class="headerlink" title="13. C++11 新特性了解吗"></a>13. C++11 新特性了解吗</h3><ol>
+<li>新增容器 std::array 保存在<strong>栈</strong>内存中，相比堆内存中的 std::vector，我们能够灵活的访问这里面的元素，从而获得更高的性能。</li>
+<li>auto 和 decltype 这两个关键字实现了类型推导</li>
+<li>替代 NULL 的 nullptr</li>
+<li>三种智能指针帮助内存管理(说一下名称)、<img src="https://gitee.com/SunGitee/src/raw/master/img/image-20200313184651322.png" alt="image-20200313184651322"></li>
+<li>C++11 引入了基于范围的迭代写法，比如基于范围的 for 循环，用一个冒号就可实现遍历，我们拥有了能够写出像 Python 一样简洁的循环语句</li>
+</ol>
+<h3 id="14-动态库和静态库？"><a href="#14-动态库和静态库？" class="headerlink" title="14. 动态库和静态库？"></a>14. 动态库和静态库？</h3><p>静态库特点总结如下：<br>静态库对函数库的链接是放在编译时期完成的。<br>程序在运行时与函数库再无瓜葛，移植方便。<br>浪费空间和资源，因为所有相关的目标文件与牵涉到的函数库被链接合成一个可执行文件。<br>文件后缀常为（.a、.lib）。</p>
+<p>动态库特点总结：<br>动态库把对一些库函数的链接载入推迟到程序运行的时期。<br>可以实现进程之间的资源共享。<br>将一些程序升级变得简单，直接改动态库即可。<br>文件后缀常为（.so、.dll）。</p>
+<h3 id="16-堆和栈的区别，以及为什么栈效率高"><a href="#16-堆和栈的区别，以及为什么栈效率高" class="headerlink" title="16. 堆和栈的区别，以及为什么栈效率高"></a>16. 堆和栈的区别，以及为什么栈效率高</h3><p>堆是由低地址向高地址扩展；栈是由高地址向低地址扩展。<br>堆中的内存需要手动申请和手动释放；栈中内存是由 OS 自动申请和自动释放，存放着参数、局部变量等内存。<br>堆中频繁调用 malloc 和 free, 会产生内存碎片，降低程序效率；而栈由于其先进后出的特性，不会产生内存碎片。<br>堆的分配效率较低，而栈的分配效率较高。</p>
+<p>栈的效率高的原因：<br>栈是<strong>操作系统提供的数据结构</strong>，计算机底层对栈提供了一系列支持：分配专门的寄存器存储栈的地址，压栈和入栈有专门的指令执行；而<strong>堆是由 C/C++ 函数库</strong>提供的，机制复杂，需要一些列分配内存、合并内存和释放内存的算法，因此效率较低。</p>
+<h3 id="17-请你来说一下-C-中的智能指针"><a href="#17-请你来说一下-C-中的智能指针" class="headerlink" title="17. 请你来说一下 C++ 中的智能指针"></a>17. 请你来说一下 C++ 中的智能指针</h3><p>C++ 里面的四个智能指针：auto_ptr, shared_ptr, weak_ptr, unique_ptr 其中后三个是 c++11 支持，并且第一个已经被 11 弃用。</p>
+<p>作用：智能指针的作用是管理一个指针，因为存在以下这种情况：申请的空间在函数结束时忘记释放，造成内存泄漏。使用智能指针可以很大程度上的避免这个问题，因为智能指针就是一个类，当超出了类的作用域是，类会自动调用析构函数，析构函数会自动释放资源。所以智能指针的作用原理就是在函数结束时自动释放内存空间，不需要手动释放内存空间。</p>
+<p>1、auto_ptr（c++98 的方案，cpp11 已经抛弃）采用所有权模式。缺点是：存在潜在的内存崩溃问题！</p>
+<figure class="highlight ceylon"><table><tr><td class="code"><pre><span class="line">auto<span class="number">_p</span>tr&lt; string&gt; p<span class="number">1</span> (``<span class="keyword">new</span>` `string (<span class="string">&quot;I reigned lonely as a cloud.”));</span></span><br><span class="line"><span class="string">``<span class="subst">auto<span class="number">_p</span>tr  p<span class="number">2</span>;p<span class="number">2</span> = p<span class="number">1</span>; </span>``</span></span><br><span class="line"><span class="string">//auto_ptr不会报错.此时不会报错，p2剥夺了p1的所有权，但是当程序运行时访问p1将会报错。所以auto_ptr的缺点是：存在潜在的内存崩溃问题！</span></span><br></pre></td></tr></table></figure>
+
+<p>2、unique_ptr（替换 auto_ptr）unique_ptr 实现独占式拥有或严格拥有概念，保证同一时间内只有一个智能指针可以指向该对象。它对于避免资源泄露（例如“以 new 创建对象后因为发生异常而忘记调用 delete”) 特别有用。采用所有权模式。</p>
+<figure class="highlight d"><table><tr><td class="code"><pre><span class="line">unique_ptr p3 (<span class="string">``</span><span class="keyword">new</span><span class="string">` `</span><span class="built_in">string</span> (<span class="string">``</span><span class="string">&quot;auto&quot;</span><span class="string">``</span>));</span><br><span class="line"><span class="string">``</span>unique_ptr p4；<span class="string">``</span>p4 = p3;<span class="string">``</span><span class="comment">//此时会报错！！``</span></span><br><span class="line"><span class="comment">//编译器认为p4=p3非法，避免了p3不再指向有效数据的问题。因此，unique_ptr比auto_ptr更安全。</span></span><br></pre></td></tr></table></figure>
+
+<p>3、shared_ptr<br>shared_ptr 实现共享式拥有概念。多个智能指针可以指向相同对象，该对象和其相关资源会在“最后一个引用被销毁”时候释放。从名字 share 就可以看出了资源可以被多个指针共享，它使用计数机制来表明资源被几个指针共享。可以通过成员函数 use_count() 来查看资源的所有者个数。除了可以通过 new 来构造，还可以通过传入 auto_ptr, unique_ptr,weak_ptr 来构造。当我们调用 release() 时，当前指针会释放资源所有权，计数减一。当计数等于 0 时，资源会被释放。<br>shared_ptr 是为了解决 auto_ptr 在对象所有权上的局限性 (auto_ptr 是独占的）, 在使用引用计数的机制上提供了可以共享所有权的智能指针。</p>
+<p>4、weak_ptr<br>weak_ptr 是一种不控制对象生命周期的智能指针，它指向一个 shared_ptr 管理的对象。进行该对象的内存管理的是那个强引用的 shared_ptr. weak_ptr 只是提供了对管理对象的一个访问手段。weak_ptr 设计的目的是为配合 shared_ptr 而引入的一种智能指针来协助 shared_ptr 工作，它只可以从一个 shared_ptr 或另一个 weak_ptr 对象构造，它的构造和析构不会引起引用记数的增加或减少。</p>
+<p>weak_ptr 是用来解决 shared_ptr 相互引用时的死锁问题，如果说两个 shared_ptr 相互引用，那么这两个指针的引用计数永远不可能下降为 0, 资源永远不会释放。它是对对象的一种弱引用，不会增加对象的引用计数，和 shared_ptr 之间可以相互转化，shared_ptr 可以直接赋值给它，它可以通过调用 lock 函数来获得 shared_ptr。</p>
+<h3 id="18-C-源文件从文本到可执行文件经历的过程？"><a href="#18-C-源文件从文本到可执行文件经历的过程？" class="headerlink" title="18. C++ 源文件从文本到可执行文件经历的过程？"></a>18. C++ 源文件从文本到可执行文件经历的过程？</h3><p>对于 C++ 源文件，从文本到可执行文件一般需要四个过程：</p>
+<ul>
+<li>预处理阶段：对源代码文件中文件包含关系（头文件）、预编译语句（宏定义）进行分析和替换，生成预编译文件。</li>
+<li>编译阶段：将经过预处理后的预编译文件转换成特定汇编代码，生成汇编文件</li>
+<li>汇编阶段：将编译阶段生成的汇编文件转化成机器码，生成可重定位目标文件</li>
+<li>链接阶段：将多个目标文件及所需要的库连接成最终的可执行目标文件</li>
+</ul>
+<h3 id="19-什么时候会发生段错误？"><a href="#19-什么时候会发生段错误？" class="headerlink" title="19. 什么时候会发生段错误？"></a>19. 什么时候会发生段错误？</h3><ul>
+<li>段错误通常发生在访问非法内存地址的时候，具体来说分为以下几种情况：<ul>
+<li>使用野指针</li>
+<li>试图修改字符串常量的内容</li>
+</ul>
+</li>
+</ul>
+<h3 id="20-右值引用"><a href="#20-右值引用" class="headerlink" title="20. 右值引用"></a>20. 右值引用</h3><p>基于右值引用可以实现移动语义和完美转发，消除两个对象交互时不必要的对象拷贝，节省运算存储资源，提高效率</p>
+<h3 id="21-const-的作用"><a href="#21-const-的作用" class="headerlink" title="21. const 的作用"></a>21. const 的作用</h3><p>const 意味着”只读”</p>
+<ul>
+<li><ol>
+<li>修饰变量，说明该变量不可以被修改</li>
+</ol>
+</li>
+<li><ol start="2">
+<li>修饰指针，分为指向常量的指针（即常量指针）和指针常量</li>
+</ol>
+</li>
+<li><ol start="3">
+<li>常量引用，经常用于形参类型，既避免了拷贝，又避免了函数对值的修改</li>
+</ol>
+</li>
+<li><ol start="4">
+<li>修饰成员函数，说明该成员函数内不能修改成员变量</li>
+</ol>
+</li>
+<li>const 用法如下：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> a;                <span class="comment">// 常对象成员，只能在初始化列表赋值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 构造函数</span></span><br><span class="line">    A() : a(<span class="number">0</span>) &#123; &#125;;</span><br><span class="line">    A(<span class="keyword">int</span> x) : a(x) &#123; &#125;;        <span class="comment">// 初始化列表</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// const可用于对重载函数的区分</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span></span>;             <span class="comment">// 普通成员函数</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="keyword">const</span></span>;       <span class="comment">// 常成员函数，不得修改类中的任何数据成员的值</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 对象</span></span><br><span class="line">    A b;                        <span class="comment">// 普通对象，可以调用全部成员函数、更新常成员变量</span></span><br><span class="line">    <span class="keyword">const</span> A a;                  <span class="comment">// 常对象，只能调用常成员函数</span></span><br><span class="line">    <span class="keyword">const</span> A *p = &amp;a;            <span class="comment">// 常指针</span></span><br><span class="line">    <span class="keyword">const</span> A &amp;q = a;             <span class="comment">// 常引用</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 指针</span></span><br><span class="line">    <span class="keyword">char</span> greeting[] = <span class="string">&quot;Hello&quot;</span>;</span><br><span class="line">    <span class="keyword">char</span>* p1 = greeting;                <span class="comment">// 指针变量，指向字符数组变量</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* p2 = greeting;          <span class="comment">// 常量指针即常指针，指针的指向可以改变，但是所存的内容不能变</span></span><br><span class="line">    <span class="keyword">char</span> <span class="keyword">const</span>* p2 = greeting;     <span class="comment">// 与const char* p2 等价</span></span><br><span class="line">    <span class="keyword">char</span>* <span class="keyword">const</span> p3 = greeting;          <span class="comment">// 指针常量，指针是一个常量，即指针的指向不能改变，但是指针所存的内容可以改变</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* <span class="keyword">const</span> p4 = greeting;    <span class="comment">// 指向常量的常指针，指针和指针所存的内容都不能改变，本质是一个常量</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function1</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> Var)</span></span>;           <span class="comment">// 传递过来的参数在函数内不可变</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function2</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* Var)</span></span>;         <span class="comment">// 参数为常量指针即指针所指的内容为常量不能变，指针指向可以改变</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function3</span><span class="params">(<span class="keyword">char</span>* <span class="keyword">const</span> Var)</span></span>;         <span class="comment">// 参数为指针常量</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function4</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp; Var)</span></span>;          <span class="comment">// 引用参数在函数内为常量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数返回值</span></span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">int</span> <span class="title">function5</span><span class="params">()</span></span>;      <span class="comment">// 返回一个常数</span></span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">int</span>* <span class="title">function6</span><span class="params">()</span></span>;     <span class="comment">// 返回一个指向常量的指针变量即常量指针，使用：const int *p = function6();</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>* <span class="keyword">const</span> <span class="title">function7</span><span class="params">()</span></span>;     <span class="comment">// 返回一个指向变量的常指针即指针常量，使用：int* const p = function7();</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="22-inline-内联函数"><a href="#22-inline-内联函数" class="headerlink" title="22. inline 内联函数"></a>22. inline 内联函数</h3><ul>
+<li>内联函数的特点：<ul>
+<li>相当于把内联函数里面的内容写在调用内联函数处；</li>
+<li>相当于不用执行进入函数的步骤，直接执行函数体；</li>
+<li>相当于宏，却比宏多了类型检查，真正具有函数特性；</li>
+<li>编译器一般不内联包含循环、递归、switch 等复杂操作的内联函数；</li>
+<li>在类声明中定义的函数，除了虚函数的其他函数都会自动隐式地当成内联函数。</li>
+</ul>
+</li>
+<li>内联函数的使用：</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 声明1（加 inline，建议使用）</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">functionName</span><span class="params">(<span class="keyword">int</span> first, <span class="keyword">int</span> second,...)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明2（不加 inline）</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">functionName</span><span class="params">(<span class="keyword">int</span> first, <span class="keyword">int</span> second,...)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">functionName</span><span class="params">(<span class="keyword">int</span> first, <span class="keyword">int</span> second,...)</span> </span>&#123;<span class="comment">/****/</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类内定义，隐式内联</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">doA</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;         <span class="comment">// 隐式内联</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类外定义，需要显式内联</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">doA</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">A::doA</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;   <span class="comment">// 需要显式内联</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>编译器对内联函数的处理步骤<ul>
+<li>将 inline 函数体复制到 inline 函数调用点处；</li>
+<li>为所用 inline 函数中的局部变量分配内存空间；</li>
+<li>将 inline 函数的的输入参数和返回值映射到调用方法的局部变量空间中；</li>
+<li>如果 inline 函数有多个返回点，将其转变为 inline 函数代码块末尾的分支（使用 GOTO）</li>
+</ul>
+</li>
+<li>使用内联函数的优缺点<ul>
+<li>优点：<ul>
+<li>内联函数同宏函数一样将在被调用处进行代码展开，省去了参数压栈、栈帧开辟与回收，结果返回等，从而提高程序运行速度。</li>
+<li>内联函数相比宏函数来说，在代码展开时，会做安全检查或自动类型转换（同普通函数），而宏定义则不会。</li>
+<li>在类中声明同时定义的成员函数，自动转化为内联函数，因此内联函数可以访问类的成员变量，宏定义则不能。</li>
+<li>内联函数在运行时可调试，而宏定义不可以。</li>
+</ul>
+</li>
+<li>缺点：<ul>
+<li>代码膨胀。内联是以代码膨胀（复制）为代价，消除函数调用带来的开销。如果执行函数体内代码的时间，相比于函数调用的开销较大，那么效率的收获会很少。另一方面，每一处内联函数的调用都要复制代码，将使程序的总代码量增大，消耗更多的内存空间。</li>
+<li>inline 函数无法随着函数库升级而升级。inline 函数的改变需要重新编译，不像 non-inline 可以直接链接。</li>
+<li>是否内联，程序员不可控。内联函数只是对编译器的建议，是否对函数内联，决定权在于编译器。</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>虚函数可以是内联函数吗？<ul>
+<li>虚函数可以是内联函数，内联是可以修饰虚函数的，但是当虚函数表现多态性的时候不能内联。</li>
+<li>内联是在编译器建议编译器内联，而虚函数的多态性在运行期，编译器无法知道运行期调用哪个代码，因此虚函数表现为多态性时（运行期）不可以内联。</li>
+<li>inline virtual 唯一可以内联的时候是：编译器知道所调用的对象是哪个类（如 Base::who()），这只有在编译器具有实际对象而不是对象的指针或引用时才会发生。</li>
+<li>虚函数内联使用实例如下：</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">who</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;I am Base\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">virtual</span> ~Base() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span> <span class="keyword">public</span> Base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">who</span><span class="params">()</span>  <span class="comment">// 不写inline时隐式内联</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;I am Derived\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 此处的虚函数 who()，是通过类（Base）的具体对象（b）来调用的，编译期间就能确定了，所以它可以是内联的，但最终是否内联取决于编译器。</span></span><br><span class="line">    Base b;</span><br><span class="line">    b.who();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 此处的虚函数是通过指针调用的，呈现多态性，需要在运行时期间才能确定，所以不能为内联。</span></span><br><span class="line">    Base *ptr = <span class="keyword">new</span> Derived();</span><br><span class="line">    ptr-&gt;who();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 因为Base有虚析构函数（virtual ~Base() &#123;&#125;），所以 delete 时，会先调用派生类（Derived）析构函数，再调用基类（Base）析构函数，防止内存泄漏。</span></span><br><span class="line">    <span class="keyword">delete</span> ptr;</span><br><span class="line">    ptr = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="23-用变量-a-给出下面的定义"><a href="#23-用变量-a-给出下面的定义" class="headerlink" title="23. 用变量 a 给出下面的定义"></a>23. 用变量 a 给出下面的定义</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">A.一个整型数？</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> a;</span><br><span class="line"></span><br><span class="line">B.一个指向整型数的指针？</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> *a;</span><br><span class="line"></span><br><span class="line">C.一个指向指针的的指针，它指向的指针是指向一个整型数？</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> **a;</span><br><span class="line"></span><br><span class="line">D.一个有<span class="number">10</span>个整型数的数组？</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> a[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">E.一个有<span class="number">10</span>个指针的数组，该指针是指向一个整型数的？</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> *a[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">F.一个指向有<span class="number">10</span>个整型数数组的指针?</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> (*a)[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">G.一个指向函数的指针，该函数有一个整型参数并返回一个整型数?</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> (*a)(<span class="keyword">int</span>);</span><br><span class="line"></span><br><span class="line">H.一个有<span class="number">10</span>个指针的数组，该指针指向一个函数，该函数有一个整型参数并返回一个整型数?</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> (*a[<span class="number">10</span>])(<span class="keyword">int</span>);</span><br></pre></td></tr></table></figure>
+
+<h3 id="24-sizeof-和-strlen-的区别？"><a href="#24-sizeof-和-strlen-的区别？" class="headerlink" title="24. sizeof 和 strlen 的区别？"></a>24. <strong>sizeof 和 strlen 的区别？</strong></h3><p>sizeof 是运算符，在编译时即计算好了； 而 strlen 是函数，要在运行时才能计算。</p>
+<h3 id="25-请你来回答一下-i和i-的区别"><a href="#25-请你来回答一下-i和i-的区别" class="headerlink" title="25. 请你来回答一下++i和i++的区别"></a>25. 请你来回答一下++i和i++的区别</h3><p>参考回答：</p>
+<p>++i先自增1，再返回，i++先返回i,再自增1</p>
+<p>请你来说一说++i和i++的实现</p>
+<p>参考回答：</p>
+<ol>
+<li>++i 实现：</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span>&amp;  <span class="keyword">int</span>::<span class="keyword">operator</span>++（）</span><br><span class="line">&#123;</span><br><span class="line">	*<span class="keyword">this</span> +=<span class="number">1</span>；</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>i++ 实现：</li>
+</ol>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>  <span class="keyword">int</span>::<span class="keyword">operator</span>（<span class="keyword">int</span>）</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> oldValue = *<span class="keyword">this</span>；</span><br><span class="line">	++（*<span class="keyword">this</span>）；</span><br><span class="line">	<span class="keyword">return</span> oldValue；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="26-红黑树（RB-tree）比AVL树的优势在哪？"><a href="#26-红黑树（RB-tree）比AVL树的优势在哪？" class="headerlink" title="26. 红黑树（RB-tree）比AVL树的优势在哪？"></a>26. 红黑树（RB-tree）比AVL树的优势在哪？</h3><p>红黑树是牺牲了严格的高度平衡的优越条件为 代价红黑树能够以O(log2 n)的时间复杂度进行搜索、插入、删除操作。此外，由于它的设计，任何不平衡都会在三次旋转之内解决。当然，还有一些更好的，但实现起来更复杂的数据结构 能够做到一步旋转之内达到平衡，但红黑树能够给我们一个比较“便宜”的解决方案。红黑树的算法时间复杂度和AVL相同，但统计性能比AVL树更高.</p>
+<p>平衡二叉树（AVL树）：</p>
+<p>平衡二叉树又称为AVL树，是一种特殊的二叉排序树。其左右子树都是平衡二叉树，且左右子树高度之差的绝对值不超过1。一句话表述为：以树中所有结点为根的树的左右子树高度之差的绝对值不超过1。将二叉树上结点的左子树深度减去右子树深度的值称为平衡因子BF，那么平衡二叉树上的所有结点的平衡因子只可能是-1、0和1。只要二叉树上有一个结点的平衡因子的绝对值大于1，则该二叉树就是不平衡的。</p>
+<p>红黑树：</p>
+<p>红黑树是一种二叉查找树，但在每个节点增加一个存储位表示节点的颜色，可以是红或黑（非红即黑）。通过对任何一条从根到叶子的路径上各个节点着色的方式的限制，红黑树确保没有一条路径会比其它路径长出两倍，因此，红黑树是一种弱平衡二叉树，相对于要求严格的AVL树来说，它的旋转次数少，所以对于搜索，插入，删除操作较多的情况下，通常使用红黑树。</p>
+<p>性质：</p>
+<ol>
+<li><p>每个节点非红即黑</p>
+</li>
+<li><p>根节点是黑的;</p>
+</li>
+<li><p>每个叶节点（叶节点即树尾端NULL指针或NULL节点）都是黑的;</p>
+</li>
+<li><p>如果一个节点是红色的，则它的子节点必须是黑色的。</p>
+</li>
+<li><p>对于任意节点而言，其到叶子点树NULL指针的每条路径都包含相同数目的黑节点;</p>
+</li>
+</ol>
+<p>区别：</p>
+<p>AVL 树是高度平衡的，频繁的插入和删除，会引起频繁的rebalance，导致效率下降；红黑树不是高度平衡的，算是一种折中，插入最多两次旋转，删除最多三次旋转。</p>
+<h3 id="27-请你来说一下map和set有什么区别，分别又是怎么实现的？"><a href="#27-请你来说一下map和set有什么区别，分别又是怎么实现的？" class="headerlink" title="27. 请你来说一下map和set有什么区别，分别又是怎么实现的？"></a>27. 请你来说一下map和set有什么区别，分别又是怎么实现的？</h3><p><strong>unordered map底层结构是哈希表</strong></p>
+<p>map和set都是C++的关联容器，其底层实现都是红黑树（RB-Tree）。由于 map 和set所开放的各种操作接口，RB-tree 也都提供了，所以几乎所有的 map 和set的操作行为，都只是转调 RB-tree 的操作行为。</p>
+<p>map和set区别在于：</p>
+<p>（1）map中的元素是key-value（关键字—值）对：关键字起到索引的作用，值则表示与索引相关联的数据；Set与之相对就是关键字的简单集合，set中每个元素只包含一个关键字。</p>
+<p>（2）<strong>set的迭代器是const的，不允许修改元素的值；map允许修改value，但不允许修改key。其原因是因为map和set是根据关键字排序来保证其有序性的，如果允许修改key的话，那么首先需要删除该键，然后调节平衡，再插入修改后的键值，调节平衡，如此一来，严重破坏了map和set的结构，导致iterator失效，不知道应该指向改变前的位置，还是指向改变后的位置。所以STL中将set的迭代器设置成const，不允许修改迭代器的值；而map的迭代器则不允许修改key值，允许修改value值。</strong></p>
+<p>（3）map支持下标操作，set不支持下标操作。map可以用key做下标，map的下标运算符[ ]将关键码作为下标去执行查找，如果关键码不存在，则插入一个具有该关键码和mapped_type类型默认值的元素至map中，因此下标运算符[ ]在map应用中需要慎用，const_map不能用，只希望确定某一个关键值是否存在而不希望插入元素时也不应该使用，mapped_type类型没有默认值也不应该使用。<strong>如果find能解决需要，尽可能用find。</strong></p>
+<h3 id="28-请你来说一下STL中迭代器的作用，有指针为何还要迭代器"><a href="#28-请你来说一下STL中迭代器的作用，有指针为何还要迭代器" class="headerlink" title="28. 请你来说一下STL中迭代器的作用，有指针为何还要迭代器"></a>28. 请你来说一下STL中迭代器的作用，有指针为何还要迭代器</h3><p>1、迭代器</p>
+<p>Iterator（迭代器）模式又称Cursor（游标）模式，用于提供一种方法顺序访问一个聚合对象中各个元素, 而又不需暴露该对象的内部表示。或者这样说可能更容易理解：Iterator模式是运用于聚合对象的一种模式，通过运用该模式，使得我们可以在不知道对象内部表示的情况下，按照一定顺序（由iterator提供的方法）访问聚合对象中的各个元素。</p>
+<p>由于Iterator模式的以上特性：与聚合对象耦合，在一定程度上限制了它的广泛运用，一般仅用于底层聚合支持类，如STL的list、vector、stack等容器类及ostream_iterator等扩展iterator。</p>
+<p>2、迭代器和指针的区别</p>
+<p>迭代器不是指针，是类模板，表现的像指针。他只是模拟了指针的一些功能，通过重载了指针的一些操作符，-&gt;、*、++、–等。迭代器封装了指针，是一个“可遍历STL（ Standard Template Library）容器内全部或部分元素”的对象， 本质是封装了原生指针，是指针概念的一种提升（lift），提供了比指针更高级的行为，相当于一种智能指针，他可以根据不同类型的数据结构来实现不同的++，–等操作。</p>
+<p>迭代器返回的是对象引用而不是对象的值，所以cout只能输出迭代器使用*取值后的值而不能直接输出其自身。</p>
+<p>3、迭代器产生原因</p>
+<p>Iterator类的访问方式就是把不同集合类的访问逻辑抽象出来，使得不用暴露集合内部的结构而达到循环遍历集合的效果。</p>
+<h3 id="29-STL里resize和reserve的区别"><a href="#29-STL里resize和reserve的区别" class="headerlink" title="29. STL里resize和reserve的区别"></a>29. STL里resize和reserve的区别</h3><p>参考回答里，给的代码例子，有不对的地方。a.reserve（n）的功能是，如果n&lt;=a.capacity(),则a 不做改变，若n&gt;a.capacity()则把a的capacity（）设成n. reserve()不影响size()的大小。但是resize 有可能会影响capacity的值</p>
+<h3 id="30-TCP建立连接和断开连接的过程："><a href="#30-TCP建立连接和断开连接的过程：" class="headerlink" title="30. TCP建立连接和断开连接的过程："></a>30. TCP建立连接和断开连接的过程：</h3><p><img src="https://gitee.com/SunGitee/src/raw/master/img/image-20200313184715540.png" alt="image-20200313184715540"></p>
+<p>三次握手：</p>
+<ol>
+<li><p>Client将标志位SYN置为1，随机产生一个值seq=J，并将该数据包发送给Server，Client进入SYN_SENT状态，等待Server确认。</p>
+</li>
+<li><p>Server收到数据包后由标志位SYN=1知道Client请求建立连接，Server将标志位SYN和ACK都置为1，ack=J+1，随机产生一个值seq=K，并将该数据包发送给Client以确认连接请求，Server进入SYN_RCVD状态。</p>
+</li>
+<li><p>Client收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给Server，Server检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，Client和Server进入ESTABLISHED状态，完成三次握手，随后Client与Server之间可以开始传输数据了。</p>
+</li>
+</ol>
+<p>四次挥手：</p>
+<p>由于TCP连接时全双工的，因此，每个方向都必须要单独进行关闭，这一原则是当一方完成数据发送任务后，发送一个FIN来终止这一方向的连接，收到一个FIN只是意味着这一方向上没有数据流动了，即不会再收到数据了，但是在这个TCP连接上仍然能够发送数据，直到这一方向也发送了FIN。首先进行关闭的一方将执行主动关闭，而另一方则执行被动关闭。</p>
+<p>1.数据传输结束后，客户端的应用进程发出连接释放报文段，并停止发送数据，客户端进入FIN_WAIT_1状态，此时客户端依然可以接收服务器发送来的数据。</p>
+<p>2.服务器接收到FIN后，发送一个ACK给客户端，确认序号为收到的序号+1，服务器进入CLOSE_WAIT状态。客户端收到后进入FIN_WAIT_2状态。</p>
+<p>3.当服务器没有数据要发送时，服务器发送一个FIN报文，此时服务器进入LAST_ACK状态，等待客户端的确认</p>
+<p>4.客户端收到服务器的FIN报文后，给服务器发送一个ACK报文，确认序列号为收到的序号+1。此时客户端进入TIME_WAIT状态，等待2MSL（MSL：报文段最大生存时间），然后关闭连接。</p>
+<h3 id="31-TCP的模型，状态转移"><a href="#31-TCP的模型，状态转移" class="headerlink" title="31. TCP的模型，状态转移"></a>31. TCP的模型，状态转移</h3><p>四层TCP/IP模型如下：</p>
+<p><img src="https://gitee.com/SunGitee/src/raw/master/img/image-20200313184743297.png" alt="image-20200313184743297"></p>
+<h3 id="32-HTTP和HTTPS的区别，以及HTTPS有什么缺点？"><a href="#32-HTTP和HTTPS的区别，以及HTTPS有什么缺点？" class="headerlink" title="32. HTTP和HTTPS的区别，以及HTTPS有什么缺点？"></a>32. HTTP和HTTPS的区别，以及HTTPS有什么缺点？</h3><p>HTTP协议和HTTPS协议区别如下：</p>
+<p>1）HTTP协议是以明文的方式在网络中传输数据，而HTTPS协议传输的数据则是经过TLS加密后的，HTTPS具有更高的安全性</p>
+<p>2）HTTPS在TCP三次握手阶段之后，还需要进行SSL 的handshake，协商加密使用的对称加密密钥</p>
+<p>3）HTTPS协议需要服务端申请证书，浏览器端安装对应的根证书</p>
+<p>4）HTTP协议端口是80，HTTPS协议端口是443</p>
+<p>HTTPS优点：</p>
+<p>HTTPS传输数据过程中使用密钥进行加密，所以安全性更高</p>
+<p>HTTPS协议可以认证用户和服务器，确保数据发送到正确的用户和服务器</p>
+<p>HTTPS缺点：</p>
+<p>HTTPS握手阶段延时较高：由于在进行HTTP会话之前还需要进行SSL握手，因此HTTPS协议握手阶段延时增加</p>
+<p>HTTPS部署成本高：一方面HTTPS协议需要使用证书来验证自身的安全性，所以需要购买CA证书；另一方面由于采用HTTPS协议需要进行加解密的计算，占用CPU资源较多，需要的服务器配置或数目高</p>
+<h3 id="33-IP地址作用，以及MAC地址作用"><a href="#33-IP地址作用，以及MAC地址作用" class="headerlink" title="33. IP地址作用，以及MAC地址作用"></a>33. IP地址作用，以及MAC地址作用</h3><p>MAC地址是一个硬件地址，用来定义网络设备的位置，主要由数据链路层负责。而IP地址是IP协议提供的一种统一的地址格式，为互联网上的每一个网络和每一台主机分配一个逻辑地址，以此来屏蔽物理地址的差异。</p>
+<h3 id="34-手写一下快排和二分查找的代码"><a href="#34-手写一下快排和二分查找的代码" class="headerlink" title="34. 手写一下快排和二分查找的代码"></a>34. 手写一下快排和二分查找的代码</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//二分查找</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">B_Search</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> low = <span class="number">0</span>, high = a.size() - <span class="number">1</span>, mid;</span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">        mid = (low + high) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (a[mid] == k) &#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[mid] &lt;= k) &#123;</span><br><span class="line">            low = mid + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[mid] &gt; k) &#123;</span><br><span class="line">            high = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//快排</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">once_QS</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;a, <span class="keyword">int</span> low, <span class="keyword">int</span> high)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> key = a[low];</span><br><span class="line">    <span class="keyword">while</span> (low &lt; high) &#123;</span><br><span class="line">        <span class="keyword">while</span> (low &lt; high &amp;&amp; key &lt;= a[high]) &#123;</span><br><span class="line">            high--;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(a[low], a[high]);</span><br><span class="line">        <span class="keyword">while</span> (low &lt; high &amp;&amp; key &gt; a[low]) &#123;</span><br><span class="line">            low++;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(a[low], a[high]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> low;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QuickSort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;a, <span class="keyword">int</span> low, <span class="keyword">int</span> high)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">        <span class="keyword">int</span> pos = once_QS(a, low, high);</span><br><span class="line">        QuickSort(a, low, pos - <span class="number">1</span>);</span><br><span class="line">        QuickSort(a, pos + <span class="number">1</span>, high);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+]]></content>
+      <categories>
+        <category>Interview</category>
+      </categories>
+      <tags>
+        <tag>C++</tag>
+        <tag>总结</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MP3 文件格式解析</title>
     <url>/wiki/MP3%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F%E8%A7%A3%E6%9E%90/</url>
     <content><![CDATA[<h1 id="MP3-文件格式解析"><a href="#MP3-文件格式解析" class="headerlink" title="MP3 文件格式解析"></a>MP3 文件格式解析</h1><p>MP3 的全称是 MPEG Audio Layer3, 它是一种高效的计算机音频编码方案，它以较大的压缩比将音频文件转换成较小的扩展名为。MP3 的文件，基本保持原文件的音质。MP3 是 ISO/MPEG 标准的一部分，ISO/MPEG 标准描述了使用高性能感知编码方案的音频压缩，此标准一直在不断更新以满足“质高量小”的追求，现已形成 MPEGLayer1、Layer2、Layer3 三个音频编码解码方案。MPEGLayer3 压缩率可达 1:10 至 1:12,1M 的 MP3 文件可播放 1 分钟，而 1 分钟 CD 音质的 WAV 文件 (44100Hz,16bit, 双声道，60 秒）要占用 10M 空间，这样算来，一张 650M 的 MP3 光盘播放时间应在 10 小时以上，而同样容量的一张 CD 盘播放时间在 70 分钟左右。MP3 的优势是 CD 难以比拟的。</p>
@@ -2975,272 +3241,6 @@
         <tag>Python</tag>
         <tag>深拷贝</tag>
         <tag>浅拷贝</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C/C++ 面试总结（更新）</title>
-    <url>/wiki/C++%E9%9D%A2%E8%AF%95%E6%80%BB%E7%BB%93(%E6%9B%B4%E6%96%B0)/</url>
-    <content><![CDATA[<blockquote>
-<p>准备下面试，下面及主要记录下一些知识点</p>
-</blockquote>
-<a id="more"></a>
-
-<h2 id="c-面试题总结"><a href="#c-面试题总结" class="headerlink" title="c++ 面试题总结"></a>c++ 面试题总结</h2><h3 id="1-C-和-C-区别"><a href="#1-C-和-C-区别" class="headerlink" title="1. C 和 C++ 区别"></a>1. C 和 C++ 区别</h3><ul>
-<li>C 是面向过程的结构化语言，C++ 是除了面向过程，也可以面向对象。</li>
-<li>C++ 具有重载、继承和多态三种特性</li>
-<li>C++ 相比 C，增加多许多类型安全的功能，比如强制类型转换</li>
-<li>C++ 支持范式编程，比如模板类、函数模板等</li>
-</ul>
-<h3 id="2-多态实现方法"><a href="#2-多态实现方法" class="headerlink" title="2. 多态实现方法"></a>2. 多态实现方法</h3><ul>
-<li>C++ 中，实现多态有以下方法：虚函数，抽象类，覆盖，模板，条件是要有重写，要有继承，父类指向子类。</li>
-</ul>
-<p><img src="https://gitee.com/SunGitee/src/raw/master/img/image-20200313184554050.png" alt="image-20200313184554050"></p>
-<h3 id="3-虚函数"><a href="#3-虚函数" class="headerlink" title="3. 虚函数"></a>3. 虚函数</h3><p><strong>虚函数的作用：</strong> 虚函数实现了多态的机制。基类定义了虚函数，子类可以重写该函数，当子类重新定义了父类的虚函数后，父类指针根据赋给它的不同的子类指针，动态地调用属于子类的该函数，且这样的函数调用是无法在编译器期间确认的，而是在运行期确认，也叫做晚绑定。</p>
-<p><strong>实现原理：</strong><br>  它涉及两个工具，<br>  当一个类声明了虚函数或者继承了虚函数，这个类就会有自己的<strong>虚函数表</strong>。虚函数表实际上就是一个函数指针数组，有的编译器用的是链表。虚函数表数组中的每一个元素对应一个函数指针指向该类的一个虚函数，同时该类的每一个对象都会包含一个虚函数表指针，虚函数表指针指向该虚函数表的地址。所以当一个类有虚函数的，是占用内存的，占用一个指针大小的内存。<br>  虚函数表按照其声明顺序放于虚函数表中。<br>  如果子类覆盖了父类的虚函数，将覆盖虚函数表中原来父类虚函数的位置。<br>  如果派生类有多个父类，子类的成员函数存放在第一个父类的表中。</p>
-<h3 id="4-深拷贝和浅拷贝（值拷贝和位拷贝）"><a href="#4-深拷贝和浅拷贝（值拷贝和位拷贝）" class="headerlink" title="4. 深拷贝和浅拷贝（值拷贝和位拷贝）"></a>4. 深拷贝和浅拷贝（值拷贝和位拷贝）</h3><p>深拷贝指拷贝时对象资源重新分配，两个对象的资源内存不同，释放一个对象资源不会影响另一个。<br>浅拷贝指两个对象均指向同一内存空间，释放一个对象的资源，另一个对象的资源也没了，造成野指针。</p>
-<h3 id="5-为什么要有虚析构函数"><a href="#5-为什么要有虚析构函数" class="headerlink" title="5. 为什么要有虚析构函数"></a>5. 为什么要有虚析构函数</h3><p>C++ 中基类采用 virtual 虚析构函数是为了防止内存泄漏。具体地说，如果派生类中申请了内存空间，并在其析构函数中对这些内存空间进行释放。假设基类中采用的是非虚析构函数，当<strong>删除基类指针指向的派生类对象时</strong>就不会触发动态绑定，因而只会调用基类的析构函数，而不会调用派生类的析构函数。那么在这种情况下，派生类中申请的空间就得不到释放从而产生内存泄漏。所以，为了防止这种情况的发生，C++ 中基类的析构函数应采用 virtual 虚析构函数。</p>
-<h3 id="6-构造函数能不能是虚函数"><a href="#6-构造函数能不能是虚函数" class="headerlink" title="6. 构造函数能不能是虚函数"></a>6. 构造函数能不能是虚函数</h3><p>不能</p>
-<p>构造一个对象时，必须知道对象实际类型，而虚函数是在运行期间确定实际类型的。而在构造一个对象时，由于对象还未构造成功，编译器就无法知道对象的实际类型，是该类本身，还是派生类，还是其他。</p>
-<p>虚函数的执行依赖于虚函数表，而虚函数表是在构造函数中进行初始化的，即初始化虚表指针（vptr），使得正确指向虚函数表。而在构造对象期间，虚函数表（vtable）还没有被初始化，将无法进行。</p>
-<h3 id="7-C-里面构造函数能有返回值吗？"><a href="#7-C-里面构造函数能有返回值吗？" class="headerlink" title="7. C++ 里面构造函数能有返回值吗？"></a>7. C++ 里面构造函数能有返回值吗？</h3><ol>
-<li>构造函数没有返回值，他只是描述了类初始化的行为。</li>
-<li>但是 new 一个类实例是有返回值的，因为 new 返回的是类实例的指针</li>
-</ol>
-<h3 id="8-构造函数和析构函数能被继承吗"><a href="#8-构造函数和析构函数能被继承吗" class="headerlink" title="8. 构造函数和析构函数能被继承吗"></a>8. 构造函数和析构函数能被继承吗</h3><p>不能</p>
-<p>不是所有的函数都能自动地从基类继承到派生类中的。构造函数和析构函数是用来处理对象的创建和析构的，它们只知道对在它们的特殊层次的对象做什么。</p>
-<p>所以，在整个层次中的所有的构造函数和析构函数都必须被调用，也就是说，构造函数和析构函数不能被继承。子类的构造函数会显示的调用父类的构造函数或隐式的调用父类的默认的构造函数进行父类部分的初始化。</p>
-<p>析构函数也一样。它们都是每个类都有的东西，如果能被继承，那就没有办法初始化了。</p>
-<h3 id="9-函数与宏的差别"><a href="#9-函数与宏的差别" class="headerlink" title="9. 函数与宏的差别"></a>9. 函数与宏的差别</h3><ol>
-<li>宏做的是简单的字符串替换，不会考虑数据类型；, 而函数是参数的传递，参数是有数据类型的。</li>
-<li>宏的参数替换是不经计算而直接处理的，而函数调用是将实参的值传递给形参，既然说是值，自然是计算得来的。</li>
-<li>宏占用的是编译的时间，而函数占用的是执行时的时间。</li>
-<li>宏的参数是不占内存空间的，因为只做字符串的替换，形参作为函数的局部变量，是占用内存的。</li>
-<li>函数的调用是需要付出一定的时空开销的，因为系统在调用函数时，要保留现场，然后转入被调用函数，执行完后返回主函数，再恢复现场，这些操作在宏中是没有的。</li>
-</ol>
-<h3 id="10-宏函数和-inline-函数的异同点"><a href="#10-宏函数和-inline-函数的异同点" class="headerlink" title="10. 宏函数和 inline 函数的异同点"></a>10. 宏函数和 inline 函数的异同点</h3><p>1、内联函数在编译时展开，而宏在预编译时展开</p>
-<p>2、在编译的时候，内联函数直接被嵌入到目标代码中去，而宏只是一个简单的文本替换。</p>
-<p>3、内联函数可以进行诸如类型安全检查、语句是否正确等编译功能，宏不具有这样的功能。</p>
-<p>4、宏不是函数，而 inline 是函数</p>
-<p>5、宏在定义时要小心处理宏参数，一般用括号括起来，否则容易出现二义性。而内联函数不会出现二义性。</p>
-<p>6、inline 可以不展开，宏一定要展开。因为 inline 指示对编译器来说，只是一个建议，编译器可以选择忽略该建议，不对该函数进行展开。</p>
-<p>7、宏定义在形式上类似于一个函数，但在使用它时，仅仅只是做预处理器符号表中的简单替换，因此它不能进行参数有效性的检测，也就不能享受 C++ 编译器严格类型检查的好处，另外它的返回值也不能被强制转换为可转换的合适的类型，这样，它的使用就存在着一系列的隐患和局限性。</p>
-<h3 id="11-C-的内存管理机制"><a href="#11-C-的内存管理机制" class="headerlink" title="11. C++ 的内存管理机制"></a>11. C++ 的内存管理机制</h3><p>C++ 程序在执行时，将内存大方向划分为<strong>4 个区域</strong></p>
-<ul>
-<li>代码区：存放函数体的二进制代码，由操作系统进行管理的</li>
-<li>全局区：存放全局变量和静态变量以及常量</li>
-<li>栈区：由编译器自动分配释放，存放函数的参数值，局部变量等</li>
-<li>堆区：由程序员<strong>分配</strong>和释放，若程序员不释放，程序结束时由操作系统回收</li>
-</ul>
-<h3 id="12-迭代和递归区别"><a href="#12-迭代和递归区别" class="headerlink" title="12. 迭代和递归区别"></a>12. 迭代和递归区别</h3><p>递归与迭代都是基于控制结构：迭代用重复结构，而递归用选择结构。<br>递归与迭代都涉及重复：迭代显式使用重复结构，而递归通过重复函数调用实现重复。<br>递归与迭代都涉及终止测试：迭代在循环条件失败时终止，递归在遇到基本情况时终止。</p>
-<h3 id="13-C-11-新特性了解吗"><a href="#13-C-11-新特性了解吗" class="headerlink" title="13. C++11 新特性了解吗"></a>13. C++11 新特性了解吗</h3><ol>
-<li>新增容器 std::array 保存在<strong>栈</strong>内存中，相比堆内存中的 std::vector，我们能够灵活的访问这里面的元素，从而获得更高的性能。</li>
-<li>auto 和 decltype 这两个关键字实现了类型推导</li>
-<li>替代 NULL 的 nullptr</li>
-<li>三种智能指针帮助内存管理(说一下名称)、<img src="https://gitee.com/SunGitee/src/raw/master/img/image-20200313184651322.png" alt="image-20200313184651322"></li>
-<li>C++11 引入了基于范围的迭代写法，比如基于范围的 for 循环，用一个冒号就可实现遍历，我们拥有了能够写出像 Python 一样简洁的循环语句</li>
-</ol>
-<h3 id="14-动态库和静态库？"><a href="#14-动态库和静态库？" class="headerlink" title="14. 动态库和静态库？"></a>14. 动态库和静态库？</h3><p>静态库特点总结如下：<br>静态库对函数库的链接是放在编译时期完成的。<br>程序在运行时与函数库再无瓜葛，移植方便。<br>浪费空间和资源，因为所有相关的目标文件与牵涉到的函数库被链接合成一个可执行文件。<br>文件后缀常为（.a、.lib）。</p>
-<p>动态库特点总结：<br>动态库把对一些库函数的链接载入推迟到程序运行的时期。<br>可以实现进程之间的资源共享。<br>将一些程序升级变得简单，直接改动态库即可。<br>文件后缀常为（.so、.dll）。</p>
-<h3 id="16-堆和栈的区别，以及为什么栈效率高"><a href="#16-堆和栈的区别，以及为什么栈效率高" class="headerlink" title="16. 堆和栈的区别，以及为什么栈效率高"></a>16. 堆和栈的区别，以及为什么栈效率高</h3><p>堆是由低地址向高地址扩展；栈是由高地址向低地址扩展。<br>堆中的内存需要手动申请和手动释放；栈中内存是由 OS 自动申请和自动释放，存放着参数、局部变量等内存。<br>堆中频繁调用 malloc 和 free, 会产生内存碎片，降低程序效率；而栈由于其先进后出的特性，不会产生内存碎片。<br>堆的分配效率较低，而栈的分配效率较高。</p>
-<p>栈的效率高的原因：<br>栈是<strong>操作系统提供的数据结构</strong>，计算机底层对栈提供了一系列支持：分配专门的寄存器存储栈的地址，压栈和入栈有专门的指令执行；而<strong>堆是由 C/C++ 函数库</strong>提供的，机制复杂，需要一些列分配内存、合并内存和释放内存的算法，因此效率较低。</p>
-<h3 id="17-请你来说一下-C-中的智能指针"><a href="#17-请你来说一下-C-中的智能指针" class="headerlink" title="17. 请你来说一下 C++ 中的智能指针"></a>17. 请你来说一下 C++ 中的智能指针</h3><p>C++ 里面的四个智能指针：auto_ptr, shared_ptr, weak_ptr, unique_ptr 其中后三个是 c++11 支持，并且第一个已经被 11 弃用。</p>
-<p>作用：智能指针的作用是管理一个指针，因为存在以下这种情况：申请的空间在函数结束时忘记释放，造成内存泄漏。使用智能指针可以很大程度上的避免这个问题，因为智能指针就是一个类，当超出了类的作用域是，类会自动调用析构函数，析构函数会自动释放资源。所以智能指针的作用原理就是在函数结束时自动释放内存空间，不需要手动释放内存空间。</p>
-<p>1、auto_ptr（c++98 的方案，cpp11 已经抛弃）采用所有权模式。缺点是：存在潜在的内存崩溃问题！</p>
-<figure class="highlight ceylon"><table><tr><td class="code"><pre><span class="line">auto<span class="number">_p</span>tr&lt; string&gt; p<span class="number">1</span> (``<span class="keyword">new</span>` `string (<span class="string">&quot;I reigned lonely as a cloud.”));</span></span><br><span class="line"><span class="string">``<span class="subst">auto<span class="number">_p</span>tr  p<span class="number">2</span>;p<span class="number">2</span> = p<span class="number">1</span>; </span>``</span></span><br><span class="line"><span class="string">//auto_ptr不会报错.此时不会报错，p2剥夺了p1的所有权，但是当程序运行时访问p1将会报错。所以auto_ptr的缺点是：存在潜在的内存崩溃问题！</span></span><br></pre></td></tr></table></figure>
-
-<p>2、unique_ptr（替换 auto_ptr）unique_ptr 实现独占式拥有或严格拥有概念，保证同一时间内只有一个智能指针可以指向该对象。它对于避免资源泄露（例如“以 new 创建对象后因为发生异常而忘记调用 delete”) 特别有用。采用所有权模式。</p>
-<figure class="highlight d"><table><tr><td class="code"><pre><span class="line">unique_ptr p3 (<span class="string">``</span><span class="keyword">new</span><span class="string">` `</span><span class="built_in">string</span> (<span class="string">``</span><span class="string">&quot;auto&quot;</span><span class="string">``</span>));</span><br><span class="line"><span class="string">``</span>unique_ptr p4；<span class="string">``</span>p4 = p3;<span class="string">``</span><span class="comment">//此时会报错！！``</span></span><br><span class="line"><span class="comment">//编译器认为p4=p3非法，避免了p3不再指向有效数据的问题。因此，unique_ptr比auto_ptr更安全。</span></span><br></pre></td></tr></table></figure>
-
-<p>3、shared_ptr<br>shared_ptr 实现共享式拥有概念。多个智能指针可以指向相同对象，该对象和其相关资源会在“最后一个引用被销毁”时候释放。从名字 share 就可以看出了资源可以被多个指针共享，它使用计数机制来表明资源被几个指针共享。可以通过成员函数 use_count() 来查看资源的所有者个数。除了可以通过 new 来构造，还可以通过传入 auto_ptr, unique_ptr,weak_ptr 来构造。当我们调用 release() 时，当前指针会释放资源所有权，计数减一。当计数等于 0 时，资源会被释放。<br>shared_ptr 是为了解决 auto_ptr 在对象所有权上的局限性 (auto_ptr 是独占的）, 在使用引用计数的机制上提供了可以共享所有权的智能指针。</p>
-<p>4、weak_ptr<br>weak_ptr 是一种不控制对象生命周期的智能指针，它指向一个 shared_ptr 管理的对象。进行该对象的内存管理的是那个强引用的 shared_ptr. weak_ptr 只是提供了对管理对象的一个访问手段。weak_ptr 设计的目的是为配合 shared_ptr 而引入的一种智能指针来协助 shared_ptr 工作，它只可以从一个 shared_ptr 或另一个 weak_ptr 对象构造，它的构造和析构不会引起引用记数的增加或减少。</p>
-<p>weak_ptr 是用来解决 shared_ptr 相互引用时的死锁问题，如果说两个 shared_ptr 相互引用，那么这两个指针的引用计数永远不可能下降为 0, 资源永远不会释放。它是对对象的一种弱引用，不会增加对象的引用计数，和 shared_ptr 之间可以相互转化，shared_ptr 可以直接赋值给它，它可以通过调用 lock 函数来获得 shared_ptr。</p>
-<h3 id="18-C-源文件从文本到可执行文件经历的过程？"><a href="#18-C-源文件从文本到可执行文件经历的过程？" class="headerlink" title="18. C++ 源文件从文本到可执行文件经历的过程？"></a>18. C++ 源文件从文本到可执行文件经历的过程？</h3><p>对于 C++ 源文件，从文本到可执行文件一般需要四个过程：</p>
-<ul>
-<li>预处理阶段：对源代码文件中文件包含关系（头文件）、预编译语句（宏定义）进行分析和替换，生成预编译文件。</li>
-<li>编译阶段：将经过预处理后的预编译文件转换成特定汇编代码，生成汇编文件</li>
-<li>汇编阶段：将编译阶段生成的汇编文件转化成机器码，生成可重定位目标文件</li>
-<li>链接阶段：将多个目标文件及所需要的库连接成最终的可执行目标文件</li>
-</ul>
-<h3 id="19-什么时候会发生段错误？"><a href="#19-什么时候会发生段错误？" class="headerlink" title="19. 什么时候会发生段错误？"></a>19. 什么时候会发生段错误？</h3><ul>
-<li>段错误通常发生在访问非法内存地址的时候，具体来说分为以下几种情况：<ul>
-<li>使用野指针</li>
-<li>试图修改字符串常量的内容</li>
-</ul>
-</li>
-</ul>
-<h3 id="20-右值引用"><a href="#20-右值引用" class="headerlink" title="20. 右值引用"></a>20. 右值引用</h3><p>基于右值引用可以实现移动语义和完美转发，消除两个对象交互时不必要的对象拷贝，节省运算存储资源，提高效率</p>
-<h3 id="21-const-的作用"><a href="#21-const-的作用" class="headerlink" title="21. const 的作用"></a>21. const 的作用</h3><p>const 意味着”只读”</p>
-<ul>
-<li><ol>
-<li>修饰变量，说明该变量不可以被修改</li>
-</ol>
-</li>
-<li><ol start="2">
-<li>修饰指针，分为指向常量的指针（即常量指针）和指针常量</li>
-</ol>
-</li>
-<li><ol start="3">
-<li>常量引用，经常用于形参类型，既避免了拷贝，又避免了函数对值的修改</li>
-</ol>
-</li>
-<li><ol start="4">
-<li>修饰成员函数，说明该成员函数内不能修改成员变量</li>
-</ol>
-</li>
-<li>const 用法如下：</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 类</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">int</span> a;                <span class="comment">// 常对象成员，只能在初始化列表赋值</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 构造函数</span></span><br><span class="line">    A() : a(<span class="number">0</span>) &#123; &#125;;</span><br><span class="line">    A(<span class="keyword">int</span> x) : a(x) &#123; &#125;;        <span class="comment">// 初始化列表</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// const可用于对重载函数的区分</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span></span>;             <span class="comment">// 普通成员函数</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> <span class="keyword">const</span></span>;       <span class="comment">// 常成员函数，不得修改类中的任何数据成员的值</span></span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 对象</span></span><br><span class="line">    A b;                        <span class="comment">// 普通对象，可以调用全部成员函数、更新常成员变量</span></span><br><span class="line">    <span class="keyword">const</span> A a;                  <span class="comment">// 常对象，只能调用常成员函数</span></span><br><span class="line">    <span class="keyword">const</span> A *p = &amp;a;            <span class="comment">// 常指针</span></span><br><span class="line">    <span class="keyword">const</span> A &amp;q = a;             <span class="comment">// 常引用</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 指针</span></span><br><span class="line">    <span class="keyword">char</span> greeting[] = <span class="string">&quot;Hello&quot;</span>;</span><br><span class="line">    <span class="keyword">char</span>* p1 = greeting;                <span class="comment">// 指针变量，指向字符数组变量</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* p2 = greeting;          <span class="comment">// 常量指针即常指针，指针的指向可以改变，但是所存的内容不能变</span></span><br><span class="line">    <span class="keyword">char</span> <span class="keyword">const</span>* p2 = greeting;     <span class="comment">// 与const char* p2 等价</span></span><br><span class="line">    <span class="keyword">char</span>* <span class="keyword">const</span> p3 = greeting;          <span class="comment">// 指针常量，指针是一个常量，即指针的指向不能改变，但是指针所存的内容可以改变</span></span><br><span class="line">    <span class="keyword">const</span> <span class="keyword">char</span>* <span class="keyword">const</span> p4 = greeting;    <span class="comment">// 指向常量的常指针，指针和指针所存的内容都不能改变，本质是一个常量</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function1</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span> Var)</span></span>;           <span class="comment">// 传递过来的参数在函数内不可变</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function2</span><span class="params">(<span class="keyword">const</span> <span class="keyword">char</span>* Var)</span></span>;         <span class="comment">// 参数为常量指针即指针所指的内容为常量不能变，指针指向可以改变</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function3</span><span class="params">(<span class="keyword">char</span>* <span class="keyword">const</span> Var)</span></span>;         <span class="comment">// 参数为指针常量</span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">function4</span><span class="params">(<span class="keyword">const</span> <span class="keyword">int</span>&amp; Var)</span></span>;          <span class="comment">// 引用参数在函数内为常量</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 函数返回值</span></span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">int</span> <span class="title">function5</span><span class="params">()</span></span>;      <span class="comment">// 返回一个常数</span></span><br><span class="line"><span class="function"><span class="keyword">const</span> <span class="keyword">int</span>* <span class="title">function6</span><span class="params">()</span></span>;     <span class="comment">// 返回一个指向常量的指针变量即常量指针，使用：const int *p = function6();</span></span><br><span class="line"><span class="function"><span class="keyword">int</span>* <span class="keyword">const</span> <span class="title">function7</span><span class="params">()</span></span>;     <span class="comment">// 返回一个指向变量的常指针即指针常量，使用：int* const p = function7();</span></span><br></pre></td></tr></table></figure>
-
-<h3 id="22-inline-内联函数"><a href="#22-inline-内联函数" class="headerlink" title="22. inline 内联函数"></a>22. inline 内联函数</h3><ul>
-<li>内联函数的特点：<ul>
-<li>相当于把内联函数里面的内容写在调用内联函数处；</li>
-<li>相当于不用执行进入函数的步骤，直接执行函数体；</li>
-<li>相当于宏，却比宏多了类型检查，真正具有函数特性；</li>
-<li>编译器一般不内联包含循环、递归、switch 等复杂操作的内联函数；</li>
-<li>在类声明中定义的函数，除了虚函数的其他函数都会自动隐式地当成内联函数。</li>
-</ul>
-</li>
-<li>内联函数的使用：</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="comment">// 声明1（加 inline，建议使用）</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">functionName</span><span class="params">(<span class="keyword">int</span> first, <span class="keyword">int</span> second,...)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 声明2（不加 inline）</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">functionName</span><span class="params">(<span class="keyword">int</span> first, <span class="keyword">int</span> second,...)</span></span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 定义</span></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">functionName</span><span class="params">(<span class="keyword">int</span> first, <span class="keyword">int</span> second,...)</span> </span>&#123;<span class="comment">/****/</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类内定义，隐式内联</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">doA</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;         <span class="comment">// 隐式内联</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 类外定义，需要显式内联</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">A</span> &#123;</span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">doA</span><span class="params">()</span></span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">int</span> <span class="title">A::doA</span><span class="params">()</span> </span>&#123; <span class="keyword">return</span> <span class="number">0</span>; &#125;   <span class="comment">// 需要显式内联</span></span><br></pre></td></tr></table></figure>
-
-<ul>
-<li>编译器对内联函数的处理步骤<ul>
-<li>将 inline 函数体复制到 inline 函数调用点处；</li>
-<li>为所用 inline 函数中的局部变量分配内存空间；</li>
-<li>将 inline 函数的的输入参数和返回值映射到调用方法的局部变量空间中；</li>
-<li>如果 inline 函数有多个返回点，将其转变为 inline 函数代码块末尾的分支（使用 GOTO）</li>
-</ul>
-</li>
-<li>使用内联函数的优缺点<ul>
-<li>优点：<ul>
-<li>内联函数同宏函数一样将在被调用处进行代码展开，省去了参数压栈、栈帧开辟与回收，结果返回等，从而提高程序运行速度。</li>
-<li>内联函数相比宏函数来说，在代码展开时，会做安全检查或自动类型转换（同普通函数），而宏定义则不会。</li>
-<li>在类中声明同时定义的成员函数，自动转化为内联函数，因此内联函数可以访问类的成员变量，宏定义则不能。</li>
-<li>内联函数在运行时可调试，而宏定义不可以。</li>
-</ul>
-</li>
-<li>缺点：<ul>
-<li>代码膨胀。内联是以代码膨胀（复制）为代价，消除函数调用带来的开销。如果执行函数体内代码的时间，相比于函数调用的开销较大，那么效率的收获会很少。另一方面，每一处内联函数的调用都要复制代码，将使程序的总代码量增大，消耗更多的内存空间。</li>
-<li>inline 函数无法随着函数库升级而升级。inline 函数的改变需要重新编译，不像 non-inline 可以直接链接。</li>
-<li>是否内联，程序员不可控。内联函数只是对编译器的建议，是否对函数内联，决定权在于编译器。</li>
-</ul>
-</li>
-</ul>
-</li>
-<li>虚函数可以是内联函数吗？<ul>
-<li>虚函数可以是内联函数，内联是可以修饰虚函数的，但是当虚函数表现多态性的时候不能内联。</li>
-<li>内联是在编译器建议编译器内联，而虚函数的多态性在运行期，编译器无法知道运行期调用哪个代码，因此虚函数表现为多态性时（运行期）不可以内联。</li>
-<li>inline virtual 唯一可以内联的时候是：编译器知道所调用的对象是哪个类（如 Base::who()），这只有在编译器具有实际对象而不是对象的指针或引用时才会发生。</li>
-<li>虚函数内联使用实例如下：</li>
-</ul>
-</li>
-</ul>
-<figure class="highlight cpp"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> <span class="built_in">std</span>;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Base</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">virtual</span> <span class="keyword">void</span> <span class="title">who</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;I am Base\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">virtual</span> ~Base() &#123;&#125;</span><br><span class="line">&#125;;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Derived</span> :</span> <span class="keyword">public</span> Base</span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">inline</span> <span class="keyword">void</span> <span class="title">who</span><span class="params">()</span>  <span class="comment">// 不写inline时隐式内联</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="built_in">cout</span> &lt;&lt; <span class="string">&quot;I am Derived\n&quot;</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="comment">// 此处的虚函数 who()，是通过类（Base）的具体对象（b）来调用的，编译期间就能确定了，所以它可以是内联的，但最终是否内联取决于编译器。</span></span><br><span class="line">    Base b;</span><br><span class="line">    b.who();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 此处的虚函数是通过指针调用的，呈现多态性，需要在运行时期间才能确定，所以不能为内联。</span></span><br><span class="line">    Base *ptr = <span class="keyword">new</span> Derived();</span><br><span class="line">    ptr-&gt;who();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 因为Base有虚析构函数（virtual ~Base() &#123;&#125;），所以 delete 时，会先调用派生类（Derived）析构函数，再调用基类（Base）析构函数，防止内存泄漏。</span></span><br><span class="line">    <span class="keyword">delete</span> ptr;</span><br><span class="line">    ptr = <span class="literal">nullptr</span>;</span><br><span class="line"></span><br><span class="line">    system(<span class="string">&quot;pause&quot;</span>);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="23-用变量-a-给出下面的定义"><a href="#23-用变量-a-给出下面的定义" class="headerlink" title="23. 用变量 a 给出下面的定义"></a>23. 用变量 a 给出下面的定义</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line">A.一个整型数？</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> a;</span><br><span class="line"></span><br><span class="line">B.一个指向整型数的指针？</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> *a;</span><br><span class="line"></span><br><span class="line">C.一个指向指针的的指针，它指向的指针是指向一个整型数？</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> **a;</span><br><span class="line"></span><br><span class="line">D.一个有<span class="number">10</span>个整型数的数组？</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> a[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">E.一个有<span class="number">10</span>个指针的数组，该指针是指向一个整型数的？</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> *a[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">F.一个指向有<span class="number">10</span>个整型数数组的指针?</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> (*a)[<span class="number">10</span>];</span><br><span class="line"></span><br><span class="line">G.一个指向函数的指针，该函数有一个整型参数并返回一个整型数?</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> (*a)(<span class="keyword">int</span>);</span><br><span class="line"></span><br><span class="line">H.一个有<span class="number">10</span>个指针的数组，该指针指向一个函数，该函数有一个整型参数并返回一个整型数?</span><br><span class="line"></span><br><span class="line">答案：<span class="keyword">int</span> (*a[<span class="number">10</span>])(<span class="keyword">int</span>);</span><br></pre></td></tr></table></figure>
-
-<h3 id="24-sizeof-和-strlen-的区别？"><a href="#24-sizeof-和-strlen-的区别？" class="headerlink" title="24. sizeof 和 strlen 的区别？"></a>24. <strong>sizeof 和 strlen 的区别？</strong></h3><p>sizeof 是运算符，在编译时即计算好了； 而 strlen 是函数，要在运行时才能计算。</p>
-<h3 id="25-请你来回答一下-i和i-的区别"><a href="#25-请你来回答一下-i和i-的区别" class="headerlink" title="25. 请你来回答一下++i和i++的区别"></a>25. 请你来回答一下++i和i++的区别</h3><p>参考回答：</p>
-<p>++i先自增1，再返回，i++先返回i,再自增1</p>
-<p>请你来说一说++i和i++的实现</p>
-<p>参考回答：</p>
-<ol>
-<li>++i 实现：</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">int</span>&amp;  <span class="keyword">int</span>::<span class="keyword">operator</span>++（）</span><br><span class="line">&#123;</span><br><span class="line">	*<span class="keyword">this</span> +=<span class="number">1</span>；</span><br><span class="line">	<span class="keyword">return</span> *<span class="keyword">this</span>；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<ol start="2">
-<li>i++ 实现：</li>
-</ol>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">const</span> <span class="keyword">int</span>  <span class="keyword">int</span>::<span class="keyword">operator</span>（<span class="keyword">int</span>）</span><br><span class="line">&#123;</span><br><span class="line">	<span class="keyword">int</span> oldValue = *<span class="keyword">this</span>；</span><br><span class="line">	++（*<span class="keyword">this</span>）；</span><br><span class="line">	<span class="keyword">return</span> oldValue；</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-<h3 id="26-红黑树（RB-tree）比AVL树的优势在哪？"><a href="#26-红黑树（RB-tree）比AVL树的优势在哪？" class="headerlink" title="26. 红黑树（RB-tree）比AVL树的优势在哪？"></a>26. 红黑树（RB-tree）比AVL树的优势在哪？</h3><p>红黑树是牺牲了严格的高度平衡的优越条件为 代价红黑树能够以O(log2 n)的时间复杂度进行搜索、插入、删除操作。此外，由于它的设计，任何不平衡都会在三次旋转之内解决。当然，还有一些更好的，但实现起来更复杂的数据结构 能够做到一步旋转之内达到平衡，但红黑树能够给我们一个比较“便宜”的解决方案。红黑树的算法时间复杂度和AVL相同，但统计性能比AVL树更高.</p>
-<p>平衡二叉树（AVL树）：</p>
-<p>平衡二叉树又称为AVL树，是一种特殊的二叉排序树。其左右子树都是平衡二叉树，且左右子树高度之差的绝对值不超过1。一句话表述为：以树中所有结点为根的树的左右子树高度之差的绝对值不超过1。将二叉树上结点的左子树深度减去右子树深度的值称为平衡因子BF，那么平衡二叉树上的所有结点的平衡因子只可能是-1、0和1。只要二叉树上有一个结点的平衡因子的绝对值大于1，则该二叉树就是不平衡的。</p>
-<p>红黑树：</p>
-<p>红黑树是一种二叉查找树，但在每个节点增加一个存储位表示节点的颜色，可以是红或黑（非红即黑）。通过对任何一条从根到叶子的路径上各个节点着色的方式的限制，红黑树确保没有一条路径会比其它路径长出两倍，因此，红黑树是一种弱平衡二叉树，相对于要求严格的AVL树来说，它的旋转次数少，所以对于搜索，插入，删除操作较多的情况下，通常使用红黑树。</p>
-<p>性质：</p>
-<ol>
-<li><p>每个节点非红即黑</p>
-</li>
-<li><p>根节点是黑的;</p>
-</li>
-<li><p>每个叶节点（叶节点即树尾端NULL指针或NULL节点）都是黑的;</p>
-</li>
-<li><p>如果一个节点是红色的，则它的子节点必须是黑色的。</p>
-</li>
-<li><p>对于任意节点而言，其到叶子点树NULL指针的每条路径都包含相同数目的黑节点;</p>
-</li>
-</ol>
-<p>区别：</p>
-<p>AVL 树是高度平衡的，频繁的插入和删除，会引起频繁的rebalance，导致效率下降；红黑树不是高度平衡的，算是一种折中，插入最多两次旋转，删除最多三次旋转。</p>
-<h3 id="27-请你来说一下map和set有什么区别，分别又是怎么实现的？"><a href="#27-请你来说一下map和set有什么区别，分别又是怎么实现的？" class="headerlink" title="27. 请你来说一下map和set有什么区别，分别又是怎么实现的？"></a>27. 请你来说一下map和set有什么区别，分别又是怎么实现的？</h3><p><strong>unordered map底层结构是哈希表</strong></p>
-<p>map和set都是C++的关联容器，其底层实现都是红黑树（RB-Tree）。由于 map 和set所开放的各种操作接口，RB-tree 也都提供了，所以几乎所有的 map 和set的操作行为，都只是转调 RB-tree 的操作行为。</p>
-<p>map和set区别在于：</p>
-<p>（1）map中的元素是key-value（关键字—值）对：关键字起到索引的作用，值则表示与索引相关联的数据；Set与之相对就是关键字的简单集合，set中每个元素只包含一个关键字。</p>
-<p>（2）<strong>set的迭代器是const的，不允许修改元素的值；map允许修改value，但不允许修改key。其原因是因为map和set是根据关键字排序来保证其有序性的，如果允许修改key的话，那么首先需要删除该键，然后调节平衡，再插入修改后的键值，调节平衡，如此一来，严重破坏了map和set的结构，导致iterator失效，不知道应该指向改变前的位置，还是指向改变后的位置。所以STL中将set的迭代器设置成const，不允许修改迭代器的值；而map的迭代器则不允许修改key值，允许修改value值。</strong></p>
-<p>（3）map支持下标操作，set不支持下标操作。map可以用key做下标，map的下标运算符[ ]将关键码作为下标去执行查找，如果关键码不存在，则插入一个具有该关键码和mapped_type类型默认值的元素至map中，因此下标运算符[ ]在map应用中需要慎用，const_map不能用，只希望确定某一个关键值是否存在而不希望插入元素时也不应该使用，mapped_type类型没有默认值也不应该使用。<strong>如果find能解决需要，尽可能用find。</strong></p>
-<h3 id="28-请你来说一下STL中迭代器的作用，有指针为何还要迭代器"><a href="#28-请你来说一下STL中迭代器的作用，有指针为何还要迭代器" class="headerlink" title="28. 请你来说一下STL中迭代器的作用，有指针为何还要迭代器"></a>28. 请你来说一下STL中迭代器的作用，有指针为何还要迭代器</h3><p>1、迭代器</p>
-<p>Iterator（迭代器）模式又称Cursor（游标）模式，用于提供一种方法顺序访问一个聚合对象中各个元素, 而又不需暴露该对象的内部表示。或者这样说可能更容易理解：Iterator模式是运用于聚合对象的一种模式，通过运用该模式，使得我们可以在不知道对象内部表示的情况下，按照一定顺序（由iterator提供的方法）访问聚合对象中的各个元素。</p>
-<p>由于Iterator模式的以上特性：与聚合对象耦合，在一定程度上限制了它的广泛运用，一般仅用于底层聚合支持类，如STL的list、vector、stack等容器类及ostream_iterator等扩展iterator。</p>
-<p>2、迭代器和指针的区别</p>
-<p>迭代器不是指针，是类模板，表现的像指针。他只是模拟了指针的一些功能，通过重载了指针的一些操作符，-&gt;、*、++、–等。迭代器封装了指针，是一个“可遍历STL（ Standard Template Library）容器内全部或部分元素”的对象， 本质是封装了原生指针，是指针概念的一种提升（lift），提供了比指针更高级的行为，相当于一种智能指针，他可以根据不同类型的数据结构来实现不同的++，–等操作。</p>
-<p>迭代器返回的是对象引用而不是对象的值，所以cout只能输出迭代器使用*取值后的值而不能直接输出其自身。</p>
-<p>3、迭代器产生原因</p>
-<p>Iterator类的访问方式就是把不同集合类的访问逻辑抽象出来，使得不用暴露集合内部的结构而达到循环遍历集合的效果。</p>
-<h3 id="29-STL里resize和reserve的区别"><a href="#29-STL里resize和reserve的区别" class="headerlink" title="29. STL里resize和reserve的区别"></a>29. STL里resize和reserve的区别</h3><p>参考回答里，给的代码例子，有不对的地方。a.reserve（n）的功能是，如果n&lt;=a.capacity(),则a 不做改变，若n&gt;a.capacity()则把a的capacity（）设成n. reserve()不影响size()的大小。但是resize 有可能会影响capacity的值</p>
-<h3 id="30-TCP建立连接和断开连接的过程："><a href="#30-TCP建立连接和断开连接的过程：" class="headerlink" title="30. TCP建立连接和断开连接的过程："></a>30. TCP建立连接和断开连接的过程：</h3><p><img src="https://gitee.com/SunGitee/src/raw/master/img/image-20200313184715540.png" alt="image-20200313184715540"></p>
-<p>三次握手：</p>
-<ol>
-<li><p>Client将标志位SYN置为1，随机产生一个值seq=J，并将该数据包发送给Server，Client进入SYN_SENT状态，等待Server确认。</p>
-</li>
-<li><p>Server收到数据包后由标志位SYN=1知道Client请求建立连接，Server将标志位SYN和ACK都置为1，ack=J+1，随机产生一个值seq=K，并将该数据包发送给Client以确认连接请求，Server进入SYN_RCVD状态。</p>
-</li>
-<li><p>Client收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给Server，Server检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，Client和Server进入ESTABLISHED状态，完成三次握手，随后Client与Server之间可以开始传输数据了。</p>
-</li>
-</ol>
-<p>四次挥手：</p>
-<p>由于TCP连接时全双工的，因此，每个方向都必须要单独进行关闭，这一原则是当一方完成数据发送任务后，发送一个FIN来终止这一方向的连接，收到一个FIN只是意味着这一方向上没有数据流动了，即不会再收到数据了，但是在这个TCP连接上仍然能够发送数据，直到这一方向也发送了FIN。首先进行关闭的一方将执行主动关闭，而另一方则执行被动关闭。</p>
-<p>1.数据传输结束后，客户端的应用进程发出连接释放报文段，并停止发送数据，客户端进入FIN_WAIT_1状态，此时客户端依然可以接收服务器发送来的数据。</p>
-<p>2.服务器接收到FIN后，发送一个ACK给客户端，确认序号为收到的序号+1，服务器进入CLOSE_WAIT状态。客户端收到后进入FIN_WAIT_2状态。</p>
-<p>3.当服务器没有数据要发送时，服务器发送一个FIN报文，此时服务器进入LAST_ACK状态，等待客户端的确认</p>
-<p>4.客户端收到服务器的FIN报文后，给服务器发送一个ACK报文，确认序列号为收到的序号+1。此时客户端进入TIME_WAIT状态，等待2MSL（MSL：报文段最大生存时间），然后关闭连接。</p>
-<h3 id="31-TCP的模型，状态转移"><a href="#31-TCP的模型，状态转移" class="headerlink" title="31. TCP的模型，状态转移"></a>31. TCP的模型，状态转移</h3><p>四层TCP/IP模型如下：</p>
-<p><img src="https://gitee.com/SunGitee/src/raw/master/img/image-20200313184743297.png" alt="image-20200313184743297"></p>
-<h3 id="32-HTTP和HTTPS的区别，以及HTTPS有什么缺点？"><a href="#32-HTTP和HTTPS的区别，以及HTTPS有什么缺点？" class="headerlink" title="32. HTTP和HTTPS的区别，以及HTTPS有什么缺点？"></a>32. HTTP和HTTPS的区别，以及HTTPS有什么缺点？</h3><p>HTTP协议和HTTPS协议区别如下：</p>
-<p>1）HTTP协议是以明文的方式在网络中传输数据，而HTTPS协议传输的数据则是经过TLS加密后的，HTTPS具有更高的安全性</p>
-<p>2）HTTPS在TCP三次握手阶段之后，还需要进行SSL 的handshake，协商加密使用的对称加密密钥</p>
-<p>3）HTTPS协议需要服务端申请证书，浏览器端安装对应的根证书</p>
-<p>4）HTTP协议端口是80，HTTPS协议端口是443</p>
-<p>HTTPS优点：</p>
-<p>HTTPS传输数据过程中使用密钥进行加密，所以安全性更高</p>
-<p>HTTPS协议可以认证用户和服务器，确保数据发送到正确的用户和服务器</p>
-<p>HTTPS缺点：</p>
-<p>HTTPS握手阶段延时较高：由于在进行HTTP会话之前还需要进行SSL握手，因此HTTPS协议握手阶段延时增加</p>
-<p>HTTPS部署成本高：一方面HTTPS协议需要使用证书来验证自身的安全性，所以需要购买CA证书；另一方面由于采用HTTPS协议需要进行加解密的计算，占用CPU资源较多，需要的服务器配置或数目高</p>
-<h3 id="33-IP地址作用，以及MAC地址作用"><a href="#33-IP地址作用，以及MAC地址作用" class="headerlink" title="33. IP地址作用，以及MAC地址作用"></a>33. IP地址作用，以及MAC地址作用</h3><p>MAC地址是一个硬件地址，用来定义网络设备的位置，主要由数据链路层负责。而IP地址是IP协议提供的一种统一的地址格式，为互联网上的每一个网络和每一台主机分配一个逻辑地址，以此来屏蔽物理地址的差异。</p>
-<h3 id="34-手写一下快排和二分查找的代码"><a href="#34-手写一下快排和二分查找的代码" class="headerlink" title="34. 手写一下快排和二分查找的代码"></a>34. 手写一下快排和二分查找的代码</h3><figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="comment">//二分查找</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">B_Search</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; a, <span class="keyword">int</span> k)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> low = <span class="number">0</span>, high = a.size() - <span class="number">1</span>, mid;</span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">        mid = (low + high) / <span class="number">2</span>;</span><br><span class="line">        <span class="keyword">if</span> (a[mid] == k) &#123;</span><br><span class="line">            <span class="keyword">return</span> mid;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[mid] &lt;= k) &#123;</span><br><span class="line">            low = mid + <span class="number">1</span>;</span><br><span class="line">        &#125; <span class="keyword">else</span> <span class="keyword">if</span> (a[mid] &gt; k) &#123;</span><br><span class="line">            high = mid - <span class="number">1</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//快排</span></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">once_QS</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;a, <span class="keyword">int</span> low, <span class="keyword">int</span> high)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">int</span> key = a[low];</span><br><span class="line">    <span class="keyword">while</span> (low &lt; high) &#123;</span><br><span class="line">        <span class="keyword">while</span> (low &lt; high &amp;&amp; key &lt;= a[high]) &#123;</span><br><span class="line">            high--;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(a[low], a[high]);</span><br><span class="line">        <span class="keyword">while</span> (low &lt; high &amp;&amp; key &gt; a[low]) &#123;</span><br><span class="line">            low++;</span><br><span class="line">        &#125;</span><br><span class="line">        swap(a[low], a[high]);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> low;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">QuickSort</span><span class="params">(<span class="built_in">vector</span>&lt;<span class="keyword">int</span>&gt; &amp;a, <span class="keyword">int</span> low, <span class="keyword">int</span> high)</span> </span>&#123;</span><br><span class="line">    <span class="keyword">while</span> (low &lt;= high) &#123;</span><br><span class="line">        <span class="keyword">int</span> pos = once_QS(a, low, high);</span><br><span class="line">        QuickSort(a, low, pos - <span class="number">1</span>);</span><br><span class="line">        QuickSort(a, pos + <span class="number">1</span>, high);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-]]></content>
-      <categories>
-        <category>Interview</category>
-      </categories>
-      <tags>
-        <tag>C++</tag>
-        <tag>总结</tag>
       </tags>
   </entry>
 </search>
