@@ -1213,7 +1213,7 @@
   <entry>
     <title>shell 命令</title>
     <url>/wiki/shell%E5%91%BD%E4%BB%A4/</url>
-    <content><![CDATA[<h1 id="shell-常用命令"><a href="#shell-常用命令" class="headerlink" title="shell 常用命令"></a>shell 常用命令</h1><h2 id="rpm"><a href="#rpm" class="headerlink" title="rpm"></a>rpm</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpmbuild -ba *.spec  #编译打包rpm</span><br><span class="line">rpm -ivh *.rpm   #安装rpm包</span><br><span class="line">rpm -qpR *.rpm   #列出包依赖的库</span><br><span class="line">rpm -ql  *.rpm   #列出安装的内容</span><br><span class="line">rpm -qpl *.rpm   #列出未安装的包里内容</span><br></pre></td></tr></table></figure>
+    <content><![CDATA[<h1 id="shell-常用命令"><a href="#shell-常用命令" class="headerlink" title="shell 常用命令"></a>shell 常用命令</h1><h2 id="rpm"><a href="#rpm" class="headerlink" title="rpm"></a>rpm</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">rpmbuild -ba *.spec  #编译打包rpm</span><br><span class="line">rpm -ivh *.rpm   #安装rpm包</span><br><span class="line">rpm -qpR *.rpm   #列出包依赖的库</span><br><span class="line">rpm -ql  *.rpm   #列出安装的内容</span><br><span class="line">rpm -qpl *.rpm   #列出未安装的包里内容</span><br><span class="line">rpm -qa | grep   #查找安装的相关包</span><br></pre></td></tr></table></figure>
 
 <h2 id="scp"><a href="#scp" class="headerlink" title="scp"></a>scp</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">scp [-P port] file usr@x.x.x.x:~/dir  #local to remote</span><br><span class="line">scp [-P port] usr@x.x.x.x:~/dir/file  ./dir  #remote to local</span><br></pre></td></tr></table></figure>
 
@@ -1232,6 +1232,8 @@
 <h2 id="pkg-config"><a href="#pkg-config" class="headerlink" title="pkg-config"></a>pkg-config</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">pkg-config --variable pc_path pkg-config #查看pc路径</span><br></pre></td></tr></table></figure>
 
 <h2 id="make"><a href="#make" class="headerlink" title="make"></a>make</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">make V=1 #展示出具体编译命令</span><br></pre></td></tr></table></figure>
+
+<h2 id="code"><a href="#code" class="headerlink" title="code"></a>code</h2><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">!/bin/bash</span></span><br><span class="line"><span class="meta">#</span><span class="bash"> get all filename <span class="keyword">in</span> specified path</span></span><br><span class="line"></span><br><span class="line">path=$1</span><br><span class="line">files=$(ls $path)</span><br><span class="line">for file in $files</span><br><span class="line">do</span><br><span class="line">  mv $file &#x27;bad-&#x27;$file</span><br><span class="line">done</span><br><span class="line"></span><br></pre></td></tr></table></figure>
 ]]></content>
       <categories>
         <category>Linux</category>
