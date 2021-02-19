@@ -829,7 +829,14 @@
 </li>
 </ol>
 <h1 id="Objects-as-Secure-Capabilities"><a href="#Objects-as-Secure-Capabilities" class="headerlink" title="Objects as Secure Capabilities"></a>Objects as Secure Capabilities</h1><ol>
-<li></li>
+<li><p>Insecure operations rejected at compile-time, how cool is that!</p>
+</li>
+<li><p>Midori was by no means the first to build an operating systems with object capabilities at its core.</p>
+</li>
+<li><p>Since objects represent capabilities, they can be as fine or coarse as you wish. You can make new ones through composition, or modify existing ones through subclassing. Dependencies are managed just like any dependencies in an object-oriented system: by encapsulating, sharing, and requesting references to objects. You can leverage all sorts of classic design patterns suddenly in the domain of security. I do have to admit the simplicity of this idea was jarring to some.</p>
+</li>
+<li><p>we banned mutable statics, by-construction at compile-time, in our programming language. That’s right, not only could a static field only be written to once, but the entire object graph it referred to was frozen after construction. </p>
+</li>
 </ol>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
 <ul>
