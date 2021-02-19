@@ -813,7 +813,25 @@
   <entry>
     <title>Learn from Midori</title>
     <url>/wiki/Midori/</url>
-    <content><![CDATA[<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+    <content><![CDATA[<h1 id="About-Midori"><a href="#About-Midori" class="headerlink" title="About Midori"></a>About Midori</h1><p>Midori was a research/incubation project to explore ways of innovating throughout Microsoft’s software stack. This spanned all aspects, including the programming language, compilers, OS, its services, applications, and the overall programming models.</p>
+<h1 id="A-Tale-of-Three-Safeties"><a href="#A-Tale-of-Three-Safeties" class="headerlink" title="A Tale of Three Safeties"></a>A Tale of Three Safeties</h1><ol>
+<li><p>Midori was built on a foundation of three kinds of safety: type, memory, and concurrency-safety</p>
+</li>
+<li><p>So, anyway, how do you build an operating system, whose central purpose is to control hardware resources, buffers, services and applications running in parallel, and so on, all of which are pretty damn unsafe things, using a safe programming environment? Great question. The answer is surprisingly simple: layers.</p>
+</li>
+<li><p>A nice consequence of our approach was that the system was built upon itself.</p>
+</li>
+<li><p>Note that I didn’t say we banned concurrency altogether, just that we banned unsafe concurrency. </p>
+</li>
+<li><p>They key insight driving the formalism here was that no two “threads” sharing an address space were permitted to see the same object as mutable at the same time. Many could read from the same memory at once, and one could write, but multiple could not write at once.</p>
+</li>
+<li><p>The combination of memory, type, and concurrency safety gave us a powerful foundation to stand on. Most of all, it delivered a heightened level of developer productivity and let us move fast. The extremely costly buffer overflows, data races, deadlocks, and so on, simply did not happen. Someday all operating systems will be written this way.</p>
+</li>
+</ol>
+<h1 id="Objects-as-Secure-Capabilities"><a href="#Objects-as-Secure-Capabilities" class="headerlink" title="Objects as Secure Capabilities"></a>Objects as Secure Capabilities</h1><ol>
+<li></li>
+</ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
 <ul>
 <li><a href="http://joeduffyblog.com/2015/11/03/blogging-about-midori/">Joe Duffy’s Blog</a></li>
 </ul>
