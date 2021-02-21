@@ -17,7 +17,7 @@ So, anyway, how do you build an operating system, whose central purpose is to co
 
 A nice consequence of our approach was that the system was built upon itself.
 
-Note that I didn’t say we banned concurrency altogether, just that we banned unsafe concurrency. 
+Note that I didn’t say we banned concurrency altogether, just that we banned unsafe concurrency.
 
 They key insight driving the formalism here was that no two “threads” sharing an address space were permitted to see the same object as mutable at the same time. Many could read from the same memory at once, and one could write, but multiple could not write at once.
 
@@ -31,12 +31,23 @@ Midori was by no means the first to build an operating systems with object capab
 
 Since objects represent capabilities, they can be as fine or coarse as you wish. You can make new ones through composition, or modify existing ones through subclassing. Dependencies are managed just like any dependencies in an object-oriented system: by encapsulating, sharing, and requesting references to objects. You can leverage all sorts of classic design patterns suddenly in the domain of security. I do have to admit the simplicity of this idea was jarring to some.
 
-we banned mutable statics, by-construction at compile-time, in our programming language. That’s right, not only could a static field only be written to once, but the entire object graph it referred to was frozen after construction. 
+we banned mutable statics, by-construction at compile-time, in our programming language. That’s right, not only could a static field only be written to once, but the entire object graph it referred to was frozen after construction.
 
 
-参考资料
+Asynchronous Everything
+First, remember, Midori was an entire OS written to use garbage collected memory. We learned some key lessons that were necessary for this to perform adequately.
 
-Joe Duffy’s Blog"> 
+The first key optimization, therefore, is that an async method that doesn’t await shouldn’t allocate anything.
+
+The second key optimization was to ensure that async methods that awaited allocated as little as possible.
+
+What we ended up with was a model that only allocated when the await happened, and that allocated only once for an entire such chain of calls. We called this chain an “activity.” The top-most demarcated the boundary of an activity. As a result, could cost something, but was free.asyncasyncawait.
+
+It was pretty common to be running the Midori system at 100% CPU utilization, because it was doing useful stuff, which is pretty rare on PCs and traditional apps.
+
+
+and ?
+参考资料"> 
   
   
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -154,7 +165,7 @@ Joe Duffy’s Blog">
 </li>
 <li><p>A nice consequence of our approach was that the system was built upon itself.</p>
 </li>
-<li><p>Note that I didn’t say we banned concurrency altogether, just that we banned unsafe concurrency. </p>
+<li><p>Note that I didn’t say we banned concurrency altogether, just that we banned unsafe concurrency.</p>
 </li>
 <li><p>They key insight driving the formalism here was that no two “threads” sharing an address space were permitted to see the same object as mutable at the same time. Many could read from the same memory at once, and one could write, but multiple could not write at once.</p>
 </li>
@@ -168,9 +179,22 @@ Joe Duffy’s Blog">
 </li>
 <li><p>Since objects represent capabilities, they can be as fine or coarse as you wish. You can make new ones through composition, or modify existing ones through subclassing. Dependencies are managed just like any dependencies in an object-oriented system: by encapsulating, sharing, and requesting references to objects. You can leverage all sorts of classic design patterns suddenly in the domain of security. I do have to admit the simplicity of this idea was jarring to some.</p>
 </li>
-<li><p>we banned mutable statics, by-construction at compile-time, in our programming language. That’s right, not only could a static field only be written to once, but the entire object graph it referred to was frozen after construction. </p>
+<li><p>we banned mutable statics, by-construction at compile-time, in our programming language. That’s right, not only could a static field only be written to once, but the entire object graph it referred to was frozen after construction.</p>
 </li>
 </ol>
+<h1 id="Asynchronous-Everything"><a href="#Asynchronous-Everything" class="headerlink" title="Asynchronous Everything"></a>Asynchronous Everything</h1><ol>
+<li><p>First, remember, Midori was an entire OS written to use garbage collected memory. We learned some key lessons that were necessary for this to perform adequately.</p>
+</li>
+<li><p>The first key optimization, therefore, is that an async method that doesn’t await shouldn’t allocate anything.</p>
+</li>
+<li><p>The second key optimization was to ensure that async methods that awaited allocated as little as possible.</p>
+</li>
+<li><p>What we ended up with was a model that only allocated when the await happened, and that allocated only once for an entire such chain of calls. We called this chain an “activity.” The top-most demarcated the boundary of an activity. As a result, could cost something, but was free.asyncasyncawait.</p>
+</li>
+<li><p>It was pretty common to be running the Midori system at 100% CPU utilization, because it was doing useful stuff, which is pretty rare on PCs and traditional apps.</p>
+</li>
+</ol>
+<p>and ?</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
 <ul>
 <li><a target="_blank" rel="noopener" href="http://joeduffyblog.com/2015/11/03/blogging-about-midori/">Joe Duffy’s Blog</a></li>
@@ -196,7 +220,8 @@ Joe Duffy’s Blog">
 
     
     
-    <a type="button" class="btn btn-default disabled"><i class="fa fa-arrow-circle-o-left"></i>Prev</a>
+    <a href="/wiki/LatencyNumbersEveryProgrammerShouldKnow/" type="button" class="btn btn-default"><i
+                class="fa fa-arrow-circle-o-left"></i> Prev</a>
     
 
     <a href="/" type="button" class="btn btn-default"><i class="fa fa-home"></i>Home</a>
@@ -269,7 +294,7 @@ new Valine(valineConfig);
     <ul id="categorys" class="tag_box list-unstyled collapse in">
           
   <li>
-    <li><a href="/categories/OS/">OS<span>1</span></a></li> <li><a href="/categories/OS/design/">design<span>1</span></a></li>
+    <li><a href="/categories/OS/">OS<span>2</span></a></li> <li><a href="/categories/OS/design/">design<span>2</span></a></li>
   </li>
 
     </ul>
@@ -293,7 +318,7 @@ new Valine(valineConfig);
 	   <a data-toggle="collapse" data-target="#toc"><i class="fa fa-bars"></i></a>
 	   <div id="toc" class="toc collapse in">
 		   <span class="toc-title">Contents</span>
-			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#About-Midori"><span class="toc-article-text">About Midori</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#A-Tale-of-Three-Safeties"><span class="toc-article-text">A Tale of Three Safeties</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#Objects-as-Secure-Capabilities"><span class="toc-article-text">Objects as Secure Capabilities</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-article-text">参考资料</span></a></li></ol></li></ol>
+			<ol class="toc-article"><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#About-Midori"><span class="toc-article-text">About Midori</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#A-Tale-of-Three-Safeties"><span class="toc-article-text">A Tale of Three Safeties</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#Objects-as-Secure-Capabilities"><span class="toc-article-text">Objects as Secure Capabilities</span></a></li><li class="toc-article-item toc-article-level-1"><a class="toc-article-link" href="#Asynchronous-Everything"><span class="toc-article-text">Asynchronous Everything</span></a><ol class="toc-article-child"><li class="toc-article-item toc-article-level-2"><a class="toc-article-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-article-text">参考资料</span></a></li></ol></li></ol>
 		</div>
 	
 	</div>

@@ -316,6 +316,27 @@
       </tags>
   </entry>
   <entry>
+    <title>Latency Numbers Every Programmer Should Know</title>
+    <url>/wiki/LatencyNumbersEveryProgrammerShouldKnow/</url>
+    <content><![CDATA[<figure class="highlight sql"><table><tr><td class="code"><pre><span class="line">Latency Comparison Numbers (~2012)</span><br><span class="line"><span class="comment">----------------------------------</span></span><br><span class="line">L1 <span class="keyword">cache</span> <span class="keyword">reference</span>                           <span class="number">0.5</span> ns</span><br><span class="line">Branch mispredict                            <span class="number">5</span>   ns</span><br><span class="line">L2 <span class="keyword">cache</span> <span class="keyword">reference</span>                           <span class="number">7</span>   ns                      <span class="number">14</span>x L1 <span class="keyword">cache</span></span><br><span class="line"><span class="keyword">Mutex</span> <span class="keyword">lock</span>/<span class="keyword">unlock</span>                           <span class="number">25</span>   ns</span><br><span class="line"><span class="keyword">Main</span> <span class="keyword">memory</span> <span class="keyword">reference</span>                      <span class="number">100</span>   ns                      <span class="number">20</span>x L2 <span class="keyword">cache</span>, <span class="number">200</span>x L1 <span class="keyword">cache</span></span><br><span class="line"><span class="keyword">Compress</span> <span class="number">1</span>K <span class="keyword">bytes</span> <span class="keyword">with</span> Zippy             <span class="number">3</span>,<span class="number">000</span>   ns        <span class="number">3</span> us</span><br><span class="line">Send <span class="number">1</span>K <span class="keyword">bytes</span> <span class="keyword">over</span> <span class="number">1</span> Gbps network       <span class="number">10</span>,<span class="number">000</span>   ns       <span class="number">10</span> us</span><br><span class="line"><span class="keyword">Read</span> <span class="number">4</span>K randomly <span class="keyword">from</span> SSD*             <span class="number">150</span>,<span class="number">000</span>   ns      <span class="number">150</span> us          ~<span class="number">1</span>GB/sec SSD</span><br><span class="line"><span class="keyword">Read</span> <span class="number">1</span> MB sequentially <span class="keyword">from</span> <span class="keyword">memory</span>     <span class="number">250</span>,<span class="number">000</span>   ns      <span class="number">250</span> us</span><br><span class="line"><span class="keyword">Round</span> trip <span class="keyword">within</span> same datacenter      <span class="number">500</span>,<span class="number">000</span>   ns      <span class="number">500</span> us</span><br><span class="line"><span class="keyword">Read</span> <span class="number">1</span> MB sequentially <span class="keyword">from</span> SSD*     <span class="number">1</span>,<span class="number">000</span>,<span class="number">000</span>   ns    <span class="number">1</span>,<span class="number">000</span> us    <span class="number">1</span> ms  ~<span class="number">1</span>GB/sec SSD, <span class="number">4</span>X <span class="keyword">memory</span></span><br><span class="line">Disk seek                           <span class="number">10</span>,<span class="number">000</span>,<span class="number">000</span>   ns   <span class="number">10</span>,<span class="number">000</span> us   <span class="number">10</span> ms  <span class="number">20</span>x datacenter roundtrip</span><br><span class="line"><span class="keyword">Read</span> <span class="number">1</span> MB sequentially <span class="keyword">from</span> disk    <span class="number">20</span>,<span class="number">000</span>,<span class="number">000</span>   ns   <span class="number">20</span>,<span class="number">000</span> us   <span class="number">20</span> ms  <span class="number">80</span>x <span class="keyword">memory</span>, <span class="number">20</span>X SSD</span><br><span class="line">Send packet CA-&gt;Netherlands-&gt;CA    <span class="number">150</span>,<span class="number">000</span>,<span class="number">000</span>   ns  <span class="number">150</span>,<span class="number">000</span> us  <span class="number">150</span> ms</span><br><span class="line"></span><br><span class="line">Notes</span><br><span class="line"><span class="comment">-----</span></span><br><span class="line"><span class="number">1</span> ns = <span class="number">10</span>^<span class="number">-9</span> <span class="keyword">seconds</span></span><br><span class="line"><span class="number">1</span> us = <span class="number">10</span>^<span class="number">-6</span> <span class="keyword">seconds</span> = <span class="number">1</span>,<span class="number">000</span> ns</span><br><span class="line"><span class="number">1</span> ms = <span class="number">10</span>^<span class="number">-3</span> <span class="keyword">seconds</span> = <span class="number">1</span>,<span class="number">000</span> us = <span class="number">1</span>,<span class="number">000</span>,<span class="number">000</span> ns</span><br><span class="line"></span><br><span class="line">Credit</span><br><span class="line"><span class="comment">------</span></span><br><span class="line"><span class="keyword">By</span> Jeff Dean:               <span class="keyword">http</span>://research.google.com/people/jeff/</span><br><span class="line">Originally <span class="keyword">by</span> Peter Norvig: <span class="keyword">http</span>://norvig.com/<span class="number">21</span>-days.html<span class="comment">#answers</span></span><br><span class="line"></span><br><span class="line">Contributions</span><br><span class="line"><span class="comment">-------------</span></span><br><span class="line"><span class="string">&#x27;Humanized&#x27;</span> comparison:  https://gist.github.com/hellerbarde/<span class="number">2843375</span></span><br><span class="line">Visual comparison chart: <span class="keyword">http</span>://i.imgur.com/k0t1e.png</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
+<ul>
+<li><a href="https://gist.github.com/jboner/2841832">Latency Numbers Every Programmer Should Know</a></li>
+</ul>
+</blockquote>
+]]></content>
+      <categories>
+        <category>OS</category>
+        <category>design</category>
+        <category>time</category>
+      </categories>
+      <tags>
+        <tag>Latency</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>LeetCode-1248. 统计「优美子数组」</title>
     <url>/wiki/LeetCode-1248.%20%E7%BB%9F%E8%AE%A1%E3%80%8C%E4%BC%98%E7%BE%8E%E5%AD%90%E6%95%B0%E7%BB%84%E3%80%8D/</url>
     <content><![CDATA[<h1 id="1248-统计「优美子数组」"><a href="#1248-统计「优美子数组」" class="headerlink" title="1248. 统计「优美子数组」"></a>1248. 统计「优美子数组」</h1><p>给你一个整数数组 nums 和一个整数 k。</p>
@@ -821,7 +842,7 @@
 </li>
 <li><p>A nice consequence of our approach was that the system was built upon itself.</p>
 </li>
-<li><p>Note that I didn’t say we banned concurrency altogether, just that we banned unsafe concurrency. </p>
+<li><p>Note that I didn’t say we banned concurrency altogether, just that we banned unsafe concurrency.</p>
 </li>
 <li><p>They key insight driving the formalism here was that no two “threads” sharing an address space were permitted to see the same object as mutable at the same time. Many could read from the same memory at once, and one could write, but multiple could not write at once.</p>
 </li>
@@ -835,9 +856,22 @@
 </li>
 <li><p>Since objects represent capabilities, they can be as fine or coarse as you wish. You can make new ones through composition, or modify existing ones through subclassing. Dependencies are managed just like any dependencies in an object-oriented system: by encapsulating, sharing, and requesting references to objects. You can leverage all sorts of classic design patterns suddenly in the domain of security. I do have to admit the simplicity of this idea was jarring to some.</p>
 </li>
-<li><p>we banned mutable statics, by-construction at compile-time, in our programming language. That’s right, not only could a static field only be written to once, but the entire object graph it referred to was frozen after construction. </p>
+<li><p>we banned mutable statics, by-construction at compile-time, in our programming language. That’s right, not only could a static field only be written to once, but the entire object graph it referred to was frozen after construction.</p>
 </li>
 </ol>
+<h1 id="Asynchronous-Everything"><a href="#Asynchronous-Everything" class="headerlink" title="Asynchronous Everything"></a>Asynchronous Everything</h1><ol>
+<li><p>First, remember, Midori was an entire OS written to use garbage collected memory. We learned some key lessons that were necessary for this to perform adequately.</p>
+</li>
+<li><p>The first key optimization, therefore, is that an async method that doesn’t await shouldn’t allocate anything.</p>
+</li>
+<li><p>The second key optimization was to ensure that async methods that awaited allocated as little as possible.</p>
+</li>
+<li><p>What we ended up with was a model that only allocated when the await happened, and that allocated only once for an entire such chain of calls. We called this chain an “activity.” The top-most demarcated the boundary of an activity. As a result, could cost something, but was free.asyncasyncawait.</p>
+</li>
+<li><p>It was pretty common to be running the Midori system at 100% CPU utilization, because it was doing useful stuff, which is pretty rare on PCs and traditional apps.</p>
+</li>
+</ol>
+<p>and ?</p>
 <h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><blockquote>
 <ul>
 <li><a href="http://joeduffyblog.com/2015/11/03/blogging-about-midori/">Joe Duffy’s Blog</a></li>
